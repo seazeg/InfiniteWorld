@@ -6,7 +6,7 @@ import './assets/css/base.css'
 import main from './components/layout/main.vue'
 import axios from 'axios'
 
-Vue.prototype.$axios = $axios
+Vue.prototype.$axios = axios
 
 Vue.component(main.name, main)
 
