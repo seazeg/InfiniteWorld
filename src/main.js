@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import './assets/css/base.css'
 import main from './components/layout/main.vue'
 
@@ -14,6 +15,7 @@ Vue.component(main.name, main)
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

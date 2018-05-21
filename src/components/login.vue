@@ -1,6 +1,6 @@
 <template>
   <layout>
-    aaaaaaaaa
+    {{$store.state.show}}
   </layout>
 </template>
 
