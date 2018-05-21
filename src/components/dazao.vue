@@ -1,5 +1,7 @@
 <template>
-    <div>demo</div>
+        <layout>
+        daozao
+    </layout>
 </template>
 
 <script>

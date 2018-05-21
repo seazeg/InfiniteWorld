@@ -1,6 +1,6 @@
 <template>
   <layout>
-    aaaaaaaaa
+    market
   </layout>
 </template>
 
@@ -10,3 +10,9 @@
   }
 
 </script>
+
+
+<style>
+
+
+</style>
