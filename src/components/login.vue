@@ -1,7 +1,7 @@
 <template>
-  <layout>
+  <div>
     {{$store.state.show}}
-  </layout>
+  </div>
 </template>
 
 <script>

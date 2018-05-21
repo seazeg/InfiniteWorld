@@ -1,7 +1,5 @@
 <template>
-    <layout>
-        center
-    </layout>
+ <div>center</div>
 </template>
 
 <script>

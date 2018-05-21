@@ -1,7 +1,7 @@
 <template>
-  <layout>
+  <div>
     market
-  </layout>
+  </div>
 </template>
 
 <script>

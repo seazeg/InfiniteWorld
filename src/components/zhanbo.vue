@@ -1,7 +1,7 @@
 <template>
-        <layout>
+        <div>
         zhanbo
-    </layout>
+    </div>
 </template>
 
 <script>

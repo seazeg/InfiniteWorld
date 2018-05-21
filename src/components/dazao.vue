@@ -1,7 +1,7 @@
 <template>
-        <layout>
+        <div>
         daozao
-    </layout>
+    </div>
 </template>
 
 <script>

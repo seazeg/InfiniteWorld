@@ -1,7 +1,7 @@
 <template>
-        <layout>
+        <div>
         role
-    </layout>
+    </div>
 </template>
 
 <script>
