@@ -95,7 +95,7 @@
 
   .iw_main .menu {
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     background: url("../../assets/images/menubg.jpg") repeat-x;
     background-size: 100% 100%;
@@ -116,7 +116,11 @@
   }
 
   .iw_main .content {
-    padding: 10px;
+    /*padding: 10px;*/
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
 </style>
