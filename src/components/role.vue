@@ -266,7 +266,7 @@
       }
     }
   }
-  
+
 </script>
 
 <style>
@@ -283,6 +283,7 @@
     height: 480px;
     position: absolute;
     top: 12%;
+    margin-left: 2.5%;
   }
 
   .role .layer .left {
