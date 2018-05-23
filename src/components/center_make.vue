@@ -8,7 +8,7 @@
  	<div class="m-btnbox">
  		<div class="m-list"><span>签到</span></div>
  		<div class="m-list"><span>占卜记录</span></div>
- 		<div class="m-list" @click="go('make')"><span>打造记录</span></div>
+ 		<div class="m-list"><span>打造记录</span></div>
  		<div class="m-list"><span>钱包</span></div>
  		<div class="m-list"><span>卡牌图鉴</span></div>
  		<div class="m-list"><span>排行榜</span></div>
@@ -49,18 +49,6 @@ export default {
       open() {
         this.tcShow = !this.tcShow
       },
-      go(type) {
-        if (type == "make") {
-          this.$router.push({
-            path: "/centerMake"
-          })
-        } 
-        // else if (type == "menu2") {
-        //   this.$router.push({
-        //     path: "/market"
-        //   })
-        // } 
-      }
     }
 
 }

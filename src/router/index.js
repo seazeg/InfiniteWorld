@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import main from '../components/layout/main.vue'
 import login from '../components/login.vue'
 import center from '../components/center.vue'
+import centerMake from '../components/center_make.vue'
 import market from '../components/market.vue'
 import role from '../components/role.vue'
 import dazao from '../components/dazao.vue'
@@ -31,7 +32,15 @@ var routes = [{
     meta:{
       title:"个人中心"
     }
-  }, {
+  },{
+    //个人中心-打造记录
+    path: '/centerMake',
+    name: 'centerMake',
+    component: centerMake,
+    meta:{
+      title:"打造记录"
+    }
+  },  {
     //市场
     path: '/market',
     name: 'market',
