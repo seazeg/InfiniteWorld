@@ -385,7 +385,7 @@
 
   .role_fenjie {
     width: 80%;
-    margin-left: 7%;
+    margin-left: 10%;
     height: 300px;
     background: url("../assets/images/role_fenjie.png") no-repeat;
     background-size: 100%;
@@ -409,7 +409,7 @@
 
   .rolesj {
     width: 80%;
-    margin-left: 7%;
+    margin-left: 10%;
     height: 350px;
     background: url("../assets/images/role_shangjia.png") no-repeat;
     background-size: 100%;
