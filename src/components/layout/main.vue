@@ -40,7 +40,7 @@
         menu2: this.$route.name == "market",
         menu3: this.$route.name == "role",
         menu4: this.$route.name == "dazao",
-        menu5: this.$route.name == "center"
+        menu5: this.$route.name == "center" || this.$router.name == "centerMake"
       }
     },
     methods: {
@@ -69,11 +69,12 @@
       }
     },
     updated() {
-      this.menu1 = this.$route.name == "zhanbo",
-        this.menu2 = this.$route.name == "market",
-        this.menu3 = this.$route.name == "role",
-        this.menu4 = this.$route.name == "dazao",
-        this.menu5 = this.$route.name == "center"
+        this.menu1 = this.$route.name == "zhanbo";
+        this.menu2 = this.$route.name == "market";
+        this.menu3 = this.$route.name == "role";
+        this.menu4 = this.$route.name == "dazao";
+        this.menu5 = this.$route.name == "center" || this.$route.name == "centerMake"
+        
     }
   }
 
