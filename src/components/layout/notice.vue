@@ -21,6 +21,7 @@
     border-radius: 10px;
     position: absolute;
     bottom: 10%;
+    margin-left: 2.5%;
   }
 
 </style>
