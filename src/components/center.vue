@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="m-btnbox">
-      <div class="m-list">
+      <div class="m-list" @click="signClick">
         <span>签到</span>
       </div>
       <div class="m-list">
@@ -46,6 +46,7 @@
         </a>
       </div>
     </div>
+    <div v-if="sign" class="m-typebox">签到成功，区块确认中，请与10秒后在角色—背包中进行查看。</div>
   </div>
 </template>
 
@@ -54,22 +55,20 @@
     data() {
       return {
         tcShow: false,
-        left: {
-          role1: true,
-          role2: false,
-          role3: false,
-          role4: false
-        },
-        rolezb: false,
-        noticeShow: false,
-        rolefj: false,
-        rolesj: false,
-        roleENS: ""
+        sign: false,
+
       }
     },
     methods: {
       open() {
         this.tcShow = !this.tcShow
+      },
+      signClick(){
+      	let self = this;
+      	self.sign = true;
+      	setTimeout(function(){
+      		self.sign = false;
+      	}, 3000)
       },
       go(type) {
         if (type == "make") {
@@ -249,5 +248,20 @@
     height: 100%;
     vertical-align: top;
   }
-
+  .m-typebox{
+  	display: inline-block;
+    width: 80%;
+    padding:.4rem .4rem;
+    box-sizing: border-box;
+    line-height: .46rem;
+    font-size: .34rem;
+    position: fixed;
+    z-index: 1000;
+    background: rgba(0,0,0,.8);
+    left: 10%;
+    top: 50%;
+    margin-top: -.54rem;
+    color: #eebc7f;
+    border-radius: .2rem;
+  }
 </style>
