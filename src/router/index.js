@@ -4,6 +4,9 @@ import main from '../components/layout/main.vue'
 import login from '../components/login.vue'
 import center from '../components/center.vue'
 import centerMake from '../components/center_make.vue'
+import card from '../components/center_card.vue'
+import chart from '../components/center_chart.vue'
+import wall from '../components/center_wall.vue'
 import market from '../components/market.vue'
 import role from '../components/role.vue'
 import dazao from '../components/dazao.vue'
@@ -40,7 +43,31 @@ var routes = [{
     meta:{
       title:"打造记录"
     }
-  },  {
+  },{
+    //个人中心-卡牌图鉴
+    path: '/card',
+    name: 'card',
+    component: card,
+    meta:{
+      title:"卡牌图鉴"
+    }
+  },{
+    //个人中心-排行榜
+    path: '/chart',
+    name: 'chart',
+    component: chart,
+    meta:{
+      title:"排行榜"
+    }
+  },{
+    //个人中心-钱包
+    path: '/wall',
+    name: 'wall',
+    component: wall,
+    meta:{
+      title:"排行榜"
+    }
+  },{
     //市场
     path: '/market',
     name: 'market',

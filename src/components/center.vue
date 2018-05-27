@@ -19,13 +19,13 @@
       <div class="m-list" @click="go('make')">
         <span>打造记录</span>
       </div>
-      <div class="m-list">
+      <div class="m-list" @click="go('wall')">
         <span>钱包</span>
       </div>
-      <div class="m-list">
+      <div class="m-list" @click="go('card')">
         <span>卡牌图鉴</span>
       </div>
-      <div class="m-list">
+      <div class="m-list" @click="go('chart')">
         <span>排行榜</span>
       </div>
       <div class="m-list">
@@ -76,11 +76,21 @@
             path: "/centerMake"
           })
         }
-        // else if (type == "menu2") {
-        //   this.$router.push({
-        //     path: "/market"
-        //   })
-        // } 
+        else if (type == "card") {
+          this.$router.push({
+            path: "/card"
+          })
+        } 
+        else if (type == "chart") {
+          this.$router.push({
+            path: "/chart"
+          })
+        }
+        else if (type == "wall") {
+          this.$router.push({
+            path: "/wall"
+          })
+        }
       }
     }
 
