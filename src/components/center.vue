@@ -5,15 +5,19 @@
         <img src="../assets/images/img-hd.png" />
       </div>
       <div class="m-name">易老斯</div>
-      <a class="z-buildbtn" @click="open()">
+      <!-- <a class="z-buildbtn" @click="open()">
         <img src="../assets/images/img-build.png" />
-      </a>
+      </a> -->
+      <div class="m-fjsbox">
+      	<i><img src="../assets/images/ico-fjs.png" /></i>
+      	<div class="m-txt">180/300</div>
+      </div>
     </div>
     <div class="m-btnbox">
       <div class="m-list" @click="signClick">
         <span>签到</span>
       </div>
-      <div class="m-list">
+      <div class="m-list" @click="go('chart')">
         <span>占卜记录</span>
       </div>
       <div class="m-list" @click="go('make')">
@@ -28,7 +32,7 @@
       <div class="m-list" @click="go('chart')">
         <span>排行榜</span>
       </div>
-      <div class="m-list">
+      <div class="m-list" @click="go('invit')">
         <span>邀请好友</span>
       </div>
     </div>
@@ -73,7 +77,7 @@
       go(type) {
         if (type == "make") {
           this.$router.push({
-            path: "/centerMake"
+            path: "/make"
           })
         }
         else if (type == "card") {
@@ -89,6 +93,16 @@
         else if (type == "wall") {
           this.$router.push({
             path: "/wall"
+          })
+        }
+        else if (type == "divine") {
+          this.$router.push({
+            path: "/divine"
+          })
+        }
+        else if (type == "invit") {
+          this.$router.push({
+            path: "/invit"
           })
         }
       }
@@ -147,12 +161,30 @@
     float: right;
     margin: .5rem .4rem 0 0;
   }
-
   .center .m-vipmes .z-buildbtn img {
     width: 100%;
     height: 100%;
     vertical-align: top;
   }
+  .center .m-vipmes .m-fjsbox{
+  	width: auto;
+    height: 1rem;
+    display: inline-block;
+    float: right;
+    margin: .75rem .4rem 0 0;
+  }
+  .center .m-vipmes .m-fjsbox i{
+  	width: .89rem; height: 1rem; display: inline-block;float: left;margin-right:.2rem; 
+  }
+  .center .m-vipmes .m-fjsbox .m-txt{
+  	width: auto;height: 1rem; line-height:1rem;display: inline-block;float: left;font-size: .42rem;color: #3f291b;
+  }
+  .center .m-vipmes .m-fjsbox i img {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+  }
+
 
   .center .m-btnbox {
     width: 8.9rem;

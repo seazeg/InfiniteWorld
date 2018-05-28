@@ -3,10 +3,12 @@ import Router from 'vue-router'
 import main from '../components/layout/main.vue'
 import login from '../components/login.vue'
 import center from '../components/center.vue'
-import centerMake from '../components/center_make.vue'
+import make from '../components/center_make.vue'
 import card from '../components/center_card.vue'
 import chart from '../components/center_chart.vue'
 import wall from '../components/center_wall.vue'
+import divine from '../components/center_divine.vue'
+import invit from '../components/center_invit.vue'
 import market from '../components/market.vue'
 import role from '../components/role.vue'
 import dazao from '../components/dazao.vue'
@@ -37,9 +39,9 @@ var routes = [{
     }
   },{
     //个人中心-打造记录
-    path: '/centerMake',
-    name: 'centerMake',
-    component: centerMake,
+    path: '/make',
+    name: 'make',
+    component: make,
     meta:{
       title:"打造记录"
     }
@@ -65,7 +67,23 @@ var routes = [{
     name: 'wall',
     component: wall,
     meta:{
-      title:"排行榜"
+      title:"钱包"
+    }
+  },{
+    //个人中心-占卜记录
+    path: '/divine',
+    name: 'divine',
+    component: divine,
+    meta:{
+      title:"占卜记录"
+    }
+  },{
+    //个人中心-邀请好友
+    path: '/invit',
+    name: 'invit',
+    component: invit,
+    meta:{
+      title:"邀请好友"
     }
   },{
     //市场
