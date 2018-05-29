@@ -32,7 +32,7 @@
 	</div>
 	<div class="m-list">
 		<div class="m-imgbox">
-			<img />
+			<img src="../assets/images/card01.png" />
 			<div v-if="tcShow" class="m-tc">
 				<div class="m-txt01">当前产出：26843</div>
 				<div class="m-txt02">领悟需求：26843</div>
@@ -75,7 +75,7 @@ export default {
 		background-size: 100%;
 	}
 	.center-card .m-list .m-imgbox{
-		width: 4rem;height: 5rem;display: inline-block;margin:.8rem auto 0;	position: relative;
+		width: 3.6rem;height: 5.3rem;display: inline-block;margin:.66rem auto 0;	position: relative;
 	}
 	.center-card .m-list .m-imgbox img{
 		width: 100%;
