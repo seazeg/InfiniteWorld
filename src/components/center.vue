@@ -5,13 +5,13 @@
         <img src="../assets/images/img-hd.png" />
       </div>
       <div class="m-name">易老斯</div>
-      <!-- <a class="z-buildbtn" @click="open()">
+      <a class="z-buildbtn" @click="open()">
         <img src="../assets/images/img-build.png" />
-      </a> -->
-      <div class="m-fjsbox">
+      </a>
+      <!-- <div class="m-fjsbox">
       	<i><img src="../assets/images/ico-fjs.png" /></i>
       	<div class="m-txt">180/300</div>
-      </div>
+      </div> -->
     </div>
     <div class="m-btnbox">
       <div class="m-list" @click="signClick">
