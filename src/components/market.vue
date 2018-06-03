@@ -39,6 +39,18 @@
     </div>
     <notice v-show="noticeShow">购买成功，区块确认中，请与10秒后在角色—交易记录中 进行查看。
     </notice>
+
+    <!-- 弹层 -->
+    <div class="marketLayer" v-show="marketLayer">
+      <div class="card">
+        <img src="" alt="">
+      </div>
+      <p>35ENS</p>
+      <div class="box">
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
+        <img src="../assets/images/role_no.png" alt="" class="no" @click="marketLayer=false">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,7 +58,8 @@
   export default {
     data() {
       return {
-        noticeShow: true
+        noticeShow: true,
+        marketLayer: true
       }
     }
   }
@@ -110,23 +123,63 @@
     left: 0.5rem;
   }
 
-  input::-webkit-input-placeholder {
+  .market input::-webkit-input-placeholder {
     color: #6d533c;
   }
 
-  input::-moz-placeholder {
+  .market input::-moz-placeholder {
     /* Mozilla Firefox 19+ */
     color: #6d533c;
   }
 
-  input:-moz-placeholder {
+  .market input:-moz-placeholder {
     /* Mozilla Firefox 4 to 18 */
     color: #6d533c;
   }
 
-  input:-ms-input-placeholder {
+  .market input:-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: #6d533c;
+  }
+
+
+  .marketLayer {
+    width: 80%;
+    margin-left: 10%;
+    height: 350px;
+    background: url("../assets/images/market_layer.png") no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 20%;
+  }
+
+.marketLayer .card{
+width: 80%;
+    height: 4.2rem;
+    background: #fff;
+    margin: 0 auto;
+    margin-top: 1.2rem;
+}
+
+.marketLayer p{
+      font-size: 0.5rem;
+    text-align: center;
+    line-height: 1.35rem;
+    color: #eda41a;
+    text-shadow: 0 1px #3f291b, 1px 0 #3f291b, -1px 0 #3f291b, 0 -1px #3f291b;
+}
+  .marketLayer .box {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+
+  .marketLayer img.ok {
+    width: 30%;
+  }
+
+  .marketLayer img.no {
+    width: 30%;
   }
 
 </style>

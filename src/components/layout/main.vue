@@ -6,7 +6,7 @@
         <router-view></router-view>
       </transition>
     </div>
-    <div class="menu">
+    <div class="menu" v-show="isShow">
       <div @click="go('menu1')">
         <img src="../../assets/images/menu1.jpg" v-if="!menu1">
         <img src="../../assets/images/menu1_hover.jpg" v-else>
@@ -40,7 +40,9 @@
         menu2: this.$route.name == "market",
         menu3: this.$route.name == "role",
         menu4: this.$route.name == "dazao",
-        menu5: this.$route.name == "center" || this.$router.name == "centerMake"
+        menu5: this.$route.name == "center" || this.$route.name == "centerMake",
+        isShow: this.$route.name != "loading" && this.$route.name != "login"
+
       }
     },
     methods: {
@@ -69,12 +71,12 @@
       }
     },
     updated() {
-        this.menu1 = this.$route.name == "zhanbo";
-        this.menu2 = this.$route.name == "market";
-        this.menu3 = this.$route.name == "role";
-        this.menu4 = this.$route.name == "dazao";
-        this.menu5 = this.$route.name == "center" || this.$route.name == "centerMake"
-        
+      this.menu1 = this.$route.name == "zhanbo";
+      this.menu2 = this.$route.name == "market";
+      this.menu3 = this.$route.name == "role";
+      this.menu4 = this.$route.name == "dazao";
+      this.menu5 = this.$route.name == "center" || this.$route.name == "centerMake";
+      this.isShow = this.$route.name != "loading" && this.$route.name != "login";
     }
   }
 

@@ -18,112 +18,112 @@ import loading from '../components/layout/loading.vue'
 Vue.use(Router)
 
 var routes = [{
-  path:"/",
-  name:"home",
-  component:main,
-  children:[{
+  //打造
+  path: '/loading',
+  name: 'loading',
+  component: loading,
+  meta: {
+    title: "加载中"
+  }
+}, {
+  path: "/",
+  name: "home",
+  component: main,
+  children: [{
     //登录
     path: 'login',
     name: 'login',
     component: login,
-    meta:{
-      title:"登录"
+    meta: {
+      title: "登录"
     }
   }, {
     //个人中心
     path: '/center',
     name: 'center',
     component: center,
-    meta:{
-      title:"个人中心"
+    meta: {
+      title: "个人中心"
     }
-  },{
+  }, {
     //个人中心-打造记录
     path: '/make',
     name: 'make',
     component: make,
-    meta:{
-      title:"打造记录"
+    meta: {
+      title: "打造记录"
     }
-  },{
+  }, {
     //个人中心-卡牌图鉴
     path: '/card',
     name: 'card',
     component: card,
-    meta:{
-      title:"卡牌图鉴"
+    meta: {
+      title: "卡牌图鉴"
     }
-  },{
+  }, {
     //个人中心-排行榜
     path: '/chart',
     name: 'chart',
     component: chart,
-    meta:{
-      title:"排行榜"
+    meta: {
+      title: "排行榜"
     }
-  },{
+  }, {
     //个人中心-钱包
     path: '/wall',
     name: 'wall',
     component: wall,
-    meta:{
-      title:"钱包"
+    meta: {
+      title: "钱包"
     }
-  },{
+  }, {
     //个人中心-占卜记录
     path: '/divine',
     name: 'divine',
     component: divine,
-    meta:{
-      title:"占卜记录"
+    meta: {
+      title: "占卜记录"
     }
-  },{
+  }, {
     //个人中心-邀请好友
     path: '/invit',
     name: 'invit',
     component: invit,
-    meta:{
-      title:"邀请好友"
+    meta: {
+      title: "邀请好友"
     }
-  },{
+  }, {
     //市场
     path: '/market',
     name: 'market',
     component: market,
-    meta:{
-      title:"市场"
+    meta: {
+      title: "市场"
     }
   }, {
     //角色
     path: '/role',
     name: 'role',
     component: role,
-    meta:{
-      title:"角色"
+    meta: {
+      title: "角色"
     }
   }, {
     //占卜
     path: '/zhanbo',
     name: 'zhanbo',
     component: zhanbo,
-    meta:{
-      title:"占卜"
+    meta: {
+      title: "占卜"
     }
   }, {
     //打造
     path: '/dazao',
     name: 'dazao',
     component: dazao,
-    meta:{
-      title:"打造"
-    }
-  }, {
-    //打造
-    path: '/loading',
-    name: 'loading',
-    component: loading,
-    meta:{
-      title:"加载中"
+    meta: {
+      title: "打造"
     }
   }, {
     //打造
