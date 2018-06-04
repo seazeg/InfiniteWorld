@@ -1,5 +1,6 @@
 <template>
   <div class="role">
+    <div class="m-jsbox"><img src="../assets/images/js.gif" alt=""></div>
     <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow">
     <transition name="component-fade" mode="out-in">
       <div class="layer" v-show="layerShow">
@@ -216,6 +217,10 @@
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolesj=false,roleENS=''">
       </div>
     </div>
+    <audio>
+      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 
@@ -274,6 +279,20 @@
     width: 100%;
     position: absolute;
     bottom: 10%;
+    left: 0;
+  }
+
+  .role .m-jsbox{
+    width: 10rem;
+    height: 16rem;
+    margin: 0 auto;
+  }
+  .role .m-jsbox img{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+
   }
 
   .role .layer {

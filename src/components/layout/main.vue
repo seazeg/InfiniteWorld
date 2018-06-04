@@ -121,11 +121,14 @@
   }
 
   .iw_main .content {
-    /*padding: 10px;*/
     height: 100%;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
   }
 
 </style>

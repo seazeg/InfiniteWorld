@@ -25,6 +25,26 @@
 						<img  src="../assets/images/card01.png"/>
 					</div>
 				</div>
+        <div class="m-list">
+					<div class="m-imgbox">
+						<img  src="../assets/images/card01.png"/>
+					</div>
+				</div>
+        <div class="m-list">
+					<div class="m-imgbox">
+						<img  src="../assets/images/card01.png"/>
+					</div>
+				</div>
+        <div class="m-list">
+					<div class="m-imgbox">
+						<img  src="../assets/images/card01.png"/>
+					</div>
+				</div>
+        <div class="m-list">
+					<div class="m-imgbox">
+						<img  src="../assets/images/card01.png"/>
+					</div>
+				</div>
 	    	</div>
 	    </div>
 <!-- <div v-if="sign" class="m-dztypebox">
@@ -153,7 +173,7 @@
     text-align: center;
   }
   .m-dzcardtcbox .m-listbox{
-  	width: 7.3rem;height: 6rem; display: inline-block;margin: .8rem auto 0;
+  	width: 7.3rem;height: 9.6rem; display: inline-block;margin: .8rem auto 0;overflow-x: hidden;overflow-y: auto;
   }
   	.m-dzcardtcbox .m-listbox .m-list{
 		width: 3.35rem;
