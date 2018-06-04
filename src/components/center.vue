@@ -17,7 +17,7 @@
       <div class="m-list" @click="signClick">
         <span>签到</span>
       </div>
-      <div class="m-list" @click="go('chart')">
+      <div class="m-list" @click="go('divine')">
         <span>占卜记录</span>
       </div>
       <div class="m-list" @click="go('make')">

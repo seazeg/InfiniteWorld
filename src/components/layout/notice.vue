@@ -20,8 +20,9 @@
     padding: 20px 0.6rem;
     border-radius: 10px;
     position: absolute;
-    bottom: 10%;
+    bottom: 15%;
     margin-left: 2.5%;
+    z-index: 9999
   }
 
 </style>

@@ -126,9 +126,13 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: absolute;
+<<<<<<< HEAD
     top: 0;
     left: 0;
     z-index: 4;
+=======
+    z-index: 4
+>>>>>>> cb5545d5aa511910b72cd0af0b90b0b265c63525
   }
 
 </style>
