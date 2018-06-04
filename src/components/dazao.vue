@@ -27,8 +27,10 @@
 				</div>
 	    	</div>
 	    </div>
-    	<div v-if="sign" class="m-dztypebox">打造完成，区块确认中，请与10秒后在个人中心—打造记录中进行查看。
-    	</div>
+<!-- <div v-if="sign" class="m-dztypebox">
+    	</div> -->
+       <notice v-show="sign">打造完成，区块确认中，请与10秒后在个人中心—打造记录中进行查看。
+    </notice>
     </div>
 </template>
 

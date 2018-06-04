@@ -10,7 +10,7 @@
     </a>
 
 
-    <div v-if="sign" class="m-dztypebox">占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。</div>
+    <!-- <div v-if="sign" class="m-dztypebox">占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。</div> -->
     <div v-show="tcShow" class="m-tcbg"></div>
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txtbox">
@@ -26,6 +26,8 @@
         </a>
       </div>
     </div>
+    <notice v-show="sign">占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。
+    </notice>
   </div>
 </template>
 
