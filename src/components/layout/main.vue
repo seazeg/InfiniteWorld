@@ -1,6 +1,7 @@
 <template>
   <div class="iw_main">
     <div class="top">{{$route.meta.title}}</div>
+    <canvas id="canv" width="414" height="594" style="position: absolute;z-index: 0;"></canvas>
     <div class="content">
       <transition name="component-fade" mode="out-in">
         <router-view></router-view>
@@ -102,6 +103,7 @@
     bottom: 0;
     background: url("../../assets/images/menubg.jpg") repeat-x;
     background-size: 100% 100%;
+    z-index: 5;
   }
 
   .iw_main .menu img {
