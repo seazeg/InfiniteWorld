@@ -126,6 +126,8 @@
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    position: absolute;
+    z-index: 4
   }
 
 </style>

@@ -273,7 +273,7 @@
   .role>img {
     width: 100%;
     position: absolute;
-    bottom: 10%;
+    bottom: 15%;
   }
 
   .role .layer {
