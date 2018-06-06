@@ -1,45 +1,36 @@
 <template>
  <div class="center-card">
-	<div class="m-list">
+	<div class="m-list" @click="open()">
 		<div class="m-imgbox">
 			<img />
-			<div v-if="tcShow" class="m-tc">
-				<div class="m-txt01">当前产出：26843</div>
-				<div class="m-txt02">领悟需求：26843</div>
-				<div class="m-txt03">上次产出时间：<br />2018/5/3 14:11</div>
-			</div>
 		</div>
 	</div>
-	<div class="m-list">
+	<div class="m-list" @click="open()">
 		<div class="m-imgbox">
 			<img />
-			<div v-if="tcShow" class="m-tc">
-				<div class="m-txt01">当前产出：26843</div>
-				<div class="m-txt02">领悟需求：26843</div>
-				<div class="m-txt03">上次产出时间：<br />2018/5/3 14:11</div>
-			</div>
 		</div>
 	</div>
-	<div class="m-list">
+	<div class="m-list" @click="open()">
 		<div class="m-imgbox">
 			<img />
-			<div v-if="tcShow" class="m-tc">
-				<div class="m-txt01">当前产出：26843</div>
-				<div class="m-txt02">领悟需求：26843</div>
-				<div class="m-txt03">上次产出时间：<br />2018/5/3 14:11</div>
-			</div>
 		</div>
 	</div>
-	<div class="m-list">
+	<div class="m-list" @click="open()">
 		<div class="m-imgbox">
 			<img src="../assets/images/card01.png" />
-			<div v-if="tcShow" class="m-tc">
-				<div class="m-txt01">当前产出：26843</div>
-				<div class="m-txt02">领悟需求：26843</div>
-				<div class="m-txt03">上次产出时间：<br />2018/5/3 14:11</div>
-			</div>
 		</div>
 	</div>
+	<div v-show="tcShow" class="m-tcbg"></div>
+    <div v-if="tcShow" class="m-tc">
+		<div class="m-xqcard"><img src="../assets/images/card01.png" /></div>
+		<div class="m-cardxqbtn"><img src="../assets/images/ico-xqbtn.png" /></div>
+		<div>
+			<div class="m-txt01">当前产出：26843</div>
+			<div class="m-txt02">领悟需求：26843</div>
+			<div class="m-txt03">上次产出时间：<br />2018/5/3 14:11</div>
+		</div>
+	</div>
+
  </div>
 </template>
 
@@ -93,6 +84,35 @@ export default {
 	}
 	.center-card .m-list .m-imgbox .m-tc .m-txt03{
 		width: 100%; display: inline-block; padding:.3rem 0;background: rgba(71,44,14,.66); text-align: center;color: #fff;font-size: .36rem;line-height: .5rem;vertical-align: top; margin-top: .3rem;
+	}
+	.center-card .m-tc {
+    width: 9.35rem;
+    height: 12.23rem;
+    display: inline-block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin: -6.12rem 0 0 -4.67rem;
+    background: url("../assets/images/bg-cardxq.png") no-repeat;
+    background-size: 100% 100%;
+    z-index: 2000;
+    text-align: center;
+  }
+  .center-card .m-tc .m-xqcard{
+	  width: 6.3rem;height: 9.3rem;display: inline-block;margin: 1rem auto 0;
+  }
+  .center-card .m-tc .m-xqcard img{
+		width: 100%;
+    	height: 100%;
+    	vertical-align: top;
+	}
+  .center-card .m-tc .m-cardxqbtn{
+	  width: 3.1rem; height: 1.15rem;display: inline-block;margin: 0 auto;
+  }
+  .center-card .m-tc .m-cardxqbtn img{
+		width: 100%;
+    	height: 100%;
+    	vertical-align: top;
 	}
 
 </style>
