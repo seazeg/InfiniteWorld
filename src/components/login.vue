@@ -26,7 +26,18 @@
     },
     methods: {
       submit() {
-
+         console.log(this.$AschJS.crypto.getKeys(this.password));
+         console.log(this.$AschJS.crypto.getAddress(this.$AschJS.crypto.getKeys(this.password).publicKey));
+        //  _this.$axios({
+        //   method: 'get',
+        //   url: _this.servUrl + '/api/getPhotos',
+        //   params
+        // }).then((res) => {
+        //   _this.data = JSON.parse(res.data.data.src);
+        //   console.log(_this.data);
+        // }, (error) => {
+        //   console.log(error);
+        // });
       }
     }
   }
