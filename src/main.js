@@ -12,6 +12,9 @@ import AschJS from 'asch-js'
 Vue.prototype.$axios = axios
 Vue.prototype.$AschJS = AschJS
 
+Vue.prototype.http184 = "http://47.106.205.184";
+Vue.prototype.http189 = "http://119.23.57.189:4096";
+
 Vue.component(main.name, main)
 Vue.component(notice.name, notice)
 

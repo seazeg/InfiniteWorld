@@ -156,7 +156,29 @@
           this.input3 = obj;
           this.selShow3 = false;
         }
+      },
+      init() {
+        var _this = this;
+        var params = {
+          pid: 0,
+          powerid: 0,
+          itemtype: "",
+          saleuptime: "2040/12/12"
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/marketlist',
+          params: params
+        }).then((res) => {
+          console.log("市场列表", res.data);
+        }, (error) => {
+          console.log(error);
+        });
+
       }
+    },
+    mounted() {
+      this.init();
     }
   }
 
@@ -201,7 +223,7 @@
 
 
   .market .search p.input span {
-     margin-left: 12px;
+    margin-left: 12px;
     width: 2.4rem;
     display: inline-block;
     overflow: hidden;

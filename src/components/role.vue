@@ -263,7 +263,102 @@
           this.left.role3 = false
           this.left.role4 = true
         }
-      }
+      },
+      roleInit() {
+        var _this = this;
+        var params = {
+          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/rolepack',
+          params: params
+        }).then((res) => {
+          console.log("角色装备", res.data);
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      bagInit() {
+        var _this = this;
+        var params = {
+          itemtype: "",
+          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          packid: 999999999
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/mypacklist',
+          params: params
+        }).then((res) => {
+          console.log("背包列表", res.data);
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      buyListInit() {
+        var _this = this;
+        var params = {
+          itemtype: "",
+          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          saletime: "2040/12/12"
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/buylist',
+          params: params
+        }).then((res) => {
+          console.log("交易记录", res.data);
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      saleListInit() {
+        var _this = this;
+        var params = {
+          itemtype: "",
+          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          saletime: "2040/12/12"
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/salelist',
+          params: params
+        }).then((res) => {
+          console.log("卖出记录", res.data);
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      myGroundingInit() {
+        var _this = this;
+        var params = {
+          itemtype: "",
+          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          saleuptime: "2040/12/12"
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/mymarketlist',
+          params: params
+        }).then((res) => {
+          console.log("卖出记录", res.data);
+        }, (error) => {
+          console.log(error);
+        });
+      },
+    },
+    mounted() {
+      //获取角色穿戴
+      this.roleInit();
+      //背包内容初始化
+      this.bagInit();
+      //交易列表初始化
+      this.buyListInit();
+      //卖出记录
+      this.saleListInit();
+      //我的上架
+      this.myGroundingInit();
     }
   }
 
