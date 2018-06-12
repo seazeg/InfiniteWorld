@@ -31,9 +31,10 @@
         var privateKey = this.$AschJS.crypto.getKeys(this.password).privateKey;
         var address = this.$AschJS.crypto.getAddress(publicKey);
 
-        $.cookie("publicKey", publicKey);
-        $.cookie("privateKey", privateKey);
-        $.cookie("address", address); 
+        sessionStorage.setItem("publicKey",publicKey)
+        sessionStorage.setItem("privateKey",privateKey)
+        sessionStorage.setItem("address",address)
+
 
 
         _this.$axios({
