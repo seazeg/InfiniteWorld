@@ -71,7 +71,30 @@ export default {
     methods: {
       open() {
         this.tcShow = !this.tcShow
+	  },
+	  //获取排行榜
+	  chartInit() {
+        var _this = this;
+        var params = {
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/ylrandlist',
+          params: params
+        }).then((res) => {
+          console.log("排行榜", res.data);
+        }, (error) => {
+          console.log(error);
+        });
       },
+    },
+    mounted() {
+	  //获取排行榜
+	  let self = this;
+	  self.chartInit();
+	  setInterval( function(){
+		self.chartInit();
+	  },5000)
     }
 
 }
@@ -147,13 +170,13 @@ export default {
 		width: auto;max-width: 2rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .4rem;color: #472c0e;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-zb{
-		width: 3.5rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
+		width: 2.8rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-zb span{
 		color: #fff;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-lw{
-		width: 3.4rem;  display: inline-block;float: left;margin-top: .56rem;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
+		width: 2.8rem;  display: inline-block;float: left;margin-top: .56rem;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-lw span{
 		color: #fff;

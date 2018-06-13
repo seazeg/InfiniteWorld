@@ -1,6 +1,9 @@
 <template>
   <div class="iw_main">
-    <div class="top">{{$route.meta.title}}</div>
+    <div class="top">
+      <div class="back" @click="back"><</div>
+      {{$route.meta.title}}
+    </div>
     <canvas id="canv" width="414" height="594" style="position: absolute;z-index: 0;"></canvas>
     <div class="content">
       <transition name="component-fade" mode="out-in">
@@ -69,6 +72,9 @@
             path: "/center"
           })
         }
+      },
+      back(){
+        window.history.go(-1);
       }
     },
     updated() {
@@ -126,13 +132,12 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: absolute;
-<<<<<<< HEAD
-    top: 0;
-    left: 0;
-    z-index: 4;
-=======
     z-index: 4
->>>>>>> cb5545d5aa511910b72cd0af0b90b0b265c63525
+  }
+  .iw_main .top .back{
+    display: inline-block;
+    float: left;
+    margin-left: 10px;
   }
 
 </style>

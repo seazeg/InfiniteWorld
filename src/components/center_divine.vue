@@ -47,7 +47,35 @@ export default {
     methods: {
       open() {
         this.tcShow = !this.tcShow
+	  },
+	  //获取占卜记录
+	  divineInit() {
+        var _this = this;
+        var params = {
+			address : "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+			boxid : "999999999"
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/boxlist',
+          params: params
+        }).then((res) => {
+          console.log("占卜记录", res.data);
+        }, (error) => {
+          console.log(error);
+        });
       },
+    },
+    mounted() {
+	  //获取排行榜
+	  let self = this;
+	  self.divineInit();
+	  setInterval( function(){
+		self.divineInit();
+	  },5000)
+      
+
+
     }
 
 }
