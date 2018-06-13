@@ -14,6 +14,8 @@ fieldset, img { border:0; }
 button, input, select, textarea { font-size:100%; }
 table { border-collapse:collapse; border-spacing:0; }
 
+html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color:transparent;}
+
 
 .component-fade-enter-active,
 .component-fade-leave-active {

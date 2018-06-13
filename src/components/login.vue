@@ -31,11 +31,15 @@
         var privateKey = this.$AschJS.crypto.getKeys(this.password).privateKey;
         var address = this.$AschJS.crypto.getAddress(publicKey);
 
-        $.cookie("publicKey", publicKey);
-        $.cookie("privateKey", privateKey);
-        $.cookie("address", address); 
-
-
+        sessionStorage.setItem("publicKey",publicKey)
+        sessionStorage.setItem("privateKey",privateKey)
+        sessionStorage.setItem("address",address)
+        sessionStorage.setItem("secret",this.password)
+        sessionStorage.setItem("secondSecret","erjimima2017")
+        sessionStorage.setItem("options",JSON.stringify(this.$AschJS.signature.createSignature(this.password, "erjimima2017")))
+        
+      console.log(this.$AschJS.signature.createSignature(this.password, "erjimima2017"));
+        
         _this.$axios({
           method: 'get',
           url: _this.http189 + '/api/dapps/' + publicKey + '/accounts/' + address

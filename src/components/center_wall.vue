@@ -1,29 +1,35 @@
 <template>
-<div>
-	<div class="m-walimg"><img src="../assets/images/img-wall-top.png" /></div>
-	<div class="center-wall">
-		<div class="m-topimg"><img src="../assets/images/bg-walllist-top.png" /></div>
-		<div class="m-listbox">
-			<div class="m-list">
-				<div class="m-titlebox">
-					<div class="m-txt">余额：5652</div>
-					<a class="m-link" @click="openIn()">充入钱包</a>
-					<a class="m-link"@click="openOut()">提到钱包</a>
-				</div>
-				<div class="m-text">ENS</div>
-			</div>
-<div class="m-list">
-				<div class="m-titlebox">
-					<div class="m-txt">余额：5652</div>
-					<a class="m-link" @click="openIn()">充入钱包</a>
-					<a class="m-link" @click="openOut()">提到钱包</a>
-				</div>
-				<div class="m-text">ENS</div>
-			</div>
-		</div>
-		<div class="m-bottomimg"><img src="../assets/images/bg-chartlist-bot.png" /></div>
-	</div>
-	<div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
+  <div>
+    <div class="m-walimg">
+      <img src="../assets/images/img-wall-top.png" />
+    </div>
+    <div class="center-wall">
+      <div class="m-topimg">
+        <img src="../assets/images/bg-walllist-top.png" />
+      </div>
+      <div class="m-listbox">
+        <div class="m-list">
+          <div class="m-titlebox">
+            <div class="m-txt">余额：5652</div>
+            <a class="m-link" @click="openIn()">充入钱包</a>
+            <a class="m-link" @click="openOut()">提到钱包</a>
+          </div>
+          <div class="m-text">ENS</div>
+        </div>
+        <div class="m-list">
+          <div class="m-titlebox">
+            <div class="m-txt">余额：5652</div>
+            <a class="m-link" @click="openIn()">充入钱包</a>
+            <a class="m-link" @click="openOut()">提到钱包</a>
+          </div>
+          <div class="m-text">ENS</div>
+        </div>
+      </div>
+      <div class="m-bottomimg">
+        <img src="../assets/images/bg-chartlist-bot.png" />
+      </div>
+    </div>
+    <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
       <div class="m-txt">将游戏内资产提到钱包，将消耗0.1ENS。</div>
       <input type="text" class="m-invitcode" maxlength="4" />
@@ -38,9 +44,9 @@
     </div>
     <div v-show="tcoutShow" class="m-walloutcontbox">
       <div class="m-txt">将游戏内资产提到钱包，将消耗0.1ENS。</div>
-      <input type="text" class="m-invitcode" maxlength="4" />
+      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSOutNum" />
       <div class="m-wallinbtnbox">
-        <a href="javascript:;" class="m-btn" @click="openOut()">
+        <a href="javascript:;" class="m-btn" @click="ENSOut()">
           <img src="../assets/images/img-txbtn01.png" />
         </a>
         <a href="javascript:;" class="m-btn" @click="openOut()">
@@ -48,16 +54,17 @@
         </a>
       </div>
     </div>
-</div>
+  </div>
 
 </template>
 
 <script>
-export default {
-	    data() {
+  export default {
+    data() {
       return {
         tcinShow: false,
         tcoutShow: false,
+        ENSOutNum: ""
       }
     },
     methods: {
@@ -67,67 +74,127 @@ export default {
       openOut() {
         this.tcoutShow = !this.tcoutShow
       },
+      ENSOut() {
+        var url = this.http184 + "/app/EnsContract";
+        var type = 2;
+        var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
+        this.$utils.contract(type, args, url)
+      }
     }
 
-}
+  }
 </script>
 
 <style>
-	.m-walimg{
-		width: 100%; height: 2.3rem; display: inline-block;
-	}
-	.m-walimg img{
-		width: 100%;
-		height: 100%;
-		vertical-align: top;
-	}
-	.center-wall {
-		width: 10.1rem;
-		margin: 0 auto 2.4rem;
-	}
-	.center-wall .m-topimg{
-		width: 100%;display: inline-block;height: .75rem;float: left;
-	}
-	.center-wall .m-bottomimg{
-		width: 100%;display: inline-block;height: .78rem;
-	}
-	.center-wall .m-topimg img, .center-wall .m-bottomimg img{
-		width: 100%;
-		height: 100%;
-		vertical-align: top;
-	}
-	.center-wall .m-listbox{
-		width: 100%;display: inline-block;background: url('../assets/images/bg-walllist.png') repeat-y;background-size: 100%;float: left;
-	}
-	.center-wall .m-listbox .m-list{
-		width: 9.38rem;
-		height: 1.98rem;
-		margin: 0 auto;
-		text-align: center;
-		background: url('../assets/images/bg-wall-list.png');
-		background-size: 100%;
-	}
-	.center-wall .m-listbox .m-list:last-child{
-		width: 9.38rem;
-		height: 1.66rem;
-		margin: 0 auto;
-		text-align: center;
-		background: url('../assets/images/bg-wall-lastlist.png');
-		background-size: 100%;
-	}
-	.center-wall .m-listbox .m-list .m-titlebox{
-		width: auto; height: .91rem;display: inline-block;float: left;margin: .08rem 0 0 .5rem;
-	}
+  .m-walimg {
+    width: 100%;
+    height: 2.3rem;
+    display: inline-block;
+  }
 
-	.center-wall .m-listbox .m-list .m-titlebox .m-txt{
-		width: 4.5rem; height: .91rem;display: inline-block;float: left;padding: 0 .1rem; font-size: .4rem; color: #472c0e;line-height: .91rem;text-align:left;
-	}
-	.center-wall .m-listbox .m-list .m-titlebox .m-link{
-		width: auto; height: .91rem;display: inline-block;float: left;padding: 0 .2rem;margin-left: -.1rem; font-size: .4rem; color: #472c0e;line-height: .91rem;text-decoration: underline;
-	}
-	.center-wall .m-listbox .m-list .m-text{
-		width: 100%;display: inline-block;margin-top: .05rem;padding: 0 .6rem;text-align: left;height: .4rem; font-size: .42rem; color: #472c0e;vertical-align: top;box-sizing: border-box; font-weight: bold;
-	}
+  .m-walimg img {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+  }
+
+  .center-wall {
+    width: 10.1rem;
+    margin: 0 auto 2.4rem;
+  }
+
+  .center-wall .m-topimg {
+    width: 100%;
+    display: inline-block;
+    height: .75rem;
+    float: left;
+  }
+
+  .center-wall .m-bottomimg {
+    width: 100%;
+    display: inline-block;
+    height: .78rem;
+  }
+
+  .center-wall .m-topimg img,
+  .center-wall .m-bottomimg img {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+  }
+
+  .center-wall .m-listbox {
+    width: 100%;
+    display: inline-block;
+    background: url('../assets/images/bg-walllist.png') repeat-y;
+    background-size: 100%;
+    float: left;
+  }
+
+  .center-wall .m-listbox .m-list {
+    width: 9.38rem;
+    height: 1.98rem;
+    margin: 0 auto;
+    text-align: center;
+    background: url('../assets/images/bg-wall-list.png');
+    background-size: 100%;
+  }
+
+  .center-wall .m-listbox .m-list:last-child {
+    width: 9.38rem;
+    height: 1.66rem;
+    margin: 0 auto;
+    text-align: center;
+    background: url('../assets/images/bg-wall-lastlist.png');
+    background-size: 100%;
+  }
+
+  .center-wall .m-listbox .m-list .m-titlebox {
+    width: auto;
+    height: .91rem;
+    display: inline-block;
+    float: left;
+    margin: .08rem 0 0 .5rem;
+  }
+
+  .center-wall .m-listbox .m-list .m-titlebox .m-txt {
+    width: 4.5rem;
+    height: .91rem;
+    display: inline-block;
+    float: left;
+    padding: 0 .1rem;
+    font-size: .4rem;
+    color: #472c0e;
+    line-height: .91rem;
+    text-align: left;
+  }
+
+  .center-wall .m-listbox .m-list .m-titlebox .m-link {
+    width: auto;
+    height: .91rem;
+    display: inline-block;
+    float: left;
+    padding: 0 .2rem;
+    margin-left: -.1rem;
+    font-size: .4rem;
+    color: #472c0e;
+    line-height: .91rem;
+    text-decoration: underline;
+  }
+
+  .center-wall .m-listbox .m-list .m-text {
+    width: 100%;
+    display: inline-block;
+    margin-top: .05rem;
+    padding: 0 .6rem;
+    text-align: left;
+    height: .4rem;
+    font-size: .42rem;
+    color: #472c0e;
+    vertical-align: top;
+    box-sizing: border-box;
+    font-weight: bold;
+  }
 
   .m-wallincontbox {
     width: 10.26rem;
@@ -244,5 +311,4 @@ export default {
     height: 100%;
     vertical-align: top;
   }
-
 </style>
