@@ -16,6 +16,7 @@ Vue.prototype.$utils = utils
 
 Vue.prototype.http184 = "http://47.106.205.184";
 Vue.prototype.http189 = "http://119.23.57.189:4096";
+Vue.prototype.dappId = "9ff587bcf3d054946f55ed1f3c0618cd6d2100a162cf6d4993c284e28b7c35fc"
 
 Vue.component(main.name, main)
 Vue.component(notice.name, notice)

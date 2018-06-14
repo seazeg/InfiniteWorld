@@ -42,7 +42,7 @@
         
         _this.$axios({
           method: 'get',
-          url: _this.http189 + '/api/dapps/' + publicKey + '/accounts/' + address
+          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + address
         }).then((res) => {
           console.log(res);
         }, (error) => {

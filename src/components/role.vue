@@ -367,7 +367,7 @@
       roleInit() {
         var _this = this;
         var params = {
-          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          address: sessionStorage.getItem("address")
         }
         _this.$axios({
           method: 'get',
@@ -383,7 +383,7 @@
         var _this = this;
         var params = {
           itemtype: "",
-          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          address: sessionStorage.getItem("address"),
           packid: 999999999
         }
         _this.$axios({
@@ -400,7 +400,7 @@
         var _this = this;
         var params = {
           itemtype: "",
-          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          address: sessionStorage.getItem("address"),
           saletime: "2040/12/12"
         }
         _this.$axios({
@@ -417,7 +417,7 @@
         var _this = this;
         var params = {
           itemtype: "",
-          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          address: sessionStorage.getItem("address"),
           saletime: "2040/12/12"
         }
         _this.$axios({
@@ -434,7 +434,7 @@
         var _this = this;
         var params = {
           itemtype: "",
-          address: "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+          address: sessionStorage.getItem("address"),
           saleuptime: "2040/12/12"
         }
         _this.$axios({
