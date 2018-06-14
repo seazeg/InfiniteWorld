@@ -79,7 +79,11 @@
         var type = 2;
         var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url)
-      }
+      },
+    },
+    mounted() {
+	  let self = this;
+    //self.ENSOut();
     }
 
   }
