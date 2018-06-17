@@ -5,7 +5,12 @@
 		 	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
 		 	<div class="m-listbox">
 		 		<div class="m-chartcontbox">
-		 			<div class="m-li">
+		 			<div class="m-li" v-for="item in chartData">
+		 				<div class="m-name">{{item.nickname}}</div>
+		 				<div class="m-zb">占卜次数：<span>123</span></div>
+		 				<div class="m-lw">领悟：<span>123</span></div>
+		 			</div>
+		 			<!-- <div class="m-li">
 		 				<div class="m-name">名称</div>
 		 				<div class="m-zb">占卜次数：<span>123</span></div>
 		 				<div class="m-lw">领悟：<span>123</span></div>
@@ -29,12 +34,7 @@
 		 				<div class="m-name">名称</div>
 		 				<div class="m-zb">占卜次数：<span>123</span></div>
 		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div>
-		 			<div class="m-li">
-		 				<div class="m-name">名称</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div>
+		 			</div> -->
 		 		</div>
 		 		<div class="m-list">
 		 			<i class="ico-chart"><img src="../assets/images/img-ph01.png" /></i>
@@ -66,6 +66,7 @@ export default {
 	    data() {
       return {
         tcShow: false,
+		chartData:'',
       }
     },
     methods: {
@@ -83,6 +84,7 @@ export default {
           params: params
         }).then((res) => {
           console.log("排行榜", res.data);
+		  _this.chartData = res.data.data;
         }, (error) => {
           console.log(error);
         });
