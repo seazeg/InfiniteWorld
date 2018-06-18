@@ -27,24 +27,16 @@
         <div class="right">
           <div v-if="left.role1">
             <div class="roleInfo">
-              <span class="field">领悟：11</span>
-              <span class="field">精神：120</span>
-              <span class="field">冷却：12%</span>
-              <span class="field">跃升：11%</span>
+              <span class="field">领悟：{{role.roleyl}}</span>
+              <span class="field">精神：{{role.rolejs}}</span>
+              <span class="field">冷却：{{role.rolecdcrit}}%</span>
+              <span class="field">跃升：{{role.roleylcrit}}%</span>
             </div>
             <div class="roleinfo2">
-              <span>
-                <p>角宫</p>
+              <span v-for="item in rolepack">
+                <p>{{item.itemname}}</p>
               </span>
-              <span>
-                <p>入相</p>
-              </span>
-              <span>
-                <p>映点</p>
-              </span>
-              <span>
-                <p>善星</p>
-              </span>
+             
             </div>
           </div>
           <div v-if="left.role2">
@@ -83,86 +75,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                    <td>
-                      <a>取消</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
+                  <tr v-for="item in myGrounding">
+                    <td>{{item.itemname}} {{item.price}}ENS</td>
+                    <td>{{item.saleuptime}}</td>
                     <td>
                       <a>取消</a>
                     </td>
@@ -182,17 +97,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
-                  </tr>
-                  <tr>
-                    <td>封印之约 30ENS</td>
-                    <td>5/16 10:32</td>
+                  <tr v-for="item in saleList">
+                    <td>{{item.itemname}} {{item.price}}ENS</td>
+                    <td>{{item.saletime}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -334,7 +241,13 @@
         noticeShow: false,
         rolefj: false,
         rolesj: false,
-        roleENS: ""
+        roleENS: "",
+        myGrounding: [],
+        saleList: [],
+        buyList: [],
+        bag: [],
+        role: [],
+        rolepack:[]
       }
     },
     methods: {
@@ -371,10 +284,25 @@
         }
         _this.$axios({
           method: 'get',
+          url: _this.http184 + '/wb/role',
+          params: params
+        }).then((res) => {
+          _this.role = res.data.data;
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      rolepackInit() {
+        var _this = this;
+        var params = {
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'get',
           url: _this.http184 + '/wb/rolepack',
           params: params
         }).then((res) => {
-          console.log("角色装备", res.data);
+          _this.rolepack = res.data.data;
         }, (error) => {
           console.log(error);
         });
@@ -391,7 +319,7 @@
           url: _this.http184 + '/wb/mypacklist',
           params: params
         }).then((res) => {
-          console.log("背包列表", res.data);
+          _this.bag = res.data.data;
         }, (error) => {
           console.log(error);
         });
@@ -408,7 +336,7 @@
           url: _this.http184 + '/wb/buylist',
           params: params
         }).then((res) => {
-          console.log("交易记录", res.data);
+          _this.buyList = res.data.data;
         }, (error) => {
           console.log(error);
         });
@@ -425,7 +353,7 @@
           url: _this.http184 + '/wb/salelist',
           params: params
         }).then((res) => {
-          console.log("卖出记录", res.data);
+          _this.saleList = res.data.data;
         }, (error) => {
           console.log(error);
         });
@@ -442,7 +370,7 @@
           url: _this.http184 + '/wb/mymarketlist',
           params: params
         }).then((res) => {
-          console.log("卖出记录", res.data);
+          _this.myGrounding = res.data.data;
         }, (error) => {
           console.log(error);
         });
@@ -463,8 +391,10 @@
       }
     },
     mounted() {
-      //获取角色穿戴
+      //角色
       this.roleInit();
+      //获取角色穿戴
+      this.rolepackInit();
       //背包内容初始化
       this.bagInit();
       //交易列表初始化
@@ -473,7 +403,7 @@
       this.saleListInit();
       //我的上架
       this.myGroundingInit();
-
+      
 
     }
   }

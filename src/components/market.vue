@@ -29,35 +29,11 @@
       </div>
     </div>
     <div class="list">
-      <div class="box">
+      <div class="box" v-for="item in data">
         <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
-        </div>
-        <img src="../assets/images/market_buy.png" alt="">
-      </div>
-      <div class="box">
-        <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
-        </div>
-        <img src="../assets/images/market_buy.png" alt="">
-      </div>
-      <div class="box">
-        <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
-        </div>
-        <img src="../assets/images/market_buy.png" alt="">
-      </div>
-      <div class="box">
-        <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
+          <span>{{item.itemname}}</span>
+          <span>炼力值:{{item.itemyl}}</span>
+          <span>{{item.price}}ENS</span>
         </div>
         <img src="../assets/images/market_buy.png" alt="">
       </div>
@@ -91,6 +67,7 @@
         input1: "全部",
         input2: "全部",
         input3: "全部",
+        data:[],
         list1: [{
           name: "一阶"
         }, {
@@ -170,7 +147,7 @@
           url: _this.http184 + '/wb/marketlist',
           params: params
         }).then((res) => {
-          console.log("市场列表", res.data);
+          _this.data = res.data.data;
         }, (error) => {
           console.log(error);
         });
