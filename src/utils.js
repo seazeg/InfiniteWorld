@@ -1,29 +1,30 @@
 import AschJS from 'asch-js'
 import axios from 'axios'
+import Vue from 'vue'
 
 const utils = {
   contract: function (type, args, url, that, callback) {
     let secret = window.sessionStorage.getItem('secret');
-    let opt = JSON.parse(sessionStorage.getItem("options"))
+    // let opt = JSON.parse(sessionStorage.getItem("options"))
     //普通合约调用
     let _transaction = AschJS.dapp.createInnerTransaction({
       fee: '0', //fee,
       type: 6666, //type,
-      args: JSON.stringify(args),
-      senderPublicKey: opt.senderPublicKey,
-      timestamp: opt.timestamp,
-      signature: opt.signature
+      args: JSON.stringify(args)
     }, secret);
     //内部转账合约
     if (type == '3' || type == '2') {
       _transaction = AschJS.dapp.createInnerTransaction({
         fee: '10000000', //fee,
         type: type,
-        args: JSON.stringify(args),
-        senderPublicKey: opt.senderPublicKey,
-        timestamp: opt.timestamp,
-        signature: opt.signature
+        args: JSON.stringify(args)
       }, secret);
+    }
+    if (type == '6') {
+      var dappid = Vue.prototype.dappId;
+      var currency = "XAS";
+      var amount = 10 * 100000000;
+      _transaction = AschJS.transfer.createInTransfer(dappid, currency, amount, secret, secondSecret || undefined);
     }
 
 

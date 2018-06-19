@@ -64,8 +64,6 @@
               sessionStorage.setItem("address", _this.$AschJS.crypto.getAddress(
                 _this.$AschJS
                 .crypto.getKeys(_this.password).publicKey))
-              sessionStorage.setItem("options", JSON.stringify(this.$AschJS.signature.createSignature(this.password,
-                "erjimima2017")))
               _this.$router.push({
                 path: "/center"
               })
