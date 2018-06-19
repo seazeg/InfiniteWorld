@@ -10,6 +10,7 @@ import axios from 'axios'
 import AschJS from 'asch-js'
 import utils from './utils'
 
+
 Vue.prototype.$axios = axios
 Vue.prototype.$AschJS = AschJS
 Vue.prototype.$utils = utils

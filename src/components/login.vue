@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="login">
+    <div class="login" v-show="!isShow">
       <input type="password" value="" v-model="password">
       <p>
         <input type="checkbox" name="" id="">
@@ -14,44 +14,66 @@
         <img src="../assets/images/login_logo.png" alt="" style="width:70%">
       </div>
     </div>
+    <div class="login_2" v-show="isShow">
+      <textarea value="" v-model="secret"></textarea>
+    </div>
   </div>
 </template>
 
 <script>
+  import Mnemonic from 'bitcore-mnemonic'
   export default {
     data() {
       return {
-        password: ""
+        password: "",
+        secret: "age captain shy decline mom fox sad upper enrich rack pause elegant",
+        isShow: false
       }
     },
     methods: {
       createSignature() {
         var _this = this;
-        var publicKey = this.$AschJS.crypto.getKeys(this.password).publicKey;
-        var privateKey = this.$AschJS.crypto.getKeys(this.password).privateKey;
-        var address = this.$AschJS.crypto.getAddress(publicKey);
-
-        sessionStorage.setItem("publicKey", publicKey)
-        sessionStorage.setItem("privateKey", privateKey)
-        sessionStorage.setItem("address", address)
-        sessionStorage.setItem("secret", this.password)
-        sessionStorage.setItem("secondSecret", "erjimima2017")
-        sessionStorage.setItem("options", JSON.stringify(this.$AschJS.signature.createSignature(this.password,
-          "erjimima2017")))
-
-      },
-      submit() {
-        var _this = this;
         _this.$axios({
           method: 'get',
-          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + sessionStorage.getItem("address")
+          url: "http://mainnet.asch.io/api/accounts/new"
         }).then((res) => {
-          _this.$router.push({
-            path: "/center"
-          })
+          _this.secret = res.data.secret;
+          _this.isShow = true;
         }, (error) => {
           console.log(error);
         });
+      },
+      submit() {
+
+        if (!Mnemonic.isValid(this.password)) {
+          alert("密码不符合规范")
+        } else {
+          var _this = this;
+          _this.$axios({
+            method: 'get',
+            url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + _this.$AschJS.crypto.getAddress(
+              _this.$AschJS
+              .crypto.getKeys(_this.password).publicKey)
+          }).then((res) => {
+            if (res.success) {
+              sessionStorage.setItem("secret", _this.secret)
+              sessionStorage.setItem("publicKey", _this.$AschJS
+                .crypto.getKeys(_this.password).publicKey)
+              sessionStorage.setItem("privateKey", _this.$AschJS
+                .crypto.getKeys(_this.password).privateKey)
+              sessionStorage.setItem("address", _this.$AschJS.crypto.getAddress(
+                _this.$AschJS
+                .crypto.getKeys(_this.password).publicKey))
+              sessionStorage.setItem("options", JSON.stringify(this.$AschJS.signature.createSignature(this.password,
+                "erjimima2017")))
+              _this.$router.push({
+                path: "/center"
+              })
+            }
+          }, (error) => {
+            console.log(error);
+          });
+        }
 
 
       }
@@ -59,7 +81,7 @@
     mounted() {
       if (sessionStorage.getItem("address")) {
         this.$router.push({
-          path:"/center"
+          path: "/center"
         })
       }
     }
@@ -105,5 +127,29 @@
 
   .login .box img {
     width: 70%;
+  }
+
+  .login_2 {
+    width: 96%;
+    margin-left: 2%;
+    height: 380px;
+    background: url("../assets/images/login_sc.png") no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 20%;
+  }
+
+  .login_2 textarea {
+    width: 70%;
+    height: 2.5rem;
+    margin: 1.8rem 0 0 1.3rem;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    padding: 10px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #111;
   }
 </style>
