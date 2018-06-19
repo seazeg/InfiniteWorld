@@ -43,7 +43,8 @@ var routes = [{
     name: 'center',
     component: center,
     meta: {
-      title: "个人中心"
+      title: "个人中心",
+      requireAuth:true
     }
   }, {
     //个人中心-打造记录
@@ -51,7 +52,8 @@ var routes = [{
     name: 'make',
     component: make,
     meta: {
-      title: "打造记录"
+      title: "打造记录",
+      requireAuth:true
     }
   }, {
     //个人中心-卡牌图鉴
@@ -59,7 +61,8 @@ var routes = [{
     name: 'card',
     component: card,
     meta: {
-      title: "卡牌图鉴"
+      title: "卡牌图鉴",
+      requireAuth:true
     }
   }, {
     //个人中心-排行榜
@@ -67,7 +70,8 @@ var routes = [{
     name: 'chart',
     component: chart,
     meta: {
-      title: "排行榜"
+      title: "排行榜",
+      requireAuth:true
     }
   }, {
     //个人中心-钱包
@@ -75,7 +79,8 @@ var routes = [{
     name: 'wall',
     component: wall,
     meta: {
-      title: "钱包"
+      title: "钱包",
+      requireAuth:true
     }
   }, {
     //个人中心-占卜记录
@@ -83,7 +88,8 @@ var routes = [{
     name: 'divine',
     component: divine,
     meta: {
-      title: "占卜记录"
+      title: "占卜记录",
+      requireAuth:true
     }
   }, {
     //个人中心-邀请好友
@@ -91,7 +97,8 @@ var routes = [{
     name: 'invit',
     component: invit,
     meta: {
-      title: "邀请好友"
+      title: "邀请好友",
+      requireAuth:true
     }
   }, {
     //市场
@@ -99,7 +106,8 @@ var routes = [{
     name: 'market',
     component: market,
     meta: {
-      title: "市场"
+      title: "市场",
+      requireAuth:true
     }
   }, {
     //角色
@@ -107,7 +115,8 @@ var routes = [{
     name: 'role',
     component: role,
     meta: {
-      title: "角色"
+      title: "角色",
+      requireAuth:true
     }
   }, {
     //占卜
@@ -115,7 +124,8 @@ var routes = [{
     name: 'zhanbo',
     component: zhanbo,
     meta: {
-      title: "占卜"
+      title: "占卜",
+      requireAuth:true
     }
   }, {
     //打造
@@ -123,7 +133,8 @@ var routes = [{
     name: 'dazao',
     component: dazao,
     meta: {
-      title: "打造"
+      title: "打造",
+      requireAuth:true
     }
   }, {
     //打造

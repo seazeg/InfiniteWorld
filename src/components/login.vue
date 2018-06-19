@@ -5,7 +5,7 @@
       <p>
         <input type="checkbox" name="" id="">
         <span>记住秘钥</span>
-        <a>创建秘钥</a>
+        <a @click="createSignature">创建秘钥</a>
       </p>
       <div class="box">
         <img src="../assets/images/login_button.png" alt="" class="submit" @click="submit()">
@@ -25,35 +25,45 @@
       }
     },
     methods: {
-      submit() {
+      createSignature() {
         var _this = this;
         var publicKey = this.$AschJS.crypto.getKeys(this.password).publicKey;
         var privateKey = this.$AschJS.crypto.getKeys(this.password).privateKey;
         var address = this.$AschJS.crypto.getAddress(publicKey);
 
-        sessionStorage.setItem("publicKey",publicKey)
-        sessionStorage.setItem("privateKey",privateKey)
-        sessionStorage.setItem("address",address)
-        sessionStorage.setItem("secret",this.password)
-        sessionStorage.setItem("secondSecret","erjimima2017")
-        sessionStorage.setItem("options",JSON.stringify(this.$AschJS.signature.createSignature(this.password, "erjimima2017")))
-        
-      console.log(this.$AschJS.signature.createSignature(this.password, "erjimima2017"));
-        
+        sessionStorage.setItem("publicKey", publicKey)
+        sessionStorage.setItem("privateKey", privateKey)
+        sessionStorage.setItem("address", address)
+        sessionStorage.setItem("secret", this.password)
+        sessionStorage.setItem("secondSecret", "erjimima2017")
+        sessionStorage.setItem("options", JSON.stringify(this.$AschJS.signature.createSignature(this.password,
+          "erjimima2017")))
+
+      },
+      submit() {
+        var _this = this;
         _this.$axios({
           method: 'get',
-          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + address
+          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + sessionStorage.getItem("address")
         }).then((res) => {
-          console.log(res);
+          _this.$router.push({
+            path: "/center"
+          })
         }, (error) => {
           console.log(error);
         });
 
 
       }
+    },
+    mounted() {
+      if (sessionStorage.getItem("address")) {
+        this.$router.push({
+          path:"/center"
+        })
+      }
     }
   }
-
 </script>
 
 <style>
@@ -96,5 +106,4 @@
   .login .box img {
     width: 70%;
   }
-
 </style>
