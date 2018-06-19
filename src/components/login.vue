@@ -55,7 +55,8 @@
               _this.$AschJS
               .crypto.getKeys(_this.password).publicKey)
           }).then((res) => {
-            if (res.success) {
+
+            if (res.data.success) {
               sessionStorage.setItem("secret", _this.secret)
               sessionStorage.setItem("publicKey", _this.$AschJS
                 .crypto.getKeys(_this.password).publicKey)
