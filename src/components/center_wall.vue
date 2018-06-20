@@ -14,7 +14,7 @@
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
-          <div class="m-text">ENS</div>
+          <div class="m-text">XAS</div>
         </div>
         <div class="m-list">
           <div class="m-titlebox">
@@ -22,7 +22,7 @@
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
-          <div class="m-text">ENS</div>
+          <div class="m-text">XAS</div>
         </div>
       </div>
       <div class="m-bottomimg">

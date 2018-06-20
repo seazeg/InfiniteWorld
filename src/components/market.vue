@@ -29,14 +29,38 @@
       </div>
     </div>
     <div class="list">
-      <div class="box" v-for="item in data">
+      <div class="box" v-for="item in marketData">
         <div class="info">
-          <span>{{item.itemname}}</span>
-          <span>炼力值:{{item.itemyl}}</span>
-          <span>{{item.price}}ENS</span>
+          <span>尘位之臣</span>
+          <span>炼力值:30</span>
+          <span>ENS</span>
         </div>
         <img src="../assets/images/market_buy.png" alt="">
       </div>
+      <!-- <div class="box">
+        <div class="info">
+          <span>尘位之臣</span>
+          <span>炼力值:30</span>
+          <span>35ENS</span>
+        </div>
+        <img src="../assets/images/market_buy.png" alt="">
+      </div>
+      <div class="box">
+        <div class="info">
+          <span>尘位之臣</span>
+          <span>炼力值:30</span>
+          <span>35ENS</span>
+        </div>
+        <img src="../assets/images/market_buy.png" alt="">
+      </div>
+      <div class="box">
+        <div class="info">
+          <span>尘位之臣</span>
+          <span>炼力值:30</span>
+          <span>35ENS</span>
+        </div>
+        <img src="../assets/images/market_buy.png" alt="">
+      </div> -->
     </div>
     <notice v-show="noticeShow">购买成功，区块确认中，请与10秒后在角色—交易记录中 进行查看。
     </notice>
@@ -59,6 +83,7 @@
   export default {
     data() {
       return {
+        marketData:'',
         noticeShow: true,
         marketLayer: false,
         selShow1: false,
@@ -67,7 +92,6 @@
         input1: "全部",
         input2: "全部",
         input3: "全部",
-        data:[],
         list1: [{
           name: "一阶"
         }, {
@@ -147,7 +171,8 @@
           url: _this.http184 + '/wb/marketlist',
           params: params
         }).then((res) => {
-          _this.data = res.data.data;
+          console.log("市场列表", res.data);
+          _this.marketData = res.data.data;
         }, (error) => {
           console.log(error);
         });

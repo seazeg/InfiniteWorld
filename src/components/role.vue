@@ -1,7 +1,7 @@
 <template>
   <div class="role">
-    <div class="m-jsbox">
-      <img src="../assets/images/jx.gif" alt="" @click="audio">
+    <div class="m-jsbox" @click="audio">
+      <img src="../assets/images/img-js1.png" alt="" class="m-jsboximg">
     </div>
     <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow">
     <transition name="component-fade" mode="out-in">
@@ -36,7 +36,6 @@
               <span v-for="item in rolepack">
                 <p>{{item.itemname}}</p>
               </span>
-             
             </div>
           </div>
           <div v-if="left.role2">
@@ -231,6 +230,9 @@
       return {
         layerShow: false,
         audioPlay: false,
+        jsImg:'1',
+        oldVideo:'',
+        oldstr:'',
         left: {
           role1: true,
           role2: false,
@@ -276,6 +278,16 @@
           this.left.role3 = false
           this.left.role4 = true
         }
+      },
+      jskt() {
+        let self = this;
+        setInterval( function(){
+          self.jsImg++;
+          $('.m-jsboximg').attr('src','../assets/images/img-js' + self.jsImg + '.png')
+          if(self.jsImg == 23){
+            self.jsImg = 0;
+          }
+        },500)
       },
       roleInit() {
         var _this = this;
@@ -375,19 +387,32 @@
           console.log(error);
         });
       },
+
       audio() {
-        var num = Math.random(); //Math.random()：得到一个0到1之间的随机数
-        num = Math.ceil(num * 24); //num*80的取值范围在0~80之间,使用向上取整就可以得到一个1~80的随机数
-        //num就是你要的随机数,如果你希望个位数前加0,那么这样:
-        var str;
-        if (num < 10) {
-          str = "0" + num
-        } else {
-          str = num.toString();
-        }
-        //alert(str);
-        var myVideo = document.getElementById("aud" + str);
-        myVideo.play();
+          let self = this;
+          var num = Math.random(); //Math.random()：得到一个0到1之间的随机数
+          num = Math.ceil(num * 24); //num*24的取值范围在0~80之间,使用向上取整就可以得到一个1~24的随机数
+          //num就是你要的随机数,如果你希望个位数前加0,那么这样:
+          var str;
+          if (num < 10) {
+            str = "0" + num
+          } else {
+            str = num.toString();
+          }
+          var myVideo = document.getElementById("aud" + str);
+            if(self.oldVideo == ''){
+              myVideo.play();
+              self.oldVideo = document.getElementById("aud" + str);
+            }else {
+              if(self.oldstr != str){
+                self.oldVideo.pause();
+                self.oldVideo.currentTime = 0;
+                myVideo.play();
+                self.oldVideo = document.getElementById("aud" + str);
+              }
+            }
+          self.oldstr =str
+
       }
     },
     mounted() {
@@ -403,8 +428,8 @@
       this.saleListInit();
       //我的上架
       this.myGroundingInit();
-      
-
+      //角色动画
+      this.jskt()
     }
   }
 </script>
@@ -417,10 +442,16 @@
     left: 0;
   }
 
-  .role .m-jsbox {
+  /* .role .m-jsbox {
     width: 9rem;
     height: 16rem;
     margin: 0 auto;
+  } */
+  .role .m-jsbox {
+    width: 7.6rem;
+    height: 12.1rem;
+    margin: 0 auto;
+    background-size: 100% 100%;
   }
 
   .role .m-jsbox img {

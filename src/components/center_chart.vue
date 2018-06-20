@@ -7,34 +7,9 @@
 		 		<div class="m-chartcontbox">
 		 			<div class="m-li" v-for="item in chartData">
 		 				<div class="m-name">{{item.nickname}}</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
+		 				<div class="m-zb">占卜次数：<span>{{item.boxcount}}</span></div>
+		 				<div class="m-lw">领悟：<span>{{item.str1}}</span></div>
 		 			</div>
-		 			<!-- <div class="m-li">
-		 				<div class="m-name">名称</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div>
-		 			<div class="m-li">
-		 				<div class="m-name">名称</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div>
-		 			<div class="m-li">
-		 				<div class="m-name">名称</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div>
-		 			<div class="m-li">
-		 				<div class="m-name">名称</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div>
-		 			<div class="m-li">
-		 				<div class="m-name">名称</div>
-		 				<div class="m-zb">占卜次数：<span>123</span></div>
-		 				<div class="m-lw">领悟：<span>123</span></div>
-		 			</div> -->
 		 		</div>
 		 		<div class="m-list">
 		 			<i class="ico-chart"><img src="../assets/images/img-ph01.png" /></i>
@@ -85,6 +60,9 @@ export default {
         }).then((res) => {
           console.log("排行榜", res.data);
 		  _this.chartData = res.data.data;
+		  for(var i=0;i<_this.chartData.length;i++){
+			  _this.chartData[i].str1 = _this.chartData[i].str1*1/100;
+		  }
         }, (error) => {
           console.log(error);
         });
