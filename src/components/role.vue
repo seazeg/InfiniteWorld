@@ -1,7 +1,7 @@
 <template>
   <div class="role">
     <div class="m-jsbox" @click="audio">
-      <img src="../assets/images/img-js1.png" alt="" class="m-jsboximg">
+      <img src="" alt="" class="m-jsboximg">
     </div>
     <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow">
     <transition name="component-fade" mode="out-in">
@@ -283,11 +283,11 @@
         let self = this;
         setInterval( function(){
           self.jsImg++;
-          $('.m-jsboximg').attr('src','../assets/images/img-js' + self.jsImg + '.png')
-          if(self.jsImg == 23){
+          $('.m-jsboximg').attr('src','../../static/images/img-js' + self.jsImg + '.png')
+          if(self.jsImg == 24){
             self.jsImg = 0;
           }
-        },500)
+        },167)
       },
       roleInit() {
         var _this = this;
@@ -440,6 +440,7 @@
     position: absolute;
     bottom: 15%;
     left: 0;
+    z-index: 100;
   }
 
   /* .role .m-jsbox {
@@ -448,8 +449,8 @@
     margin: 0 auto;
   } */
   .role .m-jsbox {
-    width: 7.6rem;
-    height: 12.1rem;
+    width: 100%;
+    height: 17.1rem;
     margin: 0 auto;
     background-size: 100% 100%;
   }

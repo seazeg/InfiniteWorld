@@ -72,9 +72,9 @@ export default {
 	  //获取排行榜
 	  let self = this;
 	  self.chartInit();
-	  setInterval( function(){
-		self.chartInit();
-	  },5000)
+	//   setInterval( function(){
+	// 	self.chartInit();
+	//   },5000)
     }
 
 }

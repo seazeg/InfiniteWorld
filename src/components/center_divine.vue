@@ -10,28 +10,13 @@
  			</div>
  			<div class="m-textbox01">
  				<div class="m-left">ENS:{{item.coin}}</div>
- 				<div class="m-right">{{item.itemname}}*1</div>
+ 				<div class="m-right">{{item.str5}}</div>
  			</div>
  			<div class="m-textbox02">
- 				<div class="m-left">装备：封约之力</div>
+ 				<div class="m-left">装备：{{item.itemname}}</div>
  				<div class="m-right">时间：{{item.boxtime}}</div>
  			</div>
  		</div>
- 		<!-- <div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">方解石占卜</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-textbox01">
- 				<div class="m-left">ENS:0.6</div>
- 				<div class="m-right">精神力药剂（5点）*1</div>
- 			</div>
- 			<div class="m-textbox02">
- 				<div class="m-left">装备：封约之力</div>
- 				<div class="m-right">时间：5/16 10:32</div>
- 			</div>
- 		</div> -->
  	</div>
  	<div class="m-bottomimg"><img src="../assets/images/bg-makelist-bot.png" /></div>
  </div>
@@ -75,14 +60,10 @@ export default {
 	  //获取排行榜
 	  let self = this;
 	  self.divineInit();
-	  setInterval( function(){
-		self.divineInit();
-	  },5000)
-      
-
-
+	//   setInterval( function(){
+	// 	self.divineInit();
+	//   },5000)
     }
-
 }
 </script>
 
