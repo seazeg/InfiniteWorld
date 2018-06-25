@@ -13,7 +13,7 @@
 	        </a>
 	      </div>
 	    </div>
-	    <div class="m-dzcardtcbox">
+	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
 	    		<div class="m-list">
 					<div class="m-imgbox">
@@ -47,10 +47,7 @@
 				</div>
 	    	</div>
 	    </div>
-<!-- <div v-if="sign" class="m-dztypebox">
-    	</div> -->
-       <notice v-show="sign">打造完成，区块确认中，请与10秒后在个人中心—打造记录中进行查看。
-    </notice>
+       <notice v-show="sign">打造完成，区块确认中，请与10秒后在个人中心—打造记录中进行查看。</notice>
     </div>
 </template>
 
@@ -59,8 +56,8 @@
     data() {
       return {
       	tcShow: true,
-        sign: true,
-
+        sign: false,
+        cardList: false,
       }
     },
     methods: {
@@ -75,8 +72,8 @@
       // 	}, 3000)
       // }
     },
-    mounted:{
-    }
+    // mounted:{
+    // }
 
   }
 
@@ -122,6 +119,7 @@
     outline: none;
     font-size: .7rem;
     text-align: center;
+    vertical-align: top;
   }
 
 

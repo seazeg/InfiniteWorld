@@ -31,36 +31,12 @@
     <div class="list">
       <div class="box" v-for="item in marketData">
         <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>ENS</span>
+          <span>{{item.itemname}}</span>
+          <span>炼力值:{{item.itemyl}}</span>
+          <span>{{item.price}}ENS</span>
         </div>
-        <img src="../assets/images/market_buy.png" alt="">
+        <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
       </div>
-      <!-- <div class="box">
-        <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
-        </div>
-        <img src="../assets/images/market_buy.png" alt="">
-      </div>
-      <div class="box">
-        <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
-        </div>
-        <img src="../assets/images/market_buy.png" alt="">
-      </div>
-      <div class="box">
-        <div class="info">
-          <span>尘位之臣</span>
-          <span>炼力值:30</span>
-          <span>35ENS</span>
-        </div>
-        <img src="../assets/images/market_buy.png" alt="">
-      </div> -->
     </div>
     <notice v-show="noticeShow">购买成功，区块确认中，请与10秒后在角色—交易记录中 进行查看。
     </notice>
@@ -68,9 +44,9 @@
     <!-- 弹层 -->
     <div class="marketLayer" v-show="marketLayer">
       <div class="card">
-        <img src="" alt="">
+        <img :src="'../../static/images/'+ buyData.img + '.png'" alt="">
       </div>
-      <p>35ENS</p>
+      <p>{{buyData.price}}ENS</p>
       <div class="box">
         <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="marketLayer=false">
@@ -80,11 +56,14 @@
 </template>
 
 <script>
+  import data from '../json/carddata'
+
   export default {
     data() {
       return {
+        carddata:data,
         marketData:'',
-        noticeShow: true,
+        noticeShow: false,
         marketLayer: false,
         selShow1: false,
         selShow2: false,
@@ -142,7 +121,8 @@
           name: "项链"
         }, {
           name: "手镯"
-        }]
+        }],
+        buyData:'',
       }
     },
     methods: {
@@ -176,8 +156,18 @@
         }, (error) => {
           console.log(error);
         });
-
-      }
+      },
+      buy(ele) {
+        let self = this;
+        self.marketLayer = true;
+        self.buyData = ele;
+        for( var a=0;a<self.carddata.length;a++){
+          if(self.buyData.itemid == self.carddata[a].id){
+            self.buyData.img = self.carddata[a].img
+            console.log(self.buyData.img)
+          }
+        }
+       },
     },
     mounted() {
       this.init();
@@ -303,7 +293,7 @@
 
   .market .list .box .info {
     line-height: 2.2rem;
-    margin-left: 1.2rem;
+    margin-left: .8rem;
     display: inline-block;
   }
 
@@ -317,7 +307,7 @@
     display: inline-block;
     position: relative;
     top: 0.3rem;
-    left: 0.5rem;
+    left: 0.1rem;
   }
 
   .market input::-webkit-input-placeholder {
@@ -353,9 +343,15 @@
   .marketLayer .card {
     width: 80%;
     height: 4.2rem;
-    background: #fff;
+    text-align: center;
     margin: 0 auto;
     margin-top: 1.2rem;
+  }
+  .marketLayer .card img{
+    width: auto;
+    margin: 0 auto;
+    height: 100%;
+    display: inline-block;
   }
 
   .marketLayer p {

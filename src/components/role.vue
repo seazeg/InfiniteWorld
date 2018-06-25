@@ -27,10 +27,10 @@
         <div class="right">
           <div v-if="left.role1">
             <div class="roleInfo">
-              <span class="field">领悟：{{role.roleyl}}</span>
+              <!-- <span class="field">领悟：{{role.roleyl}}</span>
               <span class="field">精神：{{role.rolejs}}</span>
               <span class="field">冷却：{{role.rolecdcrit}}%</span>
-              <span class="field">跃升：{{role.roleylcrit}}%</span>
+              <span class="field">跃升：{{role.roleylcrit}}%</span> -->
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
@@ -299,6 +299,7 @@
           url: _this.http184 + '/wb/role',
           params: params
         }).then((res) => {
+          console.log(res.data)
           _this.role = res.data.data;
         }, (error) => {
           console.log(error);
