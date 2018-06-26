@@ -9,8 +9,10 @@
         <img src="../assets/images/img-build.png" />
       </a>
       <div v-if="part" class="m-fjsbox">
-      	<i><img src="../assets/images/ico-fjs.png" /></i>
-      	<div class="m-txt">180/300</div>
+        <i>
+          <img src="../assets/images/ico-fjs.png" />
+        </i>
+        <div class="m-txt">180/300</div>
       </div>
     </div>
     <div class="m-btnbox">
@@ -39,13 +41,13 @@
     <div v-show="tcShow" class="m-tcbg"></div>
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txt">本次角色创建需消耗200ENS</div>
-      <input type="text" class="m-nameipt" maxlength="4" />
+      <input type="text" class="m-nameipt" maxlength="4" v-model="name"/>
       <input type="text" class="m-invitcode" maxlength="4" />
       <div class="m-tcbtnbox">
-        <a href="javascript:;" class="m-btn" @click="open()">
+        <a href="javascript:;" class="m-btn" @click="createRole()">
           <img src="../assets/images/img-txbtn01.png" />
         </a>
-        <a href="javascript:;" class="m-btn" @click="open()">
+        <a href="javascript:;" class="m-btn" @click="tcShow=false">
           <img src="../assets/images/img-txbtn02.png" />
         </a>
       </div>
@@ -60,47 +62,49 @@
       return {
         tcShow: false,
         sign: false,
-        part:false,
+        part: false,
+        name:""
       }
     },
     methods: {
+      createRole() {
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),this.name];
+        this.$utils.contract(type, args, url)
+      },
       open() {
         this.tcShow = !this.tcShow
       },
-      signClick(){
-      	let self = this;
-      	self.sign = true;
-      	setTimeout(function(){
-      		self.sign = false;
-      	}, 3000)
+      signClick() {
+        let self = this;
+        self.sign = true;
+        setTimeout(function () {
+          self.sign = false;
+        }, 3000)
       },
       go(type) {
         if (type == "make") {
           this.$router.push({
             path: "/make"
           })
-        }
-        else if (type == "card") {
+        } else if (type == "card") {
           this.$router.push({
             path: "/card"
           })
-        } 
-        else if (type == "chart") {
+        } else if (type == "chart") {
           this.$router.push({
             path: "/chart"
           })
-        }
-        else if (type == "wall") {
+        } else if (type == "wall") {
           this.$router.push({
             path: "/wall"
           })
-        }
-        else if (type == "divine") {
+        } else if (type == "divine") {
           this.$router.push({
             path: "/divine"
           })
-        }
-        else if (type == "invit") {
+        } else if (type == "invit") {
           this.$router.push({
             path: "/invit"
           })
@@ -109,7 +113,6 @@
     }
 
   }
-
 </script>
 
 <style>
@@ -161,24 +164,39 @@
     float: right;
     margin: .5rem .4rem 0 0;
   }
+
   .center .m-vipmes .z-buildbtn img {
     width: 100%;
     height: 100%;
     vertical-align: top;
   }
-  .center .m-vipmes .m-fjsbox{
-  	width: auto;
+
+  .center .m-vipmes .m-fjsbox {
+    width: auto;
     height: 1rem;
     display: inline-block;
     float: right;
     margin: .75rem .4rem 0 0;
   }
-  .center .m-vipmes .m-fjsbox i{
-  	width: .89rem; height: 1rem; display: inline-block;float: left;margin-right:.2rem; 
+
+  .center .m-vipmes .m-fjsbox i {
+    width: .89rem;
+    height: 1rem;
+    display: inline-block;
+    float: left;
+    margin-right: .2rem;
   }
-  .center .m-vipmes .m-fjsbox .m-txt{
-  	width: auto;height: 1rem; line-height:1rem;display: inline-block;float: left;font-size: .42rem;color: #3f291b;
+
+  .center .m-vipmes .m-fjsbox .m-txt {
+    width: auto;
+    height: 1rem;
+    line-height: 1rem;
+    display: inline-block;
+    float: left;
+    font-size: .42rem;
+    color: #3f291b;
   }
+
   .center .m-vipmes .m-fjsbox i img {
     width: 100%;
     height: 100%;
@@ -291,16 +309,17 @@
     height: 100%;
     vertical-align: top;
   }
-  .m-typebox{
-  	display: inline-block;
+
+  .m-typebox {
+    display: inline-block;
     width: 80%;
-    padding:.4rem .4rem;
+    padding: .4rem .4rem;
     box-sizing: border-box;
     line-height: .46rem;
     font-size: .34rem;
     position: fixed;
     z-index: 1000;
-    background: rgba(0,0,0,.8);
+    background: rgba(0, 0, 0, .8);
     left: 10%;
     top: 50%;
     margin-top: -.54rem;
