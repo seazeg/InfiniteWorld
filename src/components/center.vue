@@ -71,7 +71,7 @@
       createRole() {
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),'\\u0004'+this.name,this.yzm];
+        var args = [sessionStorage.getItem("address"),'1000\\u0004'+this.name,this.yzm];
           //"args": "[\"AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp\",\"1000\\u0004小太阳\\u000401\"]",
         this.$utils.contract(type, args, url)
       },
