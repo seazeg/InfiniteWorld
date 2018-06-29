@@ -42,7 +42,7 @@
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txt">本次角色创建需消耗200ENS</div>
       <input type="text" class="m-nameipt" maxlength="4" v-model="name"/>
-      <input type="text" class="m-invitcode" maxlength="4" />
+      <input type="text" class="m-invitcode" maxlength="4" v-model="yzm"/>
       <div class="m-tcbtnbox">
         <a href="javascript:;" class="m-btn" @click="createRole()">
           <img src="../assets/images/img-txbtn01.png" />
@@ -63,14 +63,16 @@
         tcShow: false,
         sign: false,
         part: false,
-        name:""
+        name:"",
+        yzm:""
       }
     },
     methods: {
       createRole() {
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),this.name];
+        var args = [sessionStorage.getItem("address"),'\\u0004'+this.name,this.yzm];
+          //"args": "[\"AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp\",\"1000\\u0004小太阳\\u000401\"]",
         this.$utils.contract(type, args, url)
       },
       open() {
