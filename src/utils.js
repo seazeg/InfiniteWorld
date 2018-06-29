@@ -27,11 +27,10 @@ const utils = {
       _transaction = AschJS.transfer.createInTransfer(dappid, currency, amount, secret, secondSecret || undefined);
     }
 
-
     axios({
       method: 'POST',
       url: url,
-      params: _transaction,
+      data:_transaction,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
