@@ -72,7 +72,9 @@
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
         var args = [sessionStorage.getItem("address"),"1000\u0004"+this.name+"\u000401\u0004"+this.ma];
-        this.$utils.contract(type, args, url)
+        this.$utils.contract(type, args, url).then((res) => {
+          console.log(res.data)
+        }
       },
       open() {
         this.tcShow = !this.tcShow
