@@ -26,7 +26,7 @@
     data() {
       return {
         password: "",
-        secret: "age captain shy decline mom fox sad upper enrich rack pause elegant",
+        secret: "",
         isShow: false
       }
     },
@@ -57,7 +57,7 @@
           }).then((res) => {
 
             if (res.data.success) {
-              sessionStorage.setItem("secret", _this.secret)
+              sessionStorage.setItem("secret", _this.password)
               sessionStorage.setItem("publicKey", _this.$AschJS
                 .crypto.getKeys(_this.password).publicKey)
               sessionStorage.setItem("privateKey", _this.$AschJS
