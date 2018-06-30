@@ -3,7 +3,7 @@ import axios from 'axios'
 import Vue from 'vue'
 
 const utils = {
-  contract: function (type, args, url, that, callback) {
+  contract: function (type, args, url, callback) {
     let secret = window.sessionStorage.getItem('secret');
     // let opt = JSON.parse(sessionStorage.getItem("options"))
     //普通合约调用
@@ -26,7 +26,7 @@ const utils = {
       var amount = 10 * 100000000;
       _transaction = AschJS.transfer.createInTransfer(dappid, currency, amount, secret, secondSecret || undefined);
     }
-    console.log(JSON.stringify(_transaction));
+
     axios({
       method: 'POST',
       url: url,
@@ -38,10 +38,11 @@ const utils = {
         // "magic":"5f5b3cf5"  //生产
       }
     }).then((res) => {
-      var data =res.data
+      var data = res.data;
       if (res.status === 200 && data.result) { //执行成功
-        // callback(data, that);
+        callback(data);
       } else {
+        callback(data);
         if (data.msg.indexOf('Insufficient balance') < -1) { //error: "Error: Apply transaction error: Error: Insufficient balance"
           console.log('top', '余额不足,请充值');
           return;
@@ -87,7 +88,6 @@ const utils = {
     }, (error) => {
       console.log(error);
     });
-
   }
 
 }
