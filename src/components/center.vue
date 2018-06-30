@@ -77,12 +77,19 @@
         var args = [sessionStorage.getItem("address"),"1000\u0004"+this.name+"\u000401\u0004"+this.ma];
         var result = this.$utils.contract(type, args, url,function(data){
           self.tcShow = false;
-          self.signData = data.msg;
-          self.sign = true;
-          setTimeout( function(){
-            self.sign = false;
-          },2000)
-
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
            console.log("返回结果",data);
         });
        
