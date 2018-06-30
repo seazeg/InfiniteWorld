@@ -26,7 +26,7 @@
     data() {
       return {
         password: "",
-        secret: "age captain shy decline mom fox sad upper enrich rack pause elegant",
+        secret: "",
         isShow: false
       }
     },
