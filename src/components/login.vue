@@ -16,6 +16,9 @@
     </div>
     <div class="login_2" v-show="isShow">
       <textarea value="" v-model="secret"></textarea>
+        <a href="javascript:;" class="m-btn" @click="closezc()">
+          <img src="../assets/images/img-txbtn01.png" />
+        </a>
     </div>
   </div>
 </template>
@@ -73,8 +76,9 @@
             console.log(error);
           });
         }
-
-
+      },
+      closezc() {
+        this.isShow = false;
       }
     },
     mounted() {
@@ -151,4 +155,18 @@
     border: 0;
     color: #111;
   }
+
+ .m-btn {
+    width: 2.95rem;
+    height: 1.2rem;
+    display: block;
+    margin: 2.8rem auto 0;
+  }
+
+ .m-btn img {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+  }
+
 </style>
