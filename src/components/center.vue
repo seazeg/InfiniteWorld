@@ -52,7 +52,8 @@
         </a>
       </div>
     </div>
-    <div v-if="sign" class="m-typebox">签到成功，区块确认中，请与10秒后在角色—背包中进行查看。</div>
+    <div v-if="sign" class="m-typebox">{{signData}}</div>
+    <!-- 签到成功，区块确认中，请与10秒后在角色—背包中进行查看。 -->
   </div>
 </template>
 
@@ -64,15 +65,24 @@
         sign: false,
         part: false,
         name:"",
-        ma:""
+        ma:"",
+        signData:'',
       }
     },
     methods: {
       createRole() {
+        let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
         var args = [sessionStorage.getItem("address"),"1000\u0004"+this.name+"\u000401\u0004"+this.ma];
         var result = this.$utils.contract(type, args, url,function(data){
+          self.tcShow = false;
+          self.signData = data.msg;
+          self.sign = true;
+          setTimeout( function(){
+            self.sign = false;
+          },2000)
+
            console.log("返回结果",data);
         });
        
