@@ -39,15 +39,17 @@
             </div>
           </div>
           <div v-if="left.role2">
+            
             <div class="roleinfo2 fixed">
-              <span @click="rolezb=true">
+              <span @click="rolezb=true"  v-for="item in bag">
+                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <div class="role_zb" v-show="rolezb">
                   <div>装备</div>
                   <div @click="rolesj=true">上架</div>
                   <div @click="rolefj=true">分解</div>
                 </div>
               </span>
-              <span>
+              <!-- <span>
               </span>
               <span>
               </span>
@@ -60,7 +62,7 @@
               <span>
               </span>
               <span>
-              </span>
+              </span> -->
             </div>
           </div>
           <div v-if="left.role3">
@@ -291,7 +293,7 @@
           if(self.jsImg == 24){
             self.jsImg = 0;
           }
-        },167)
+        },200)
       },
       roleInit() {
         var _this = this;
@@ -303,8 +305,10 @@
           url: _this.http184 + '/wb/role',
           params: params
         }).then((res) => {
-          console.log(res.data)
+
           _this.role = res.data.data;
+          console.log(_this.role)
+
         }, (error) => {
           console.log(error);
         });
@@ -344,6 +348,15 @@
           params: params
         }).then((res) => {
           _this.bag = res.data.data;
+          for( var a=0;a<_this.carddata.length;a++){
+            for( var b=0; b<_this.bag.length;b++){
+              if(_this.bag[b].itemid == _this.carddata[a].id){
+                _this.bag[b].img = _this.carddata[a].img
+                console.log(_this.bag[b].img)
+              }
+            }
+          
+          }
         }, (error) => {
           console.log(error);
         });
@@ -502,10 +515,10 @@
   }
 
   .role .layer .right {
-    width: 63%;
+    width: 60%;
     float: right;
     margin-top: 35px;
-
+    margin-right: 5%;
   }
 
   .role .layer .right .roleInfo {
@@ -533,6 +546,7 @@
 
   .role .layer .right .roleinfo2 span {
     width: 40%;
+    margin: 0 5%;
     height: 130px;
     background: #85735b;
     display: inline-block;
@@ -549,6 +563,11 @@
     line-height: 30px;
     position: absolute;
     bottom: 0;
+  }
+  .role .layer .right .roleinfo2 span .img{
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
   }
 
   .role .layer .right .roleinfo2.fixed {
