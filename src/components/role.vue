@@ -27,10 +27,10 @@
         <div class="right">
           <div v-if="left.role1">
             <div class="roleInfo">
-              <!-- <span class="field">领悟：{{role.roleyl}}</span>
+              <span class="field">领悟：{{role.roleyl}}</span>
               <span class="field">精神：{{role.rolejs}}</span>
               <span class="field">冷却：{{role.rolecdcrit}}%</span>
-              <span class="field">跃升：{{role.roleylcrit}}%</span> -->
+              <span class="field">跃升：{{role.roleylcrit}}%</span>
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
@@ -225,9 +225,12 @@
 </template>
 
 <script>
+  import data from '../json/carddata'
+
   export default {
     data() {
       return {
+        carddata:data,
         layerShow: false,
         audioPlay: false,
         jsImg:'1',
@@ -279,6 +282,7 @@
           this.left.role4 = true
         }
       },
+      //角色帧动画
       jskt() {
         let self = this;
         setInterval( function(){
@@ -316,6 +320,13 @@
           params: params
         }).then((res) => {
           _this.rolepack = res.data.data;
+          console.log(_this.rolepack)
+          // for( var a=0;a<self.carddata.length;a++){
+          // if(self.buyData.itemid == self.carddata[a].id){
+          //   self.buyData.img = self.carddata[a].img
+          //   console.log(self.buyData.img)
+          // }
+        //}
         }, (error) => {
           console.log(error);
         });

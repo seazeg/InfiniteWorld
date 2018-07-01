@@ -5,7 +5,7 @@
       <!-- <img src="../assets/images/img-zhanbutime.png" /> -->
       <div id="countdown"></div>
     </div>
-    <a href="javascript:;" class="m-zbcardbtn">
+    <a href="javascript:;" class="m-zbcardbtn" @click="zhanbo()">
       <img src="../assets/images/img-zhanbucard.png" />
     </a>
 
@@ -36,7 +36,7 @@
     data() {
       return {
         tcShow: false,
-        sign: true,
+        sign: false,
 
       }
     },
@@ -44,6 +44,23 @@
       close() {
         this.tcShow = !this.tcShow
       },
+      zhanbo() {
+        var _this = this;
+        var params = {
+          address: sessionStorage.getItem("address"),
+          boxid: "999999999",
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/boxlist',
+          params: params
+        }).then((res) => {
+          console.log("占卜", res.data);
+          _this.marketData = res.data.data;
+        }, (error) => {
+          console.log(error);
+        });
+      }
 
     },
     mounted() {
@@ -82,6 +99,7 @@
 
         $("#countdown").jCountdown(config);
       }, 100);
+
     }
   }
 
