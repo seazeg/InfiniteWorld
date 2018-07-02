@@ -54,7 +54,7 @@
         </a>
       </div>
     </div>
-    <notice v-show="sign">{{msg}}</notice>
+    <notice v-show="issign">{{msg}}</notice>
   </div>
 
 </template>
@@ -68,7 +68,7 @@
         ENSOutNum: "",
         ENSInNum:"",
         msg: "",
-        sign: false
+        issign: false
       }
     },
     methods: {
@@ -86,42 +86,42 @@
         this.$utils.contract(type, args, url, function (data) {
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('Key is locked') > -1) {
             _this.msg = '你的操作正在进行网络确认，请稍后';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('amount range') > -1) {
             _this.msg = '数额要大于0';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('String is too long') > -1) {
             _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('should be integer') > -1) {
             _this.msg = '您输入的数额过长或不为整数，请再次确认';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('Invalid timestamp') > -1) {
             _this.msg = '本地时间不精准，请先校准本地时间';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('second') > -1) {
             _this.msg = '设置了二级密码账号无法使用';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('Account is locked') > -1) {
             _this.msg = '锁仓账户无法使用'
-            _this.sign = true
+            _this.issign = true
             return;
           }
         })
@@ -134,53 +134,53 @@
         this.$utils.contract(type, args, url, function (data) {
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('Key is locked') > -1) {
             _this.msg = '你的操作正在进行网络确认，请稍后';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('amount range') > -1) {
             _this.msg = '数额要大于0';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('String is too long') > -1) {
             _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('should be integer') > -1) {
             _this.msg = '您输入的数额过长或不为整数，请再次确认';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('Invalid timestamp') > -1) {
             _this.msg = '本地时间不精准，请先校准本地时间';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('second') > -1) {
             _this.msg = '设置了二级密码账号无法使用';
-            _this.sign = true
+            _this.issign = true
             return;
           }
           if (data.msg.indexOf('Account is locked') > -1) {
             _this.msg = '锁仓账户无法使用'
-            _this.sign = true
+            _this.issign = true
             return;
           }
         })
       },
     },
     mounted() {
-      let self = this;
+      let _this = this;
       //self.ENSOut();
-    },
-    updated () {
-      this.sign = false
+      setInterval(function(){
+         _this.issign = false
+      },3000)
     }
 
   }
