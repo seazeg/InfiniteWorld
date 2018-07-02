@@ -42,17 +42,14 @@
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txt">本次角色创建需消耗200ENS</div>
       <input type="text" class="m-nameipt" maxlength="4" v-model="name"/>
-      <input type="text" class="m-invitcode" maxlength="4" v-model="yzm"/>
-      <div class="m-tcbtnbox">
-        <a href="javascript:;" class="m-btn" @click="createRole()">
           <img src="../assets/images/img-txbtn01.png" />
-        </a>
         <a href="javascript:;" class="m-btn" @click="tcShow=false">
           <img src="../assets/images/img-txbtn02.png" />
         </a>
       </div>
     </div>
-    <div v-if="sign" class="m-typebox">签到成功，区块确认中，请与10秒后在角色—背包中进行查看。</div>
+    <div v-if="sign" class="m-typebox">{{signData}}</div>
+    <!-- 签到成功，区块确认中，请与10秒后在角色—背包中进行查看。 -->
   </div>
 </template>
 
@@ -64,16 +61,34 @@
         sign: false,
         part: false,
         name:"",
-        yzm:""
+        ma:"",
+        signData:'',
       }
     },
     methods: {
       createRole() {
+        let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),'1000\\u0004'+this.name,this.yzm];
-          //"args": "[\"AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp\",\"1000\\u0004小太阳\\u000401\"]",
-        this.$utils.contract(type, args, url)
+        var args = [sessionStorage.getItem("address"),"1000\u0004"+this.name+"\u000401\u0004"+this.ma];
+        var result = this.$utils.contract(type, args, url,function(data){
+          self.tcShow = false;
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+           console.log("返回结果",data);
+        });
+       
       },
       open() {
         this.tcShow = !this.tcShow
