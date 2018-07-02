@@ -8,21 +8,13 @@
         <img src="../assets/images/bg-walllist-top.png" />
       </div>
       <div class="m-listbox">
-        <div class="m-list">
+        <div class="m-list" v-for="item in balancesList">
           <div class="m-titlebox">
-            <div class="m-txt">余额：5652</div>
+            <div class="m-txt">余额：{{item.balance}}</div>
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
-          <div class="m-text">XAS</div>
-        </div>
-        <div class="m-list">
-          <div class="m-titlebox">
-            <div class="m-txt">余额：5652</div>
-            <a class="m-link" @click="openIn()">充入钱包</a>
-            <a class="m-link" @click="openOut()">提到钱包</a>
-          </div>
-          <div class="m-text">XAS</div>
+          <div class="m-text">{{item.currency}}</div>
         </div>
       </div>
       <div class="m-bottomimg">
@@ -31,7 +23,7 @@
     </div>
     <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
-      <div class="m-txt">将游戏内资产提到钱包，将消耗0.1ENS。</div>
+      <div class="m-txt">将游戏内资产充入钱包，将消耗0.1ENS。</div>
       <input type="text" class="m-invitcode" maxlength="4" v-model="ENSInNum"/>
       <div class="m-wallinbtnbox">
         <a href="javascript:;" class="m-btn" @click="ENSIn()">
@@ -68,7 +60,8 @@
         ENSOutNum: "",
         ENSInNum:"",
         msg: "",
-        issign: false
+        issign: false,
+        balancesList:[]
       }
     },
     methods: {
@@ -181,6 +174,8 @@
       setInterval(function(){
          _this.issign = false
       },3000)
+
+      this.balancesList = sessionStorage.getItem("balances")
     }
 
   }

@@ -33,6 +33,7 @@ const utils = {
         "Accept": "application/json",
         "Content-Type": "application/json",
         "magic": "594fe0f3",
+        "version":""
         // "magic":"5f5b3cf5"  //生产
       }
     }).then((res) => {
