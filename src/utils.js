@@ -42,7 +42,7 @@ const utils = {
       } else {
         callback(data);
         if (data.msg.indexOf('Insufficient balance') < -1) { //error: "Error: Apply transaction error: Error: Insufficient balance"
-          console.log('top', '余额不足,请充值');
+          console.log('top', '余额不足,请尽快充值');
           return;
         }
         if (data.msg.indexOf('Key is locked') > -1) {

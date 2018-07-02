@@ -5,7 +5,7 @@
       <!-- <img src="../assets/images/img-zhanbutime.png" /> -->
       <div id="countdown"></div>
     </div>
-    <a href="javascript:;" class="m-zbcardbtn">
+    <a href="javascript:;" class="m-zbcardbtn" @click="zhanbo()">
       <img src="../assets/images/img-zhanbucard.png" />
     </a>
 
@@ -26,7 +26,7 @@
         </a>
       </div>
     </div>
-    <notice v-show="sign">占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。
+    <notice v-show="sign">{{signData}}
     </notice>
   </div>
 </template>
@@ -36,7 +36,8 @@
     data() {
       return {
         tcShow: false,
-        sign: true,
+        sign: false,
+        signData:'',
 
       }
     },
@@ -44,6 +45,31 @@
       close() {
         this.tcShow = !this.tcShow
       },
+      zhanbo() {
+
+        let self = this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1002\u0004"];
+        var result = this.$utils.contract(type, args, url,function(data){
+          self.tcShow = false;
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = "占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。";
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+           console.log("返回结果",data);
+        });
+       
+      }
 
     },
     mounted() {
@@ -82,6 +108,7 @@
 
         $("#countdown").jCountdown(config);
       }, 100);
+
     }
   }
 

@@ -118,6 +118,9 @@ const carddata = [{
 }, {
   id: '1040',
   img:'img-carddj3'
+}, {
+  id: '8888',
+  img:'img-carddj3'
 }]
 
 export default carddata;
