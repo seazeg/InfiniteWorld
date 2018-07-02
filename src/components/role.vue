@@ -27,10 +27,10 @@
         <div class="right">
           <div v-if="left.role1">
             <div class="roleInfo">
-              <span class="field">领悟：{{role.roleyl}}</span>
-              <span class="field">精神：{{role.rolejs}}</span>
-              <span class="field">冷却：{{role.rolecdcrit}}%</span>
-              <span class="field">跃升：{{role.roleylcrit}}%</span>
+              <span class="field">领悟：{{roleInfo.roleyl}}</span>
+              <span class="field">精神：{{roleInfo.rolejs}}</span>
+              <span class="field">冷却：{{roleInfo.rolecdcrit}}%</span>
+              <span class="field">跃升：{{roleInfo.roleylcrit}}%</span>
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
@@ -39,9 +39,9 @@
             </div>
           </div>
           <div v-if="left.role2">
-            
+
             <div class="roleinfo2 fixed">
-              <span @click="rolezb=true"  v-for="item in bag">
+              <span @click="rolezb=true" v-for="item in bag">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <div class="role_zb" v-show="rolezb">
                   <div>装备</div>
@@ -232,12 +232,12 @@
   export default {
     data() {
       return {
-        carddata:data,
+        carddata: data,
         layerShow: false,
         audioPlay: false,
-        jsImg:'1',
-        oldVideo:'',
-        oldstr:'',
+        jsImg: '1',
+        oldVideo: '',
+        oldstr: '',
         left: {
           role1: true,
           role2: false,
@@ -253,8 +253,13 @@
         saleList: [],
         buyList: [],
         bag: [],
-        role: [],
-        rolepack:[]
+        roleInfo: {
+          roleyl: "",
+          rolejs: "",
+          rolecdcrit: "",
+          roleylcrit: ""
+        },
+        rolepack: []
       }
     },
     methods: {
@@ -287,13 +292,13 @@
       //角色帧动画
       jskt() {
         let self = this;
-        setInterval( function(){
+        setInterval(function () {
           self.jsImg++;
-          $('.m-jsboximg').attr('src','../../static/images/img-js' + self.jsImg + '.png')
-          if(self.jsImg == 24){
+          $('.m-jsboximg').attr('src', '../../static/images/img-js' + self.jsImg + '.png')
+          if (self.jsImg == 24) {
             self.jsImg = 0;
           }
-        },200)
+        }, 200)
       },
       roleInit() {
         var _this = this;
@@ -330,7 +335,7 @@
           //   self.buyData.img = self.carddata[a].img
           //   console.log(self.buyData.img)
           // }
-        //}
+          //}
         }, (error) => {
           console.log(error);
         });
@@ -348,14 +353,14 @@
           params: params
         }).then((res) => {
           _this.bag = res.data.data;
-          for( var a=0;a<_this.carddata.length;a++){
-            for( var b=0; b<_this.bag.length;b++){
-              if(_this.bag[b].itemid == _this.carddata[a].id){
+          for (var a = 0; a < _this.carddata.length; a++) {
+            for (var b = 0; b < _this.bag.length; b++) {
+              if (_this.bag[b].itemid == _this.carddata[a].id) {
                 _this.bag[b].img = _this.carddata[a].img
                 console.log(_this.bag[b].img)
               }
             }
-          
+
           }
         }, (error) => {
           console.log(error);
@@ -414,29 +419,29 @@
       },
 
       audio() {
-          let self = this;
-          var num = Math.random(); //Math.random()：得到一个0到1之间的随机数
-          num = Math.ceil(num * 24); //num*24的取值范围在0~80之间,使用向上取整就可以得到一个1~24的随机数
-          //num就是你要的随机数,如果你希望个位数前加0,那么这样:
-          var str;
-          if (num < 10) {
-            str = "0" + num
-          } else {
-            str = num.toString();
+        let self = this;
+        var num = Math.random(); //Math.random()：得到一个0到1之间的随机数
+        num = Math.ceil(num * 24); //num*24的取值范围在0~80之间,使用向上取整就可以得到一个1~24的随机数
+        //num就是你要的随机数,如果你希望个位数前加0,那么这样:
+        var str;
+        if (num < 10) {
+          str = "0" + num
+        } else {
+          str = num.toString();
+        }
+        var myVideo = document.getElementById("aud" + str);
+        if (self.oldVideo == '') {
+          myVideo.play();
+          self.oldVideo = document.getElementById("aud" + str);
+        } else {
+          if (self.oldstr != str) {
+            self.oldVideo.pause();
+            self.oldVideo.currentTime = 0;
+            myVideo.play();
+            self.oldVideo = document.getElementById("aud" + str);
           }
-          var myVideo = document.getElementById("aud" + str);
-            if(self.oldVideo == ''){
-              myVideo.play();
-              self.oldVideo = document.getElementById("aud" + str);
-            }else {
-              if(self.oldstr != str){
-                self.oldVideo.pause();
-                self.oldVideo.currentTime = 0;
-                myVideo.play();
-                self.oldVideo = document.getElementById("aud" + str);
-              }
-            }
-          self.oldstr =str
+        }
+        self.oldstr = str
 
       }
     },
@@ -473,6 +478,7 @@
     height: 16rem;
     margin: 0 auto;
   } */
+
   .role .m-jsbox {
     width: 100%;
     height: 17.1rem;
@@ -518,7 +524,7 @@
     width: 60%;
     float: right;
     margin-top: 35px;
-    margin-right: 5%;
+    margin-right: 2%;
   }
 
   .role .layer .right .roleInfo {
@@ -564,7 +570,8 @@
     position: absolute;
     bottom: 0;
   }
-  .role .layer .right .roleinfo2 span .img{
+
+  .role .layer .right .roleinfo2 span .img {
     width: 100%;
     height: 100%;
     vertical-align: top;
