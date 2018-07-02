@@ -22,9 +22,7 @@ const utils = {
     }
     if (type == '6') {
       var dappid = Vue.prototype.dappId;
-      var currency = "XAS";
-      var amount = 10 * 100000000;
-      _transaction = AschJS.transfer.createInTransfer(dappid, currency, amount, secret, secondSecret || undefined);
+      _transaction = AschJS.transfer.createInTransfer(dappid, args[0], args[1], secret, "");
     }
 
     axios({

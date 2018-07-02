@@ -32,9 +32,9 @@
     <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
       <div class="m-txt">将游戏内资产提到钱包，将消耗0.1ENS。</div>
-      <input type="text" class="m-invitcode" maxlength="4" />
+      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSInNum"/>
       <div class="m-wallinbtnbox">
-        <a href="javascript:;" class="m-btn" @click="openIn()">
+        <a href="javascript:;" class="m-btn" @click="ENSIn()">
           <img src="../assets/images/img-txbtn01.png" />
         </a>
         <a href="javascript:;" class="m-btn" @click="openIn()">
@@ -54,6 +54,7 @@
         </a>
       </div>
     </div>
+    <notice v-show="sign">{{msg}}</notice>
   </div>
 
 </template>
@@ -64,7 +65,10 @@
       return {
         tcinShow: false,
         tcoutShow: false,
-        ENSOutNum: ""
+        ENSOutNum: "",
+        ENSInNum:"",
+        msg: "",
+        sign: false
       }
     },
     methods: {
@@ -74,16 +78,109 @@
       openOut() {
         this.tcoutShow = !this.tcoutShow
       },
+      ENSIn() {
+        var _this = this;
+        var url = this.http189 + "/peer/transactions";
+        var type = 6;
+        var args = ["XAS", this.ENSInNum, sessionStorage.getItem("address")];
+        this.$utils.contract(type, args, url, function (data) {
+          if (data.msg.indexOf('Insufficient balance') > -1) {
+            _this.msg = "余额不足,请充值";
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('Key is locked') > -1) {
+            _this.msg = '你的操作正在进行网络确认，请稍后';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('amount range') > -1) {
+            _this.msg = '数额要大于0';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('String is too long') > -1) {
+            _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('should be integer') > -1) {
+            _this.msg = '您输入的数额过长或不为整数，请再次确认';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('Invalid timestamp') > -1) {
+            _this.msg = '本地时间不精准，请先校准本地时间';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('second') > -1) {
+            _this.msg = '设置了二级密码账号无法使用';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('Account is locked') > -1) {
+            _this.msg = '锁仓账户无法使用'
+            _this.sign = true
+            return;
+          }
+        })
+      },
       ENSOut() {
+        var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
         var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
-        this.$utils.contract(type, args, url)
+        this.$utils.contract(type, args, url, function (data) {
+          if (data.msg.indexOf('Insufficient balance') > -1) {
+            _this.msg = "余额不足,请充值";
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('Key is locked') > -1) {
+            _this.msg = '你的操作正在进行网络确认，请稍后';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('amount range') > -1) {
+            _this.msg = '数额要大于0';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('String is too long') > -1) {
+            _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('should be integer') > -1) {
+            _this.msg = '您输入的数额过长或不为整数，请再次确认';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('Invalid timestamp') > -1) {
+            _this.msg = '本地时间不精准，请先校准本地时间';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('second') > -1) {
+            _this.msg = '设置了二级密码账号无法使用';
+            _this.sign = true
+            return;
+          }
+          if (data.msg.indexOf('Account is locked') > -1) {
+            _this.msg = '锁仓账户无法使用'
+            _this.sign = true
+            return;
+          }
+        })
       },
     },
     mounted() {
-	  let self = this;
-    //self.ENSOut();
+      let self = this;
+      //self.ENSOut();
+    },
+    updated () {
+      this.sign = false
     }
 
   }
