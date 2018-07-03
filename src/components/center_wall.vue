@@ -8,21 +8,13 @@
         <img src="../assets/images/bg-walllist-top.png" />
       </div>
       <div class="m-listbox">
-        <div class="m-list">
+        <div class="m-list" v-for="item in balancesList">
           <div class="m-titlebox">
-            <div class="m-txt">余额：5652</div>
+            <div class="m-txt">余额：{{item.balance}}</div>
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
-          <div class="m-text">XAS</div>
-        </div>
-        <div class="m-list">
-          <div class="m-titlebox">
-            <div class="m-txt">余额：5652</div>
-            <a class="m-link" @click="openIn()">充入钱包</a>
-            <a class="m-link" @click="openOut()">提到钱包</a>
-          </div>
-          <div class="m-text">XAS</div>
+          <div class="m-text">{{item.currency}}</div>
         </div>
       </div>
       <div class="m-bottomimg">
@@ -31,10 +23,10 @@
     </div>
     <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
-      <div class="m-txt">将游戏内资产提到钱包，将消耗0.1ENS。</div>
-      <input type="text" class="m-invitcode" maxlength="4" />
+      <div class="m-txt">将游戏内资产充入钱包，将消耗0.1ENS。</div>
+      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSInNum"/>
       <div class="m-wallinbtnbox">
-        <a href="javascript:;" class="m-btn" @click="openIn()">
+        <a href="javascript:;" class="m-btn" @click="ENSIn()">
           <img src="../assets/images/img-txbtn01.png" />
         </a>
         <a href="javascript:;" class="m-btn" @click="openIn()">
@@ -54,6 +46,7 @@
         </a>
       </div>
     </div>
+    <notice v-show="issign">{{msg}}</notice>
   </div>
 
 </template>
@@ -64,7 +57,11 @@
       return {
         tcinShow: false,
         tcoutShow: false,
-        ENSOutNum: ""
+        ENSOutNum: "",
+        ENSInNum:"",
+        msg: "",
+        issign: false,
+        balancesList:[]
       }
     },
     methods: {
@@ -74,16 +71,111 @@
       openOut() {
         this.tcoutShow = !this.tcoutShow
       },
+      ENSIn() {
+        var _this = this;
+        var url = this.http189 + "/peer/transactions";
+        var type = 6;
+        var args = ["XAS", this.ENSInNum, sessionStorage.getItem("address")];
+        this.$utils.contract(type, args, url, function (data) {
+          if (data.msg.indexOf('Insufficient balance') > -1) {
+            _this.msg = "余额不足,请充值";
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('Key is locked') > -1) {
+            _this.msg = '你的操作正在进行网络确认，请稍后';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('amount range') > -1) {
+            _this.msg = '数额要大于0';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('String is too long') > -1) {
+            _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('should be integer') > -1) {
+            _this.msg = '您输入的数额过长或不为整数，请再次确认';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('Invalid timestamp') > -1) {
+            _this.msg = '本地时间不精准，请先校准本地时间';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('second') > -1) {
+            _this.msg = '设置了二级密码账号无法使用';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('Account is locked') > -1) {
+            _this.msg = '锁仓账户无法使用'
+            _this.issign = true
+            return;
+          }
+        })
+      },
       ENSOut() {
+        var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
         var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
-        this.$utils.contract(type, args, url)
+        this.$utils.contract(type, args, url, function (data) {
+          if (data.msg.indexOf('Insufficient balance') > -1) {
+            _this.msg = "余额不足,请充值";
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('Key is locked') > -1) {
+            _this.msg = '你的操作正在进行网络确认，请稍后';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('amount range') > -1) {
+            _this.msg = '数额要大于0';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('String is too long') > -1) {
+            _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('should be integer') > -1) {
+            _this.msg = '您输入的数额过长或不为整数，请再次确认';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('Invalid timestamp') > -1) {
+            _this.msg = '本地时间不精准，请先校准本地时间';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('second') > -1) {
+            _this.msg = '设置了二级密码账号无法使用';
+            _this.issign = true
+            return;
+          }
+          if (data.msg.indexOf('Account is locked') > -1) {
+            _this.msg = '锁仓账户无法使用'
+            _this.issign = true
+            return;
+          }
+        })
       },
     },
     mounted() {
-	  let self = this;
-    //self.ENSOut();
+      let _this = this;
+      //self.ENSOut();
+      setInterval(function(){
+         _this.issign = false
+      },3000)
+
+      this.balancesList = sessionStorage.getItem("balances")
     }
 
   }
