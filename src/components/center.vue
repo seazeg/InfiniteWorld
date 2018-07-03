@@ -4,7 +4,7 @@
       <div class="img-hd">
         <img src="../assets/images/img-hd.png" />
       </div>
-      <div class="m-name">易老斯</div>
+      <div class="m-name">{{proname}}</div>
       <a v-if="!part" class="z-buildbtn" @click="open()">
         <img src="../assets/images/img-build.png" />
       </a>
@@ -42,7 +42,11 @@
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txt">本次角色创建需消耗200ENS</div>
       <input type="text" class="m-nameipt" maxlength="4" v-model="name"/>
+      <input type="text" class="m-invitcode" maxlength="4" v-model="ma"/>
+      <div class="m-tcbtnbox">
+        <a href="javascript:;" class="m-btn" @click="createRole()">
           <img src="../assets/images/img-txbtn01.png" />
+        </a>
         <a href="javascript:;" class="m-btn" @click="tcShow=false">
           <img src="../assets/images/img-txbtn02.png" />
         </a>
@@ -61,6 +65,7 @@
         sign: false,
         part: false,
         name:"",
+        proname:"",
         ma:"",
         signData:'',
       }
@@ -85,6 +90,8 @@
             setTimeout( function(){
               self.sign = false;
             },2000)
+            self.proname = self.name;
+            self.part = true;
           }
            console.log("返回结果",data);
         });

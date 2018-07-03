@@ -307,7 +307,7 @@
         }).then((res) => {
 
           _this.role = res.data.data;
-          console.log(_this.role)
+          //console.log(_this.role)
 
         }, (error) => {
           console.log(error);
@@ -324,7 +324,7 @@
           params: params
         }).then((res) => {
           _this.rolepack = res.data.data;
-          console.log(_this.rolepack)
+          //console.log(_this.rolepack)
           // for( var a=0;a<self.carddata.length;a++){
           // if(self.buyData.itemid == self.carddata[a].id){
           //   self.buyData.img = self.carddata[a].img
@@ -348,14 +348,18 @@
           params: params
         }).then((res) => {
           _this.bag = res.data.data;
+          for( var c=0; c<_this.bag.length;c++){
+            if(_this.bag[c].itemid == '88888'){
+              _this.bag.splice(c,1)
+            }
+          }
+          
           for( var a=0;a<_this.carddata.length;a++){
             for( var b=0; b<_this.bag.length;b++){
               if(_this.bag[b].itemid == _this.carddata[a].id){
                 _this.bag[b].img = _this.carddata[a].img
-                console.log(_this.bag[b].img)
               }
             }
-          
           }
         }, (error) => {
           console.log(error);
