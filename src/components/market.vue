@@ -48,7 +48,7 @@
       </div>
       <p>{{buyData.price}}ENS</p>
       <div class="box">
-        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="buyFn(buyData)">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="marketLayer=false">
       </div>
     </div>
@@ -153,6 +153,15 @@
       }
     },
     methods: {
+      buyFn(obj) {
+        let self = this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.itemid];
+        var result = this.$utils.contract(type, args, url, function (data) {
+          console.log("返回结果", data);
+        });
+      },
       add(type, obj) {
         if (type == 1) {
           this.input1 = obj.name;
