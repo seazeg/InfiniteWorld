@@ -85,7 +85,7 @@
         }
         var b = new Date;
         var b = -b.getTimezoneOffset() / 60;
-        var i = '2018/6/5 20:30:00';
+        var i = '2018/7/3 22:00:00';
         var config = {
           timeText: i, //倒计时时间
           timeZone: b, //时区
