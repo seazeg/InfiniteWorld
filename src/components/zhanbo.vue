@@ -60,7 +60,8 @@
               self.sign = false;
             },2000)
           }else if(data.result == true){
-            self.signData = "占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。";
+            self.tcShow = true;
+           // self.signData = "占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。";
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
