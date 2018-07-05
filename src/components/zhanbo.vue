@@ -49,27 +49,41 @@
       },
       zhanbo() {
         let self = this;
-        var url = this.http184 + "/app/EnsContract";
-        var type = 6666;
-        var args = [sessionStorage.getItem("address"),"1002\u0004"];
-        var result = this.$utils.contract(type, args, url,function(data){
+        var zbfjs = self.fjs*1-10;
+        var zbjs =self.rolejs*1-5;
+        if( zbfjs<0 || zbjs<0){
+          self.signData = "方解石或精神力不足！";
+          self.sign = true;
           self.tcShow = false;
-          if(data.result == false){
-            self.signData = data.msg;
-            self.sign = true;
-            setTimeout( function(){
+          setTimeout( function(){
               self.sign = false;
             },2000)
-          }else if(data.result == true){
-            self.tcShow = true;
-           // self.signData = "占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。";
-            self.sign = true;
-            setTimeout( function(){
-              self.sign = false;
-            },2000)
-          }
-           console.log("返回结果",data);
-        });
+        }else{
+          var url = this.http184 + "/app/EnsContract";
+          var type = 6666;
+          var args = [sessionStorage.getItem("address"),"1002\u0004"];
+          var result = this.$utils.contract(type, args, url,function(data){
+            self.tcShow = false;
+            if(data.result == false){
+              self.signData = data.msg;
+              self.sign = true;
+              setTimeout( function(){
+                self.sign = false;
+              },2000)
+            }else if(data.result == true){
+              self.tcShow = true;
+            // self.signData = "占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。";
+              self.sign = true;
+              setTimeout( function(){
+                self.sign = false;
+              },2000)
+            }
+            console.log("返回结果",data);
+          });
+        }
+
+
+
        
       },
       roleInit() {

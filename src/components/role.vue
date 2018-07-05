@@ -41,9 +41,9 @@
           <div v-if="left.role2">
 
             <div class="roleinfo2 fixed">
-              <span @click="rolezb=true" v-for="item in bag">
-                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
-                <div class="role_zb" v-show="rolezb">
+              <span v-for="(item, index) in bag">
+                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="" @click="showBtn(index)">
+                <div class="role_zb" v-if="item.rolezb">
                   <div>装备</div>
                   <div @click="rolesj=true">上架</div>
                   <div @click="rolefj=true">分解</div>
@@ -244,7 +244,7 @@
           role3: false,
           role4: false
         },
-        rolezb: false,
+        //rolezb: false,
         noticeShow: false,
         rolefj: false,
         rolesj: false,
@@ -265,6 +265,12 @@
     methods: {
       open() {
         this.layerShow = !this.layerShow
+      },
+      showBtn(ele){
+        let self = this;
+        console.log(self.bag[ele].rolezb)
+        self.bag[ele].rolezb = true;
+        console.log(self.bag[ele].rolezb,111)
       },
       change(type) {
         if (type == 1) {
@@ -350,6 +356,9 @@
           params: params
         }).then((res) => {
           _this.bag = res.data.data;
+          for (var c = 0; c < _this.bag.length; c++) {
+            _this.bag[c].rolezb=false;
+          }
           for (var a = 0; a < _this.carddata.length; a++) {
             for (var b = 0; b < _this.bag.length; b++) {
               if (_this.bag[b].itemid == _this.carddata[a].id) {
@@ -476,7 +485,7 @@
 
   .role .m-jsbox {
     width: 100%;
-    height: 17.1rem;
+    height: 100%;
     margin: 0 auto;
     background-size: 100% 100%;
   }
@@ -591,6 +600,7 @@
     font-size: 0.38rem;
     position: absolute;
     right: 0;
+    top:0;
     padding: 10px 0;
   }
 
