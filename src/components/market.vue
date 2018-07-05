@@ -7,14 +7,14 @@
           <span @click="selShow1=!selShow1">阶数：{{input1}}</span>
 
           <ul class="select1" v-show="selShow1">
-            <li v-for="item in list1" @click="add(1,item.name)">{{item.name}}</li>
+            <li v-for="item in list1" @click="add(1,item)">{{item.name}}</li>
           </ul>
 
         </p>
         <p class="input">
           <span @click="selShow2=!selShow2">品级：{{input2}}</span>
           <ul class="select2" v-show="selShow2">
-            <li v-for="item in list2" @click="add(2,item.name)">{{item.name}}</li>
+            <li v-for="item in list2" @click="add(2,item)">{{item.name}}</li>
 
           </ul>
 
@@ -22,7 +22,7 @@
         <p class="input">
           <span @click="selShow3=!selShow3">系列：{{input3}}</span>
           <ul class="select3" v-show="selShow3">
-            <li v-for="item in list3" @click="add(3,item.name)">{{item.name}}</li>
+            <li v-for="item in list3" @click="add(3,item)">{{item.name}}</li>
           </ul>
 
         </p>
@@ -48,7 +48,7 @@
       </div>
       <p>{{buyData.price}}ENS</p>
       <div class="box">
-        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="buyFn(buyData)">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="marketLayer=false">
       </div>
     </div>
@@ -61,8 +61,8 @@
   export default {
     data() {
       return {
-        carddata:data,
-        marketData:'',
+        carddata: data,
+        marketData: '',
         noticeShow: false,
         marketLayer: false,
         selShow1: false,
@@ -72,78 +72,120 @@
         input2: "全部",
         input3: "全部",
         list1: [{
-          name: "一阶"
+          name: "一阶",
+          type: 1
         }, {
-          name: "二阶"
+          name: "二阶",
+          type: 2
         }, {
-          name: "三阶"
+          name: "三阶",
+          type: 3
         }, {
-          name: "四阶"
+          name: "四阶",
+          type: 4
         }, {
-          name: "五阶"
+          name: "五阶",
+          type: 5
         }, {
-          name: "六阶"
+          name: "六阶",
+          type: 6
         }, {
-          name: "七阶"
+          name: "七阶",
+          type: 7
         }, {
-          name: "八阶"
+          name: "八阶",
+          type: 8
         }, {
-          name: "九阶"
+          name: "九阶",
+          type: 9
         }, {
-          name: "十阶"
+          name: "十阶",
+          type: 10
         }],
         list2: [{
-          name: "平淡无奇"
+          name: "平淡无奇",
+          type: 1
         }, {
-          name: "星罗棋布"
+          name: "星罗棋布",
+          type: 2
         }, {
-          name: "屈指可数"
+          name: "屈指可数",
+          type: 3
         }, {
-          name: "绝无仅有"
+          name: "绝无仅有",
+          type: 4
         }, {
-          name: "世所罕见"
+          name: "世所罕见",
+          type: 5
         }, {
-          name: "珍奇异宝"
+          name: "珍奇异宝",
+          type: 6
         }, {
-          name: "百年难遇"
+          name: "百年难遇",
+          type: 7
         }, {
-          name: "沧海一粟"
+          name: "沧海一粟",
+          type: 8
         }, {
-          name: "空前绝后"
+          name: "空前绝后",
+          type: 9
         }, {
-          name: "寥若星辰"
+          name: "寥若星辰",
+          type: 10
         }],
         list3: [{
-          name: "戒指"
+          name: "戒指",
+          type: "戒指"
         }, {
-          name: "臂章"
+          name: "臂章",
+          type: "臂章"
         }, {
-          name: "项链"
+          name: "项链",
+          type: "项链"
         }, {
-          name: "手镯"
+          name: "手镯",
+          type: "手镯"
         }],
-        buyData:'',
+        buyData: '',
+        pid: 0,
+        powerid: 0,
+        itemtype: ""
       }
     },
     methods: {
+      buyFn(obj) {
+        let self = this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.itemid];
+        var result = this.$utils.contract(type, args, url, function (data) {
+          console.log("返回结果", data);
+        });
+      },
       add(type, obj) {
         if (type == 1) {
-          this.input1 = obj;
+          this.input1 = obj.name;
+          this.pid = obj.type;
           this.selShow1 = false;
+          this.init()
         } else if (type == 2) {
-          this.input2 = obj;
+          this.input2 = obj.name;
+          this.powerid = obj.type;
           this.selShow2 = false;
+          this.init()
         } else if (type == 3) {
-          this.input3 = obj;
+          this.input3 = obj.name;
+          this.itemtype = obj.type;
           this.selShow3 = false;
+          this.init()
         }
       },
       init() {
         var _this = this;
         var params = {
-          pid: 0,
-          powerid: 0,
-          itemtype: "",
+          pid: _this.pid,
+          powerid: _this.powerid,
+          itemtype: _this.itemtype,
           saleuptime: "2040/12/12"
         }
         _this.$axios({
@@ -161,19 +203,18 @@
         let self = this;
         self.marketLayer = true;
         self.buyData = ele;
-        for( var a=0;a<self.carddata.length;a++){
-          if(self.buyData.itemid == self.carddata[a].id){
+        for (var a = 0; a < self.carddata.length; a++) {
+          if (self.buyData.itemid == self.carddata[a].id) {
             self.buyData.img = self.carddata[a].img
             console.log(self.buyData.img)
           }
         }
-       },
+      },
     },
     mounted() {
       this.init();
     }
   }
-
 </script>
 
 
@@ -347,7 +388,8 @@
     margin: 0 auto;
     margin-top: 1.2rem;
   }
-  .marketLayer .card img{
+
+  .marketLayer .card img {
     width: auto;
     margin: 0 auto;
     height: 100%;
@@ -375,5 +417,4 @@
   .marketLayer img.no {
     width: 30%;
   }
-
 </style>
