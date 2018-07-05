@@ -310,10 +310,7 @@
           url: _this.http184 + '/wb/role',
           params: params
         }).then((res) => {
-
-          _this.role = res.data.data;
-          //console.log(_this.role)
-
+          _this.roleInfo = res.data.data;
         }, (error) => {
           console.log(error);
         });

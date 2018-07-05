@@ -12,7 +12,7 @@
         <i>
           <img src="../assets/images/ico-fjs.png" />
         </i>
-        <div class="m-txt">180/300</div>
+        <div class="m-txt">{{fjs}}/300</div>
       </div>
     </div>
     <div class="m-btnbox">
@@ -68,6 +68,8 @@
         proname:"",
         ma:"",
         signData:'',
+        role:'',
+        fjs:'',
       }
     },
     methods: {
@@ -96,6 +98,29 @@
            console.log("返回结果",data);
         });
        
+      },
+      roleInit() {
+        var _this = this;
+        var params = {
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/role',
+          params: params
+        }).then((res) => {
+          _this.role = res.data.data;
+          if(_this.role.nickname!=''){
+            _this.proname = _this.role.nickname;
+            _this.fjs = _this.role.str5;
+            if(_this.fjs == ''){
+              _this.fjs = '0';
+            }
+            _this.part = true;
+          }
+        }, (error) => {
+          console.log(error);
+        });
       },
       open() {
         this.tcShow = !this.tcShow
@@ -134,6 +159,10 @@
           })
         }
       }
+    },
+    mounted() {
+      //角色
+      this.roleInit();
     }
 
   }
