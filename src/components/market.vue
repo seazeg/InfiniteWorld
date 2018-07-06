@@ -52,6 +52,7 @@
         <img src="../assets/images/role_no.png" alt="" class="no" @click="marketLayer=false">
       </div>
     </div>
+    <notice v-show="sign">{{signData}}</notice>
   </div>
 </template>
 
@@ -68,6 +69,7 @@
         selShow1: false,
         selShow2: false,
         selShow3: false,
+        sign: false,
         input1: "全部",
         input2: "全部",
         input3: "全部",
@@ -157,8 +159,24 @@
         let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.itemid];
+        var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.packid];
         var result = this.$utils.contract(type, args, url, function (data) {
+          self.marketLayer = false;
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+            self.proname = self.name;
+            self.part = true;
+          }
           console.log("返回结果", data);
         });
       },
@@ -206,9 +224,36 @@
         for (var a = 0; a < self.carddata.length; a++) {
           if (self.buyData.itemid == self.carddata[a].id) {
             self.buyData.img = self.carddata[a].img
-            console.log(self.buyData.img)
           }
         }
+        self.packid = self.buyData.packid
+      },
+      //购买装备
+      buyEquip() {
+        let self = this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1004\u0004"+this.packid];
+        var result = this.$utils.contract(type, args, url,function(data){
+          self.tcShow = false;
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+            self.proname = self.name;
+            self.part = true;
+          }
+           console.log("返回结果",data);
+        });
+       
       },
     },
     mounted() {

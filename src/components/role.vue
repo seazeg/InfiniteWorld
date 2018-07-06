@@ -49,20 +49,6 @@
                   <div @click="rolefj=true">分解</div>
                 </div>
               </span>
-              <!-- <span>
-              </span>
-              <span>
-              </span>
-              <span>
-              </span>
-              <span>
-              </span>
-              <span>
-              </span>
-              <span>
-              </span>
-              <span>
-              </span> -->
             </div>
           </div>
           <div v-if="left.role3">
@@ -94,7 +80,6 @@
                   <tr>
                     <th>交易</th>
                     <th>时间</th>
-
                   </tr>
                 </thead>
                 <tbody>
@@ -117,7 +102,6 @@
         <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolefj=false">
       </div>
-
     </div>
     <!-- 上架 -->
     <div class="rolesj" v-show="rolesj">
@@ -268,9 +252,12 @@
       },
       showBtn(ele){
         let self = this;
-        console.log(self.bag[ele].rolezb)
-        self.bag[ele].rolezb = true;
-        console.log(self.bag[ele].rolezb,111)
+        if(self.bag[ele].rolezb == true){
+          self.bag[ele].rolezb = false;
+        }else{
+          self.bag[ele].rolezb = true;
+        }
+        
       },
       change(type) {
         if (type == 1) {
@@ -357,8 +344,10 @@
         }).then((res) => {
           _this.bag = res.data.data;
           for (var c = 0; c < _this.bag.length; c++) {
-            _this.bag[c].rolezb=false;
+            //_this.bag[c].rolezb=false;
+           _this.$set(_this.bag[c],'rolezb',false);
           }
+          console.log(_this.bag)
           for (var a = 0; a < _this.carddata.length; a++) {
             for (var b = 0; b < _this.bag.length; b++) {
               if (_this.bag[b].itemid == _this.carddata[a].id) {
@@ -528,11 +517,12 @@
     width: 60%;
     float: right;
     margin-top: 35px;
-    margin-right: 2%;
+    margin-right: 5%;
   }
 
   .role .layer .right .roleInfo {
     margin-bottom: 10px;
+    margin-left: .4rem;
   }
 
   .role .layer .right .roleInfo .field {
@@ -589,6 +579,7 @@
 
   .role .layer .right .roleinfo2.fixed>span {
     position: relative;
+    margin-bottom: .2rem;
   }
 
   .role .layer .right .roleinfo2 .role_zb {
