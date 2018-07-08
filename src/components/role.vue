@@ -44,9 +44,10 @@
               <span v-for="(item, index) in bag">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="" @click="showBtn(index)">
                 <div class="role_zb" v-if="item.rolezb">
-                  <div>装备</div>
-                  <div @click="rolesj=true">上架</div>
-                  <div @click="rolefj=true">分解</div>
+                  <div v-show="!item.zbon" @click="equipOn(item)">装备</div>
+                  <div v-show="item.zbon" @click="equipOff(item)">卸下</div>
+                  <div @click="openSell(item)">上架</div>
+                  <div @click="deczb(item)">分解</div>
                 </div>
               </span>
             </div>
@@ -99,7 +100,7 @@
     <!-- 分解 -->
     <div class="role_fenjie" v-show="rolefj">
       <div class="box">
-        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="decompose()">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolefj=false">
       </div>
     </div>
@@ -107,7 +108,7 @@
     <div class="rolesj" v-show="rolesj">
       <input type="number" value="" v-model="roleENS">
       <div class="box">
-        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="">
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="equipSell()">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolesj=false,roleENS=''">
       </div>
     </div>
@@ -207,6 +208,7 @@
       <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
       <source src="../assets/audio/24.mp3" type="audio/mpeg">
     </audio>
+    <notice v-show="sign">{{signData}}</notice>
   </div>
 </template>
 
@@ -229,6 +231,10 @@
           role4: false
         },
         //rolezb: false,
+        sign: false,
+        signData:'',
+        sellPackid:'',
+        decPackid:'',
         noticeShow: false,
         rolefj: false,
         rolesj: false,
@@ -319,13 +325,6 @@
           params: params
         }).then((res) => {
           _this.rolepack = res.data.data;
-          //console.log(_this.rolepack)
-          // for( var a=0;a<self.carddata.length;a++){
-          // if(self.buyData.itemid == self.carddata[a].id){
-          //   self.buyData.img = self.carddata[a].img
-          //   console.log(self.buyData.img)
-          // }
-          //}
         }, (error) => {
           console.log(error);
         });
@@ -344,10 +343,9 @@
         }).then((res) => {
           _this.bag = res.data.data;
           for (var c = 0; c < _this.bag.length; c++) {
-            //_this.bag[c].rolezb=false;
            _this.$set(_this.bag[c],'rolezb',false);
+           _this.$set(_this.bag[c],'zbno',false);
           }
-          console.log(_this.bag)
           for (var a = 0; a < _this.carddata.length; a++) {
             for (var b = 0; b < _this.bag.length; b++) {
               if (_this.bag[b].itemid == _this.carddata[a].id) {
@@ -410,6 +408,132 @@
           console.log(error);
         });
       },
+      //穿上装备
+      equipOn(ele) {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1101\u0004"+ele.packid+"\u00041"];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            ele.rolezb = false;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            ele.rolezb = false;
+            ele.zbon = true;
+            console.log(ele)
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+          console.log("返回结果",data);
+        });
+      },
+      //卸下装备
+      equipOff(ele) {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1101\u0004"+ele.packid+"\u00040"];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            ele.rolezb = false;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            ele.rolezb = false;
+            ele.zbon = false;
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+          console.log("返回结果",data);
+        });
+      },
+      //打开卖装备弹层
+      openSell(ele) {
+        let self =this;
+        ele.rolezb = false;
+        self.rolesj=true;
+        self.sellPackid =ele.packid;
+      },
+      //卖装备
+      equipSell() {
+        let self =this;
+        if(self.roleENS == ''){
+          self.signData = '请正确填写卖价！';
+          self.sign = true;
+          setTimeout( function(){
+            self.sign = false;
+          },2000)
+        }else{
+          var url = this.http184 + "/app/EnsContract";
+          var type = 6666;
+          var args = [sessionStorage.getItem("address"),"1103\u0004"+self.sellPackid+"\u0004ENDLESS.ENS\u00041\u0004"+self.roleENS];
+          var result = this.$utils.contract(type, args, url,function(data){
+            if(data.result == false){
+              self.signData = data.msg;
+              self.rolesj=false;
+              self.sign = true;
+              setTimeout( function(){
+                self.sign = false;
+              },2000)
+            }else if(data.result == true){
+              self.rolesj=false;
+              self.signData = data.data;
+              self.sign = true;
+              setTimeout( function(){
+                self.sign = false;
+              },2000)
+            }
+            console.log("返回结果",data);
+          });
+        }
+      },
+      //设定分解装备的Packid
+      deczb(ele){
+        let self = this;
+        ele.rolezb = false;
+        self.decPackid = ele.packid;
+        self.rolefj = true;
+      },
+     //分解装备
+      decompose() {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1105\u0004"+self.decPackid];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            self.signData = data.msg;
+            self.rolefj=false;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.rolefj=false;
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+          console.log("返回结果",data);
+        });
+        
+      },
 
       audio() {
         let self = this;
@@ -435,7 +559,6 @@
           }
         }
         self.oldstr = str
-
       }
     },
     mounted() {
@@ -666,6 +789,7 @@
 
   .role .layer .right .table {
     width: 86%;
+    margin-left: 8%;
     /* margin-top: 20px; */
   }
 

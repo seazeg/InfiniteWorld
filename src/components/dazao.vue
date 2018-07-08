@@ -1,11 +1,12 @@
 <template>
     <div class="m-dazao">
+      <div class="m-clickbtn" @click="cardList=true"></div>
     	<div v-show="tcShow" class="m-tcbg"></div>
 	    <div v-show="tcShow" class="m-dzcontbox">
 	      <div class="m-txt01">123</div>
 	      <div class="m-txt02">123</div>
 	      <div class="m-dztcbtnbox">
-	        <a href="javascript:;" class="m-btn" @click="close()">
+	        <a href="javascript:;" class="m-btn" @click="dzEquip()">
 	          <img src="../assets/images/ico-dazaobtn01.png" />
 	        </a>
 	        <a href="javascript:;" class="m-btn" @click="close()">
@@ -15,65 +16,99 @@
 	    </div>
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
-	    		<div class="m-list">
+	    		<div class="m-list" v-for="(item, index) in bag" @click="dzShow(item)">
 					<div class="m-imgbox">
-						<img  src="../assets/images/card01.png"/>
+						<img :src="'../../static/images/'+ item.img + '.png'"/>
 					</div>
 				</div>
-				<div class="m-list">
-					<div class="m-imgbox">
-						<img  src="../assets/images/card01.png"/>
-					</div>
-				</div>
-        <div class="m-list">
-					<div class="m-imgbox">
-						<img  src="../assets/images/card01.png"/>
-					</div>
-				</div>
-        <div class="m-list">
-					<div class="m-imgbox">
-						<img  src="../assets/images/card01.png"/>
-					</div>
-				</div>
-        <div class="m-list">
-					<div class="m-imgbox">
-						<img  src="../assets/images/card01.png"/>
-					</div>
-				</div>
-        <div class="m-list">
-					<div class="m-imgbox">
-						<img  src="../assets/images/card01.png"/>
-					</div>
-				</div>
+
 	    	</div>
 	    </div>
-       <notice v-show="sign">打造完成，区块确认中，请与10秒后在个人中心—打造记录中进行查看。</notice>
+       <notice v-show="sign">{{signData}}</notice>
     </div>
 </template>
 
 <script>
+  import data from '../json/carddata'
+
   export default {
     data() {
       return {
-      	tcShow: true,
+        carddata: data,
+      	tcShow: false,
         sign: false,
+        signData:'',
         cardList: false,
+        bag: [],
+        dzPackid:'',
       }
     },
     methods: {
       close() {
         this.tcShow = !this.tcShow
       },
-      // signClick(){
-      // 	let self = this;
-      // 	self.sign = true;
-      // 	setTimeout(function(){
-      // 		self.sign = false;
-      // 	}, 3000)
-      // }
+      dzShow(ele){
+        let self = this;
+        self.cardList = false;
+        self.tcShow = true;
+        self.dzPackid = ele.packid;
+      },
+      bagInit() {
+        var _this = this;
+        var params = {
+          itemtype: "",
+          address: sessionStorage.getItem("address"),
+          packid: 999999999
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/mypacklist',
+          params: params
+        }).then((res) => {
+          _this.bag = res.data.data;
+          for (var c = 0; c < _this.bag.length; c++) {
+           _this.$set(_this.bag[c],'rolezb',false);
+           _this.$set(_this.bag[c],'zbno',false);
+          }
+          for (var a = 0; a < _this.carddata.length; a++) {
+            for (var b = 0; b < _this.bag.length; b++) {
+              if (_this.bag[b].itemid == _this.carddata[a].id) {
+                _this.bag[b].img = _this.carddata[a].img
+              }
+            }
+          }
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      //打造装备
+      dzEquip() {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1104\u0004"+self.dzPackid];
+        var result = this.$utils.contract(type, args, url,function(data){
+          self.tcShow=false;
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+          console.log("返回结果",data);
+        });
+      },
     },
-    // mounted:{
-    // }
+    mounted() {
+      this.bagInit();
+    }
 
   }
 
@@ -84,6 +119,7 @@
 	width: 10.8rem;height:100%; display: inline-block;background: url("../assets/images/bg-dazao.jpg") no-repeat;
     background-size: 100% 100%;
 }
+.m-dazao .m-clickbtn{width: 100%; height: 100%;display: inline-block;}
   .m-dzcontbox {
     width: 8.7rem;
     height: 9.65rem;
