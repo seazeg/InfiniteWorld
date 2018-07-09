@@ -63,6 +63,7 @@
     data() {
       return {
         carddata: data,
+        signData:'',
         marketData: '',
         noticeShow: false,
         marketLayer: false,
@@ -374,6 +375,7 @@
     height: 2.6rem;
     background: url("../assets/images/market_bg.png") repeat-y;
     background-size: 100%;
+    position: relative;
 
   }
 
@@ -391,9 +393,9 @@
   .market .list .box img {
     width: 20%;
     display: inline-block;
-    position: relative;
-    top: 0.3rem;
-    left: 0.1rem;
+    position: absolute;
+    top: 0.9rem;
+    right: 0.7rem;
   }
 
   .market input::-webkit-input-placeholder {

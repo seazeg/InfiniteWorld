@@ -16,7 +16,7 @@
             <img src="../assets/images/role2_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(3)">
-            <img src="../assets/images/role3.jpg" alt="" v-if="!left.role3">
+            <img src="../assets/images/role3.jpg" alt="" v-if="!left.role3" @click="myGroundingInit()">
             <img src="../assets/images/role3_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(4)">
@@ -67,7 +67,7 @@
                     <td>{{item.itemname}} {{item.price}}ENS</td>
                     <td>{{item.saleuptime}}</td>
                     <td>
-                      <a>取消</a>
+                      <a href="javascript:;"  @click="sellDown(item)">取消</a>
                     </td>
                   </tr>
                 </tbody>
@@ -500,6 +500,33 @@
             console.log("返回结果",data);
           });
         }
+      },
+      //取消卖装备
+      sellDown(ele) {
+        let self =this;
+          var url = this.http184 + "/app/EnsContract";
+          var type = 6666;
+          var args = [sessionStorage.getItem("address"),"1103\u0004"+ele.packid+"\u0004\u00040\u00040"];
+          var result = this.$utils.contract(type, args, url,function(data){
+            if(data.result == false){
+              self.signData = data.msg;
+              self.rolesj=false;
+              self.sign = true;
+              setTimeout( function(){
+                self.sign = false;
+              },2000)
+            }else if(data.result == true){
+              self.rolesj=false;
+              self.signData = data.data;
+              self.sign = true;
+              setTimeout( function(){
+                self.sign = false;
+              },2000);
+              self.myGroundingInit();
+            }
+            console.log("返回结果",data);
+          });
+
       },
       //设定分解装备的Packid
       deczb(ele){
