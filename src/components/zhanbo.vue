@@ -36,10 +36,10 @@
       return {
         tcShow: false,
         sign: false,
-        signData:'',
-        fjs:'',
-        rolejs:'',
-        nextTime:'',
+        signData: '',
+        fjs: '',
+        rolejs: '',
+        nextTime: '',
       }
     },
     methods: {
@@ -48,43 +48,43 @@
       },
       zhanbo() {
         let self = this;
-        var zbfjs = self.fjs*1-10;
-        var zbjs =self.rolejs*1-5;
-        if( zbfjs<0 || zbjs<0){
+        var zbfjs = self.fjs * 1 - 10;
+        var zbjs = self.rolejs * 1 - 5;
+        if (zbfjs < 0 || zbjs < 0) {
           self.signData = "方解石或精神力不足！";
           self.sign = true;
           self.tcShow = false;
-          setTimeout( function(){
-              self.sign = false;
-            },2000)
-        }else{
+          setTimeout(function () {
+            self.sign = false;
+          }, 2000)
+        } else {
           var url = this.http184 + "/app/EnsContract";
           var type = 6666;
-          var args = [sessionStorage.getItem("address"),"1002\u0004"];
-          var result = this.$utils.contract(type, args, url,function(data){
+          var args = [sessionStorage.getItem("address"), "1002\u0004"];
+          var result = this.$utils.contract(type, args, url, function (data) {
             self.tcShow = false;
-            if(data.result == false){
+            if (data.result == false) {
               self.signData = data.msg;
               self.sign = true;
-              setTimeout( function(){
+              setTimeout(function () {
                 self.sign = false;
-              },2000)
-            }else if(data.result == true){
+              }, 2000)
+            } else if (data.result == true) {
               self.tcShow = false;
               self.signData = "占卜成功，区块确认中，请与10秒后在个人—占卜记录中进行查看。";
               self.sign = true;
-              setTimeout( function(){
+              setTimeout(function () {
                 self.sign = false;
-              },2000)
-              window.reload();
+              }, 2000)
+              self.init()
             }
-            console.log("返回结果",data);
+            console.log("返回结果", data);
           });
         }
 
 
 
-       
+
       },
       roleInit() {
         var _this = this;
@@ -97,12 +97,12 @@
           params: params
         }).then((res) => {
           _this.role = res.data.data;
-          if(_this.role.nickname!=''){
+          if (_this.role.nickname != '') {
             _this.proname = _this.role.nickname;
             _this.fjs = _this.role.str5;
             _this.rolejs = _this.role.rolejs;
             _this.nextTime = _this.role.nexttime;
-            if(_this.fjs == ''){
+            if (_this.fjs == '') {
               _this.fjs = '0';
             }
             _this.part = true;
@@ -111,86 +111,52 @@
           console.log(error);
         });
       },
-      timedjs() {
-        var width = window.innerWidth;
-        var w = 0;
-        if (width >= 320 && width <= 374) {
-          w = 180
-        } else if (width >= 375 && width <= 413) {
-          w = 220
-        } else if (width <= 414) {
-          w = 0;
-        }
-        var b = new Date;
-        var b = -b.getTimezoneOffset() / 60;
-        //var i = '2018/7/3 22:00:00';
-        var i = this.nextTime;
-        var config = {
-          timeText: i, //倒计时时间
-          timeZone: b, //时区
-          style: "flip", //显示的样式，可选值有flip,slide,metal,crystal
-          color: "black", //显示的颜色，可选值white,black
-          width: w, //倒计时宽度
-          textGroupSpace: 12, //天、时、分、秒之间间距
-          textSpace: 0, //数字之间间距
-          reflection: 0, //是否显示倒影
-          reflectionOpacity: 10, //倒影透明度
-          reflectionBlur: 0, //倒影模糊程度
-          dayTextNumber: 3, //倒计时天数数字个数
-          displayDay: 0, //是否显示天数!0为是 0 为否
-          displayHour: 0, //是否显示小时数
-          displayMinute: !0, //是否显示分钟数
-          displaySecond: !0, //是否显示秒数
-          displayLabel: !0, //是否显示倒计时底部label
-          onFinish: function () {}
-        };
+      init() {
+        this.roleInit();
+        setTimeout(() => {
 
-        $("#countdown").jCountdown(config);
-      },
-
+          var width = window.innerWidth;
+          var w = 0;
+          if (width >= 320 && width <= 374) {
+            w = 180
+          } else if (width >= 375 && width <= 413) {
+            w = 220
+          } else if (width <= 414) {
+            w = 0;
+          }
+          var b = new Date;
+          var b = -b.getTimezoneOffset() / 60;
+          // var i = '2018/7/10 10:00:00';
+          var i = this.nextTime;
+          var config = {
+            timeText: i, //倒计时时间
+            timeZone: b, //时区
+            style: "flip", //显示的样式，可选值有flip,slide,metal,crystal
+            color: "black", //显示的颜色，可选值white,black
+            width: w, //倒计时宽度
+            textGroupSpace: 12, //天、时、分、秒之间间距
+            textSpace: 0, //数字之间间距
+            reflection: 0, //是否显示倒影
+            reflectionOpacity: 10, //倒影透明度
+            reflectionBlur: 0, //倒影模糊程度
+            dayTextNumber: 3, //倒计时天数数字个数
+            displayDay: 0, //是否显示天数!0为是 0 为否
+            displayHour: 0, //是否显示小时数
+            displayMinute: !0, //是否显示分钟数
+            displaySecond: !0, //是否显示秒数
+            displayLabel: !0, //是否显示倒计时底部label
+            onFinish: function () {}
+          };
+          // $("#countdown").jCountdown("destroy");
+          $("#countdown").jCountdown(config);
+        }, 100);
+      }
     },
     mounted() {
-      this.roleInit();
-      setTimeout(() => {
-        var width = window.innerWidth;
-        var w = 0;
-        if (width >= 320 && width <= 374) {
-          w = 180
-        } else if (width >= 375 && width <= 413) {
-          w = 220
-        } else if (width <= 414) {
-          w = 0;
-        }
-        var b = new Date;
-        var b = -b.getTimezoneOffset() / 60;
-        //var i = '2018/7/3 22:00:00';
-        var i = this.nextTime;
-        var config = {
-          timeText: i, //倒计时时间
-          timeZone: b, //时区
-          style: "flip", //显示的样式，可选值有flip,slide,metal,crystal
-          color: "black", //显示的颜色，可选值white,black
-          width: w, //倒计时宽度
-          textGroupSpace: 12, //天、时、分、秒之间间距
-          textSpace: 0, //数字之间间距
-          reflection: 0, //是否显示倒影
-          reflectionOpacity: 10, //倒影透明度
-          reflectionBlur: 0, //倒影模糊程度
-          dayTextNumber: 3, //倒计时天数数字个数
-          displayDay: 0, //是否显示天数!0为是 0 为否
-          displayHour: 0, //是否显示小时数
-          displayMinute: !0, //是否显示分钟数
-          displaySecond: !0, //是否显示秒数
-          displayLabel: !0, //是否显示倒计时底部label
-          onFinish: function () {}
-        };
-
-        $("#countdown").jCountdown(config);
-      }, 100);
+      this.init()
 
     }
   }
-
 </script>
 
 <style>
@@ -287,5 +253,4 @@
     height: 100%;
     vertical-align: top;
   }
-
 </style>
