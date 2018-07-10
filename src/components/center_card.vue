@@ -1,6 +1,6 @@
 <template>
  <div class="center-card">
-	<div class="m-list" @click="open()">
+	<!-- <div class="m-list" @click="open()">
 		<div class="m-imgbox">
 			<img />
 		</div>
@@ -14,7 +14,7 @@
 		<div class="m-imgbox">
 			<img />
 		</div>
-	</div>
+	</div> -->
 	<div class="m-list" @click="open()">
 		<div class="m-imgbox">
 			<img src="../assets/images/card01.png" />
