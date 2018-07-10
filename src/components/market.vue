@@ -1,7 +1,7 @@
 <template>
   <div class="market">
     <div class="search">
-      <input type="text" placeholder="搜索你想要的">
+      <input type="text" placeholder="搜索你想要的" @keyup="search()" v-model="key">
       <div style="position: relative;bottom: 0.1rem;">
         <p class="input">
           <span @click="selShow1=!selShow1">阶数：{{input1}}</span>
@@ -63,7 +63,7 @@
     data() {
       return {
         carddata: data,
-        signData:'',
+        signData: '',
         marketData: '',
         noticeShow: false,
         marketLayer: false,
@@ -152,7 +152,8 @@
         buyData: '',
         pid: 0,
         powerid: 0,
-        itemtype: ""
+        itemtype: "",
+        key:""
       }
     },
     methods: {
@@ -163,18 +164,18 @@
         var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.packid];
         var result = this.$utils.contract(type, args, url, function (data) {
           self.marketLayer = false;
-          if(data.result == false){
+          if (data.result == false) {
             self.signData = data.msg;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
-          }else if(data.result == true){
+            }, 2000)
+          } else if (data.result == true) {
             self.signData = data.data;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
+            }, 2000)
             self.proname = self.name;
             self.part = true;
           }
@@ -234,28 +235,50 @@
         let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),"1004\u0004"+this.packid];
-        var result = this.$utils.contract(type, args, url,function(data){
+        var args = [sessionStorage.getItem("address"), "1004\u0004" + this.packid];
+        var result = this.$utils.contract(type, args, url, function (data) {
           self.tcShow = false;
-          if(data.result == false){
+          if (data.result == false) {
             self.signData = data.msg;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
-          }else if(data.result == true){
+            }, 2000)
+          } else if (data.result == true) {
             self.signData = data.data;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
+            }, 2000)
             self.proname = self.name;
             self.part = true;
           }
-           console.log("返回结果",data);
+          console.log("返回结果", data);
         });
-       
+
       },
+      search() {
+        var _this = this;
+        //_this.key
+        
+        // var params = {
+        //   pid: _this.pid,
+        //   powerid: _this.powerid,
+        //   itemtype: _this.itemtype,
+        //   saleuptime: "2040/12/12"
+        // }
+        // _this.$axios({
+        //   method: 'get',
+        //   url: _this.http184 + '/wb/marketlist',
+        //   params: params
+        // }).then((res) => {
+        //   console.log("市场列表", res.data);
+        //   _this.marketData = res.data.data;
+        // }, (error) => {
+        //   console.log(error);
+        // });
+        //麻痹没有查询字段,傻逼后端
+      }
     },
     mounted() {
       this.init();
