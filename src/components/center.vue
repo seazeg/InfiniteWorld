@@ -69,7 +69,7 @@
         ma:"",
         signData:'',
         role:'',
-        fjs:'',
+        fjs:"0",
       }
     },
     methods: {
