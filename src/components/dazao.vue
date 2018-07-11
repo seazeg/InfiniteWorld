@@ -3,8 +3,8 @@
       <div class="m-clickbtn" @click="cardList=true"></div>
     	<div v-show="tcShow" class="m-tcbg"></div>
 	    <div v-show="tcShow" class="m-dzcontbox">
-	      <div class="m-txt01">123</div>
-	      <div class="m-txt02">123</div>
+	      <div class="m-txt01">{{dzens}}</div>
+	      <div class="m-txt02">{{dzfjs}}</div>
 	      <div class="m-dztcbtnbox">
 	        <a href="javascript:;" class="m-btn" @click="dzEquip()">
 	          <img src="../assets/images/ico-dazaobtn01.png" />
@@ -16,12 +16,11 @@
 	    </div>
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
-	    		<div class="m-list" v-for="(item, index) in bag" @click="dzShow(item)">
-					<div class="m-imgbox">
+	    		<div class="m-list" v-for="(item, index) in bag">
+					<div class="m-imgbox" @click="getResource(item)">
 						<img :src="'../../static/images/'+ item.img + '.png'"/>
 					</div>
 				</div>
-
 	    	</div>
 	    </div>
        <notice v-show="sign">{{signData}}</notice>
@@ -40,19 +39,15 @@
         signData:'',
         cardList: false,
         bag: [],
-        dzPackid:'',
+        dzfjs:'',
+        dzens:'',
       }
     },
     methods: {
       close() {
         this.tcShow = !this.tcShow
       },
-      dzShow(ele){
-        let self = this;
-        self.cardList = false;
-        self.tcShow = true;
-        self.dzPackid = ele.packid;
-      },
+      
       bagInit() {
         var _this = this;
         var params = {
@@ -77,6 +72,29 @@
               }
             }
           }
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      //获取打造需要的ens跟方解石
+      getResource(ele) {
+        var _this = this;
+        var params = {
+          itemtype: "",
+          address: sessionStorage.getItem("address"),
+          packid: ele.packid,
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/itempowercost',
+          params: params
+        }).then((res) => {
+         console.log(res.data.data);
+         _this.dzens = res.data.data[0].costens;
+         _this.dzfjs = res.data.data[0].costitem;
+         _this.cardList = false;
+         _this.tcShow = true;
+
         }, (error) => {
           console.log(error);
         });

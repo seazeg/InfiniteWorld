@@ -8,7 +8,7 @@
       <div class="layer" v-show="layerShow">
         <div class="left">
           <p @click="change(1)">
-            <img src="../assets/images/role1.jpg" alt="" v-if="!left.role1">
+            <img src="../assets/images/role1.jpg" alt="" v-if="!left.role1" @click="rolepackInit()">
             <img src="../assets/images/role1_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(2)">
@@ -34,6 +34,7 @@
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
+                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <p>{{item.itemname}}</p>
               </span>
             </div>
@@ -325,6 +326,13 @@
           params: params
         }).then((res) => {
           _this.rolepack = res.data.data;
+          for (var a = 0; a < _this.carddata.length; a++) {
+            for (var b = 0; b < _this.rolepack.length; b++) {
+              if (_this.rolepack[b].itemid == _this.carddata[a].id) {
+                _this.rolepack[b].img = _this.carddata[a].img
+              }
+            }
+          }
         }, (error) => {
           console.log(error);
         });
@@ -693,10 +701,9 @@
     height: 243px;
   }
 
-
   .role .layer .right .roleinfo2 span {
     width: 40%;
-    margin: 0 5%;
+    margin: 0 5% .2rem;
     height: 130px;
     background: #85735b;
     display: inline-block;
@@ -705,7 +712,7 @@
 
   .role .layer .right .roleinfo2 span p {
     width: 100%;
-    background: #463d30;
+    background: rgba(70, 61, 48, .5);
     height: 30px;
     color: #fff;
     font-size: 0.32rem;

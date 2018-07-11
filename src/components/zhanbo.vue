@@ -154,7 +154,6 @@
     },
     mounted() {
       this.init()
-
     }
   }
 </script>
