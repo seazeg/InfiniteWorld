@@ -34,6 +34,9 @@
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
+                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <p>{{item.itemname}}</p>
               </span>
@@ -42,12 +45,17 @@
           <div v-if="left.role2">
 
             <div class="roleinfo2 fixed">
-              <span v-for="(item, index) in bag">
-                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="" @click="showBtn(index)">
+              <span v-for="(item, index) in bag" @click="showBtn(index)">
+                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
+                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <div class="role_zb" v-if="item.rolezb">
-                  <div v-show="!item.zbon" @click="equipOn(item)">装备</div>
-                  <div v-show="item.zbon" @click="equipOff(item)">卸下</div>
-                  <div @click="openSell(item)">上架</div>
+                  <div v-if="!item.iszb== '0' && item.isband == '0'" @click="equipOn(item)">装备</div>
+                  <div v-if="item.iszb== '0' && item.isband == '0'" @click="equipOff(item)">卸下</div>
+                  <div v-if="item.isband == '1'" @click="openSell(item)">上架</div>
+                  <div v-if="item.isband == '1'" @click="jf(item)">解封</div>
+                  <div v-if="item.isband == '0'" @click="fj(item)">封禁</div>
                   <div @click="deczb(item)">分解</div>
                 </div>
               </span>
@@ -215,11 +223,13 @@
 
 <script>
   import data from '../json/carddata'
+  import leveldata from '../json/cardlevel'
 
   export default {
     data() {
       return {
         carddata: data,
+        cardlevel:leveldata,
         layerShow: false,
         audioPlay: false,
         jsImg: '1',
@@ -262,6 +272,9 @@
         if(self.bag[ele].rolezb == true){
           self.bag[ele].rolezb = false;
         }else{
+          for(var e=0; e<self.bag.length;e++){
+            self.bag[e].rolezb = false;
+          }
           self.bag[ele].rolezb = true;
         }
         
@@ -333,6 +346,13 @@
               }
             }
           }
+          for (var v = 0; v < _this.cardlevel.length; v++) {
+            for (var z = 0; z < _this.rolepack.length; z++) {
+              if (_this.rolepack[z].powerid == _this.cardlevel[v].id) {
+                _this.rolepack[z].levelimg = _this.cardlevel[v].img
+              }
+            }
+          }
         }, (error) => {
           console.log(error);
         });
@@ -352,12 +372,18 @@
           _this.bag = res.data.data;
           for (var c = 0; c < _this.bag.length; c++) {
            _this.$set(_this.bag[c],'rolezb',false);
-           _this.$set(_this.bag[c],'zbno',false);
           }
           for (var a = 0; a < _this.carddata.length; a++) {
             for (var b = 0; b < _this.bag.length; b++) {
               if (_this.bag[b].itemid == _this.carddata[a].id) {
                 _this.bag[b].img = _this.carddata[a].img
+              }
+            }
+          }
+          for (var v = 0; v < _this.cardlevel.length; v++) {
+            for (var z = 0; z < _this.bag.length; z++) {
+              if (_this.bag[z].powerid == _this.cardlevel[v].id) {
+                _this.bag[z].levelimg = _this.cardlevel[v].img
               }
             }
           }
@@ -416,6 +442,54 @@
           console.log(error);
         });
       },
+      //封禁装备
+      fj(ele) {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1112\u0004"+ele.packid+"\u00041"];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000);
+            self.bagInit();
+          }
+          console.log("返回结果",data);
+        });
+      },
+      //解封装备
+      jf(ele) {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1112\u0004"+ele.packid+"\u00040"];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            self.signData = data.msg;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000);
+            self.bagInit();
+          }
+          console.log("返回结果",data);
+        });
+      },
       //穿上装备
       equipOn(ele) {
         let self =this;
@@ -432,8 +506,6 @@
             },2000)
           }else if(data.result == true){
             ele.rolezb = false;
-            ele.zbon = true;
-            console.log(ele)
             self.signData = data.data;
             self.sign = true;
             setTimeout( function(){
@@ -459,7 +531,6 @@
             },2000)
           }else if(data.result == true){
             ele.rolezb = false;
-            ele.zbon = false;
             self.signData = data.data;
             self.sign = true;
             setTimeout( function(){
@@ -727,6 +798,24 @@
     height: 100%;
     vertical-align: top;
   }
+  .role .layer .right .roleinfo2 span .levelimg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 100;
+    vertical-align: top;
+  }
+  .role .layer .right .roleinfo2 span .fyimg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 200;
+    vertical-align: top;
+  }
 
   .role .layer .right .roleinfo2.fixed {
     margin-top: 20px;
@@ -750,6 +839,7 @@
     right: 0;
     top:0;
     padding: 10px 0;
+    z-index: 600;
   }
 
   .role .layer .right .roleinfo2 .role_zb>div {
@@ -768,6 +858,7 @@
     background-size: 100%;
     position: absolute;
     top: 20%;
+    z-index: 1000;
   }
 
 
@@ -792,6 +883,7 @@
     background-size: 100%;
     position: absolute;
     top: 20%;
+    z-index: 1000;
   }
 
   .rolesj input {

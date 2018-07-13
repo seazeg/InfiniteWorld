@@ -3,8 +3,9 @@
       <div class="m-clickbtn" @click="cardList=true"></div>
     	<div v-show="tcShow" class="m-tcbg"></div>
 	    <div v-show="tcShow" class="m-dzcontbox">
-	      <div class="m-txt01">{{dzens}}</div>
-	      <div class="m-txt02">{{dzfjs}}</div>
+        <div class="m-txt">打造将消耗</div>
+	      <div class="m-txt01">ENS*{{dzens}}</div>
+	      <div class="m-txt02">方解石*{{dzfjs}}</div>
 	      <div class="m-dztcbtnbox">
 	        <a href="javascript:;" class="m-btn" @click="dzEquip()">
 	          <img src="../assets/images/ico-dazaobtn01.png" />
@@ -151,12 +152,22 @@
     z-index: 2000;
     text-align: center;
   }
-
-  .m-dzcontbox .m-txt01 {
-    width: 3.8rem;
+  .m-dzcontbox .m-txt {
+    width: 100%;
     display: inline-block;
     background: #fff;
-    margin: 3.6rem 0 0 .6rem;
+    margin: 2rem 0 0;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: .7rem;
+    text-align: center;
+  }
+  .m-dzcontbox .m-txt01 {
+    width: 100%;
+    display: inline-block;
+    background: #fff;
+    margin: .2rem 0 0;
     border: none;
     background: none;
     outline: none;
@@ -164,10 +175,10 @@
     text-align: center;
   }
     .m-dzcontbox .m-txt02 {
-    width: 3.8rem;
+    width: 100%;
     display: inline-block;
     background: #fff;
-    margin: -.2rem 0 0 2.6rem;
+    margin: .2rem 0 0;
     border: none;
     background: none;
     outline: none;
