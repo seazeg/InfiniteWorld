@@ -138,16 +138,16 @@
         }],
         list3: [{
           name: "戒指",
-          type: "戒指"
+          type: "1"
         }, {
           name: "臂章",
-          type: "臂章"
+          type: "2"
         }, {
           name: "项链",
-          type: "项链"
+          type: "4"
         }, {
           name: "手镯",
-          type: "手镯"
+          type: "3"
         }],
         buyData: '',
         pid: 0,
