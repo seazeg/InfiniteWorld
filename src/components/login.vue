@@ -16,9 +16,9 @@
     </div>
     <div class="login_2" v-show="isShow">
       <textarea value="" v-model="secret"></textarea>
-        <a href="javascript:;" class="m-btn" @click="closezc()">
-          <img src="../assets/images/img-txbtn01.png" />
-        </a>
+      <a href="javascript:;" class="m-btn" @click="closezc()">
+        <img src="../assets/images/img-txbtn01.png" />
+      </a>
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@
           }).then((res) => {
 
             if (res.data.success) {
-              sessionStorage.setItem("balances",res.data.account.balances)
+              sessionStorage.setItem("balances", res.data.account.balances)
               sessionStorage.setItem("secret", _this.password)
               sessionStorage.setItem("publicKey", _this.$AschJS
                 .crypto.getKeys(_this.password).publicKey)
@@ -81,6 +81,7 @@
       closezc() {
         this.isShow = false;
       }
+      
     },
     mounted() {
       if (sessionStorage.getItem("address")) {
@@ -157,17 +158,16 @@
     color: #111;
   }
 
- .m-btn {
+  .m-btn {
     width: 2.95rem;
     height: 1.2rem;
     display: block;
     margin: 2.8rem auto 0;
   }
 
- .m-btn img {
+  .m-btn img {
     width: 100%;
     height: 100%;
     vertical-align: top;
   }
-
 </style>

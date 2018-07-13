@@ -41,8 +41,8 @@
     <div v-show="tcShow" class="m-tcbg"></div>
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txt">本次角色创建需消耗200ENS</div>
-      <input type="text" class="m-nameipt" maxlength="4" v-model="name"/>
-      <input type="text" class="m-invitcode" maxlength="4" v-model="ma"/>
+      <input type="text" class="m-nameipt" maxlength="4" v-model="name" />
+      <input type="text" class="m-invitcode" maxlength="4" v-model="ma" />
       <div class="m-tcbtnbox">
         <a href="javascript:;" class="m-btn" @click="createRole()">
           <img src="../assets/images/img-txbtn01.png" />
@@ -64,12 +64,12 @@
         tcShow: false,
         sign: false,
         part: false,
-        name:"",
-        proname:"",
-        ma:"",
-        signData:'',
-        role:'',
-        fjs:"0",
+        name: "",
+        proname: "",
+        ma: "",
+        signData: '',
+        role: '',
+        fjs: "0",
       }
     },
     methods: {
@@ -77,27 +77,27 @@
         let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),"1000\u0004"+this.name+"\u000401\u0004"+this.ma];
-        var result = this.$utils.contract(type, args, url,function(data){
+        var args = [sessionStorage.getItem("address"), "1000\u0004" + this.name + "\u000401\u0004" + this.ma];
+        var result = this.$utils.contract(type, args, url, function (data) {
           self.tcShow = false;
-          if(data.result == false){
+          if (data.result == false) {
             self.signData = data.msg;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
-          }else if(data.result == true){
+            }, 2000)
+          } else if (data.result == true) {
             self.signData = data.data;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
+            }, 2000)
             self.proname = self.name;
             self.part = true;
           }
-           console.log("返回结果",data);
+          console.log("返回结果", data);
         });
-       
+
       },
       roleInit() {
         var _this = this;
@@ -110,10 +110,10 @@
           params: params
         }).then((res) => {
           _this.role = res.data.data;
-          if(_this.role.nickname!=''){
+          if (_this.role.nickname != '') {
             _this.proname = _this.role.nickname;
             _this.fjs = _this.role.str5;
-            if(_this.fjs == ''){
+            if (_this.fjs == '') {
               _this.fjs = '0';
             }
             _this.part = true;
@@ -129,24 +129,24 @@
         let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),"1111\u0004"];
-        var result = this.$utils.contract(type, args, url,function(data){
+        var args = [sessionStorage.getItem("address"), "1111\u0004"];
+        var result = this.$utils.contract(type, args, url, function (data) {
           self.tcShow = false;
-          if(data.result == false){
+          if (data.result == false) {
             self.signData = data.msg;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
-          }else if(data.result == true){
+            }, 2000)
+          } else if (data.result == true) {
             self.signData = data.data;
             self.sign = true;
-            setTimeout( function(){
+            setTimeout(function () {
               self.sign = false;
-            },2000)
+            }, 2000)
             self.roleInit();
           }
-           console.log("返回结果",data);
+          console.log("返回结果", data);
         });
       },
       go(type) {
@@ -175,11 +175,55 @@
             path: "/invit"
           })
         }
+      },
+      verCheck() {
+        var md = new MobileDetect(window.navigator.userAgent);
+        var os = md.os(); //获取系统  
+        var ver = "";
+        if (os == "iOS") { //ios系统的处理  
+          os = md.os();
+          ver = md.version("iPhone")
+        } else if (os == "AndroidOS") { //Android系统的处理  
+          os = "Android";
+          ver = md.version("Android")
+        }
+
+        var _this = this;
+        var params = {
+          uuid: "5df2cd47183b9876",
+          cordova: ver,
+          model: md.phone(),
+          platform: os,
+          version: ver,
+          manufacturer: md.mobile(),
+          isVirtual: false,
+          serial: "sys",
+          appversion: "1.0.0" || $.cookie("appversion"),
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'post',
+          url: _this.http184 + '/app/ver',
+          data: params
+        }).then((res) => {
+          var result = res.data.data;
+          if (!!result) {
+            if (result.isUpdate) {
+              $.cookie("appversion", result.verno)
+              alert(result.memo);
+              window.location.href = result.downurl;
+            }
+          }
+        }, (error) => {
+          console.log(error);
+        });
       }
     },
     mounted() {
       //角色
       this.roleInit();
+      this.verCheck();
+
     }
 
   }
