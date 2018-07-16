@@ -46,16 +46,16 @@
 
             <div class="roleinfo2 fixed">
               <span v-for="(item, index) in bag" @click="showBtn(index)">
-                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
-                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <div class="role_zb" v-if="item.rolezb">
-                  <div v-if="!item.iszb== '0' && item.isband == '0'" @click="equipOn(item)">装备</div>
-                  <div v-if="item.iszb== '0' && item.isband == '0'" @click="equipOff(item)">卸下</div>
-                  <div v-if="item.isband == '1'" @click="openSell(item)">上架</div>
-                  <div v-if="item.isband == '1'" @click="jf(item)">解封</div>
-                  <div v-if="item.isband == '0'" @click="fj(item)">封禁</div>
+                  <div v-if="!item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
+                  <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOff(item)">卸下</div>
+                  <div v-if="item.isband == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.isband == '0'" @click="openjf(item)">解封</div>
+                  <div v-if="item.isband == '1'" @click="openfy(item)">封禁</div>
                   <div @click="deczb(item)">分解</div>
                 </div>
               </span>
@@ -111,6 +111,23 @@
       <div class="box">
         <img src="../assets/images/role_ok.png" alt="" class="ok" @click="decompose()">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolefj=false">
+      </div>
+    </div>
+    <!-- 封印 -->
+    <div class="role_fengyin" v-show="rolefy">
+      <div class="box">
+        <div class="m-txt">再次封印将消耗</div>
+	      <div class="m-txt01">ENS*{{fyens}}</div>
+	      <div class="m-txt02">方解石*{{fyfjs}}</div>
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="fy()">
+        <img src="../assets/images/role_no.png" alt="" class="no" @click="rolefy=false">
+      </div>
+    </div>
+    <!-- 解封 -->
+    <div class="role_jiefeng" v-show="rolejf">
+      <div class="box">
+        <img src="../assets/images/role_ok.png" alt="" class="ok" @click="jf()">
+        <img src="../assets/images/role_no.png" alt="" class="no" @click="rolejf=false">
       </div>
     </div>
     <!-- 上架 -->
@@ -248,6 +265,12 @@
         decPackid:'',
         noticeShow: false,
         rolefj: false,
+        rolefy: false,
+        fyPackid:'',
+        fyens:'',
+        fyfjs:'',
+        rolejf: false,
+        jfPackid:'',
         rolesj: false,
         roleENS: "",
         myGrounding: [],
@@ -442,20 +465,44 @@
           console.log(error);
         });
       },
+      //打开封禁弹窗
+      openfy(ele) {
+        var _this = this;
+        _this.fyPackid = ele.packid;
+        var params = {
+          itemtype: "",
+          address: sessionStorage.getItem("address"),
+          packid: ele.packid,
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/getbindcount',
+          params: params
+        }).then((res) => {
+         console.log(res.data.data);
+         _this.fyens = res.data.data.bindens;
+         _this.fyfjs = res.data.data.bindcount;
+         _this.rolefy = true;
+        }, (error) => {
+          console.log(error);
+        });
+      },
       //封禁装备
-      fj(ele) {
+      fy() {
         let self =this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),"1112\u0004"+ele.packid+"\u00041"];
+        var args = [sessionStorage.getItem("address"),"1112\u0004"+self.fyPackid+"\u00041"];
         var result = this.$utils.contract(type, args, url,function(data){
           if(data.result == false){
+            self.rolefy = false;
             self.signData = data.msg;
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
             },2000)
           }else if(data.result == true){
+            self.rolefy = false;
             self.signData = data.data;
             self.sign = true;
             setTimeout( function(){
@@ -466,13 +513,20 @@
           console.log("返回结果",data);
         });
       },
+      //打开解封弹窗
+      openjf(ele) {
+        let self = this;
+        self.jfPackid = ele.packid;
+        self.rolejf = true;
+      },
       //解封装备
-      jf(ele) {
+      jf() {
         let self =this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"),"1112\u0004"+ele.packid+"\u00040"];
+        var args = [sessionStorage.getItem("address"),"1112\u0004"+self.jfPackid+"\u00040"];
         var result = this.$utils.contract(type, args, url,function(data){
+          self.rolejf = false;
           if(data.result == false){
             self.signData = data.msg;
             self.sign = true;
@@ -874,6 +928,87 @@
   .role_fenjie img.no {
     width: 30%;
   }
+
+  .role_fengyin {
+    width: 80%;
+    margin-left: 10%;
+    height: 7.2rem;
+    background: url("../assets/images/role_fengyin.png") no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 20%;
+    z-index: 1000;
+  }
+
+
+  .role_fengyin .box {
+    text-align: center;
+  }
+  .role_fengyin .box .m-txt {
+    width: 100%;
+    display: inline-block;
+    margin: .8rem 0 0;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: .7rem;
+    text-align: center;
+  }
+  .role_fengyin .box .m-txt01 {
+    width: 100%;
+    display: inline-block;
+    margin: .2rem 0 0;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: .7rem;
+    text-align: center;
+  }
+  .role_fengyin .box .m-txt02 {
+    width: 100%;
+    display: inline-block;
+    margin: .2rem 0 .8rem;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: .7rem;
+    text-align: center;
+    vertical-align: top;
+  }
+
+  .role_fengyin img.ok {
+    width: 30%;
+  }
+
+  .role_fengyin img.no {
+    width: 30%;
+  }
+
+.role_jiefeng {
+    width: 80%;
+    margin-left: 10%;
+    height: 300px;
+    background: url("../assets/images/role_jiefeng.png") no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 20%;
+    z-index: 1000;
+  }
+
+
+  .role_jiefeng .box {
+    text-align: center;
+    margin-top: 3.6rem;
+  }
+
+  .role_jiefeng img.ok {
+    width: 30%;
+  }
+
+  .role_jiefeng img.no {
+    width: 30%;
+  }
+
 
   .rolesj {
     width: 80%;
