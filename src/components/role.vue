@@ -346,7 +346,15 @@
           url: _this.http184 + '/wb/role',
           params: params
         }).then((res) => {
-          _this.roleInfo = res.data.data;
+          if(res.data.data == ''){
+            self.signData = '请先创建角色';
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000);
+          }else{
+            _this.roleInfo = res.data.data;
+          }
         }, (error) => {
           console.log(error);
         });
