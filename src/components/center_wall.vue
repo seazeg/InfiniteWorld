@@ -179,8 +179,8 @@
       setInterval(function(){
          _this.issign = false
       },3000)
-
-      this.balancesList = sessionStorage.getItem("balances")
+      
+      this.balancesList = sessionStorage.getItem("balances") || [{balance:0,currency:"ENS"}]
     }
 
   }

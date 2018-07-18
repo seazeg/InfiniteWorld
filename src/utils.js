@@ -5,6 +5,12 @@ import Vue from 'vue'
 const utils = {
   contract: function (type, args, url, callback) {
     let secret = window.sessionStorage.getItem('secret');
+    let headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "magic": "594fe0f3",
+       // "magic":"5f5b3cf5"  //生产
+    }
     // let opt = JSON.parse(sessionStorage.getItem("options"))
     //普通合约调用
     let _transaction = AschJS.dapp.createInnerTransaction({
@@ -25,19 +31,15 @@ const utils = {
       _transaction = {
         "transaction":AschJS.transfer.createInTransfer(dappid, args[0], args[1], secret, "")
       };
+      headers.version = "";
     }
+
 
     axios({
       method: 'POST',
       url: url,
       data:JSON.stringify(_transaction),
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "magic": "594fe0f3",
-        "version":""
-        // "magic":"5f5b3cf5"  //生产
-      }
+      headers: headers
     }).then((res) => {
       var data = res.data;
       if (res.status === 200 && data.result) { //执行成功
