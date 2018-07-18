@@ -8,8 +8,6 @@ const utils = {
     let headers = {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "magic": "594fe0f3",
-       // "magic":"5f5b3cf5"  //生产
     }
     // let opt = JSON.parse(sessionStorage.getItem("options"))
     //普通合约调用
@@ -31,6 +29,8 @@ const utils = {
       _transaction = {
         "transaction":AschJS.transfer.createInTransfer(dappid, args[0], args[1], secret, "")
       };
+      headers.magic = "594fe0f3",
+      // headers.magic = "5f5b3cf5"  //生产
       headers.version = "";
     }
 
