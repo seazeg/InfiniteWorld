@@ -1,7 +1,7 @@
 <template>
   <div class="market">
     <div class="search">
-      <input type="text" placeholder="搜索你想要的" @keyup="search()" v-model="key">
+      <!-- <input type="text" placeholder="搜索你想要的" @keyup="search()" v-model="key"> -->
       <div style="position: relative;bottom: 0.1rem;">
         <p class="input">
           <span @click="selShow1=!selShow1">阶数：{{input1}}</span>
