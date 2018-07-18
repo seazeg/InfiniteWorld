@@ -109,16 +109,15 @@
           url: _this.http184 + '/wb/role',
           params: params
         }).then((res) => {
-          console.log(res.data.data)
-          // if (res.data != '') {
-          //   _this.role = res.data.data;
-          //   _this.proname = _this.role.nickname;
-          //   _this.fjs = _this.role.str5;
-          //   if (_this.fjs == '') {
-          //     _this.fjs = '0';
-          //   }
-          //   _this.part = true;
-          // }
+          if (res.data.data != null) {
+            _this.role = res.data.data;
+            _this.proname = _this.role.nickname;
+            _this.fjs = _this.role.str5;
+            if (_this.fjs == '') { 
+              _this.fjs = '0';
+            }
+            _this.part = true;
+          }
         }, (error) => {
           console.log(error);
         });
