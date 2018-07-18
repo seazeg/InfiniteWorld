@@ -3,7 +3,7 @@
     <div class="m-jsbox" @click="audio">
       <img src="" alt="" class="m-jsboximg">
     </div>
-    <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow">
+    <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow &&btnshow">
     <transition name="component-fade" mode="out-in">
       <div class="layer" v-show="layerShow">
         <div class="left">
@@ -249,6 +249,7 @@
         cardlevel:leveldata,
         layerShow: false,
         audioPlay: false,
+        btnshow: true,
         jsImg: '1',
         oldVideo: '',
         oldstr: '',
@@ -346,11 +347,12 @@
           url: _this.http184 + '/wb/role',
           params: params
         }).then((res) => {
-          if(res.data.data == ''){
-            self.signData = '请先创建角色';
-            self.sign = true;
+          if(res.data.data == null){
+            _this.btnshow = false;
+            _this.signData = '请先创建角色';
+            _this.sign = true;
             setTimeout( function(){
-              self.sign = false;
+              _this.sign = false;
             },2000);
           }else{
             _this.roleInfo = res.data.data;
