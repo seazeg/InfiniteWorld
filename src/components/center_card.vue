@@ -1,33 +1,19 @@
 <template>
  <div class="center-card">
-	<!-- <div class="m-list" @click="open()">
+	<div class="m-list" v-for="item in cardData" @click="open(item)">
 		<div class="m-imgbox">
-			<img />
-		</div>
-	</div>
-	<div class="m-list" @click="open()">
-		<div class="m-imgbox">
-			<img />
-		</div>
-	</div>
-	<div class="m-list" @click="open()">
-		<div class="m-imgbox">
-			<img />
-		</div>
-	</div> -->
-	<div class="m-list" @click="open()">
-		<div class="m-imgbox">
-			<img src="../assets/images/card01.png" />
+			<!-- <img src="../assets/images/card01.png" /> -->
+			<img :src="'../../static/images/'+ item.img + '.png'" alt="">
 		</div>
 	</div>
 	<div v-show="tcShow" class="m-tcbg"></div>
     <div v-if="tcShow" class="m-tc">
-		<div class="m-xqcard"><img src="../assets/images/card01.png" /></div>
+		<div class="m-xqcard"><img :src="'../../static/images/'+ showImg + '.png'" alt=""></div>
 		<div v-if="!cardxq" class="m-cardxqbtn" @click="openCard()"><img src="../assets/images/ico-xqbtn.png" /></div>
 		<div v-if="cardxq" class="m-xqtxtbox" @click="openCard()">
-			<div class="m-txt01">当前产出：<span>26843</span></div>
+			<div class="m-txt01">当前产出：<span>{{procount}}</span></div>
 			<div class="m-txt02">领悟需求：<span>26843</span></div>
-			<div class="m-txt03">上次产出时间：<span>2018/5/3 14:11</span></div>
+			<div class="m-txt03">上次产出时间：<span>{{lastprotime}}</span></div>
 		</div>
 	</div>
 
@@ -35,20 +21,67 @@
 </template>
 
 <script>
+import data from '../json/carddata'
 export default {
 	    data() {
       return {
+		carddata: data,
         tcShow: false,
 		cardxq: false,
+		cardData:[],
+		showImg:'',
+		lastprotime:'',
+		procount:'',
       }
     },
     methods: {
-      open() {
-        this.tcShow = !this.tcShow
+      open(ele) {
+		console.log(ele);
+		let self = this;
+		self.showImg= ele.img;
+		if(ele.lastprotime == null){
+			self.lastprotime = '00-00-00 00:00:00'
+		}else{
+			self.lastprotime = ele.lastprotime
+		}
+		self.procount = ele.procount
+        self.tcShow = !self.tcShow
       },
 	  openCard() {
         this.cardxq = !this.cardxq
+	  },
+	  	  //获取占卜记录
+	  cardInit() {
+        var _this = this;
+        var params = {
+			address : sessionStorage.getItem("address"),
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/itemlist',
+          params: params
+        }).then((res) => {
+          console.log("卡牌图鉴", res.data);
+			_this.cardData = res.data.data;
+			for (var a = 0; a < _this.carddata.length; a++) {
+            for (var b = 0; b < _this.cardData.length; b++) {
+              if (_this.cardData[b].itemid == _this.carddata[a].id) {
+                _this.cardData[b].img = _this.carddata[a].img
+              }
+            }
+          }
+			for( var a = 0; a<_this.cardData.length; a++){
+				//_this.cardData[a].boxtime = _this.cardData[a].boxtime.slice(5,16)
+			}
+        }, (error) => {
+          console.log(error);
+        });
       },
+	},
+	mounted() {
+	  //获取卡牌图鉴
+	  let self = this;
+	  self.cardInit();
     }
 
 }
