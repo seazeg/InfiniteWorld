@@ -41,8 +41,8 @@
     <div v-show="tcShow" class="m-tcbg"></div>
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txt">本次角色创建需消耗200ENS</div>
-      <input type="text" class="m-nameipt" maxlength="4" v-model="name" />
-      <input type="text" class="m-invitcode" maxlength="4" v-model="ma" />
+      <input type="text" class="m-nameipt" maxlength="6" v-model="name" />
+      <input type="text" class="m-invitcode" maxlength="10" v-model="ma" />
       <div class="m-tcbtnbox">
         <a href="javascript:;" class="m-btn" @click="createRole()">
           <img src="../assets/images/img-txbtn01.png" />

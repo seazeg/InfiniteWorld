@@ -38,7 +38,7 @@ export default {
 	  divineInit() {
         var _this = this;
         var params = {
-			address : "AAQ43FbgeZvwDZXyVKyqfJisNV2RYYtRyp",
+			address : sessionStorage.getItem("address"),
 			boxid : "999999999"
         }
         _this.$axios({
