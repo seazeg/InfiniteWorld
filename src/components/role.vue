@@ -504,7 +504,11 @@
         var result = this.$utils.contract(type, args, url,function(data){
           if(data.result == false){
             self.rolefy = false;
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
@@ -536,7 +540,11 @@
         var result = this.$utils.contract(type, args, url,function(data){
           self.rolejf = false;
           if(data.result == false){
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
@@ -560,7 +568,11 @@
         var args = [sessionStorage.getItem("address"),"1101\u0004"+ele.packid+"\u00041"];
         var result = this.$utils.contract(type, args, url,function(data){
           if(data.result == false){
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.sign = true;
             ele.rolezb = false;
             setTimeout( function(){
@@ -585,7 +597,11 @@
         var args = [sessionStorage.getItem("address"),"1101\u0004"+ele.packid+"\u00040"];
         var result = this.$utils.contract(type, args, url,function(data){
           if(data.result == false){
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.sign = true;
             ele.rolezb = false;
             setTimeout( function(){
@@ -624,7 +640,11 @@
           var args = [sessionStorage.getItem("address"),"1103\u0004"+self.sellPackid+"\u0004ENDLESS.ENS\u00041\u0004"+self.roleENS];
           var result = this.$utils.contract(type, args, url,function(data){
             if(data.result == false){
-              self.signData = data.msg;
+              if(data.msg == '合约失败,Error: Invalid timestamp'){
+                self.signData = '请更新手机时间';
+              }else{
+                self.signData = data.msg;
+              }
               self.rolesj=false;
               self.sign = true;
               setTimeout( function(){
@@ -650,7 +670,11 @@
           var args = [sessionStorage.getItem("address"),"1103\u0004"+ele.packid+"\u0004\u00040\u00040"];
           var result = this.$utils.contract(type, args, url,function(data){
             if(data.result == false){
-              self.signData = data.msg;
+              if(data.msg == '合约失败,Error: Invalid timestamp'){
+                self.signData = '请更新手机时间';
+              }else{
+                self.signData = data.msg;
+              }
               self.rolesj=false;
               self.sign = true;
               setTimeout( function(){
@@ -684,7 +708,11 @@
         var args = [sessionStorage.getItem("address"),"1105\u0004"+self.decPackid];
         var result = this.$utils.contract(type, args, url,function(data){
           if(data.result == false){
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.rolefj=false;
             self.sign = true;
             setTimeout( function(){

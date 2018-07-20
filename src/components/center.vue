@@ -83,7 +83,11 @@
         var result = this.$utils.contract(type, args, url, function (data) {
           self.tcShow = false;
           if (data.result == false) {
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.sign = true;
             setTimeout(function () {
               self.sign = false;
@@ -144,7 +148,11 @@
         var result = this.$utils.contract(type, args, url, function (data) {
           self.tcShow = false;
           if (data.result == false) {
-            self.signData = data.msg;
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
             self.sign = true;
             setTimeout(function () {
               self.sign = false;

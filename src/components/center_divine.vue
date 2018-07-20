@@ -54,7 +54,6 @@ export default {
           url: _this.http184 + '/wb/boxlist',
           params: params
         }).then((res) => {
-          console.log("占卜记录", res.data);
 					_this.divineData = res.data.data;
 					if(_this.divineData == ''){
 						_this.noData =false;

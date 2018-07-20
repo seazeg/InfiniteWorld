@@ -5,11 +5,11 @@
  		<div v-if="noData" class="m-list" v-for="item in makeData">
  			<div class="m-titlebox">
  				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造封约之镯</div>
+ 				<div class="m-txt">打造{{item.itemname}}</div>
  				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
  			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：{{item.boxtime}}</div>
+ 			<div class="m-text">{{item.memo}}</div>
+ 			<div class="m-date">时间：{{item.crtime}}</div>
  		</div>
 		 <div v-if="!noData" class="m-list">
  			<div class="m-text">暂无数据</div>
@@ -50,7 +50,7 @@ export default {
 				_this.noData =false;
 			}else{
 				for( var a = 0; a<_this.makeData.length; a++){
-					_this.makeData[a].boxtime = _this.makeData[a].boxtime.slice(5,16)
+					_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
 				}
 			}
 			
