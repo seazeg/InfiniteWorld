@@ -2,7 +2,7 @@
  <div class="center-devine">
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
  	<div class="m-listbox">
- 		<div class="m-list" v-for="item in divineData">
+ 		<div v-if="noData" class="m-list" v-for="item in divineData">
  			<div class="m-titlebox">
  				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
  				<div class="m-txt">方解石占卜</div>
@@ -17,6 +17,13 @@
  				<div class="m-right">时间：{{item.boxtime}}</div>
  			</div>
  		</div>
+		 <div v-if="!noData" class="m-list">
+ 			<div class="m-titlebox">
+ 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
+ 				<div class="m-txt">暂无数据</div>
+ 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
+ 			</div>
+ 		</div>
  	</div>
  	<div class="m-bottomimg"><img src="../assets/images/bg-makelist-bot.png" /></div>
  </div>
@@ -28,6 +35,7 @@ export default {
       return {
         tcShow: false,
 				divineData:'',
+				noData:true,
       }
     },
     methods: {
@@ -48,8 +56,12 @@ export default {
         }).then((res) => {
           console.log("占卜记录", res.data);
 					_this.divineData = res.data.data;
-					for( var a = 0; a<_this.divineData.length; a++){
-						_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
+					if(_this.divineData == ''){
+						_this.noData =false;
+					}else{
+							for( var a = 0; a<_this.divineData.length; a++){
+								_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
+							}
 					}
         }, (error) => {
           console.log(error);

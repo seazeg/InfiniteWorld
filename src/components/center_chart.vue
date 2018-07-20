@@ -6,28 +6,11 @@
 		 	<div class="m-listbox">
 		 		<div class="m-chartcontbox">
 		 			<div class="m-li" v-for="item in chartData">
+						<i class="ico-chart"><img class="img" :src="'../../static/images/'+ item.img + '.png'" alt=""></i>
 		 				<div class="m-name">{{item.nickname}}</div>
 		 				<div class="m-zb">占卜次数：<span>{{item.boxcount}}</span></div>
 		 				<div class="m-lw">领悟：<span>{{item.str1}}</span></div>
 		 			</div>
-		 		</div>
-		 		<div class="m-list">
-		 			<i class="ico-chart"><img src="../assets/images/img-ph01.png" /></i>
-		 		</div>
-		 		<div class="m-list">
-		 			<i class="ico-chart"><img src="../assets/images/img-ph02.png" /></i>
-		 		</div>
-		 		<div class="m-list">
-		 			<i class="ico-chart"><img src="../assets/images/img-ph03.png" /></i>
-		 		</div>
-		 		<div class="m-list">
-		 			<i class="ico-chart"><img src="../assets/images/img-ph04.png" /></i>
-		 		</div>
-		 		<div class="m-list">
-		 			<i class="ico-chart"><img src="../assets/images/img-ph05.png" /></i>
-		 		</div>
-		 		<div class="m-list">
-		 			<i class="ico-chart"><img src="../assets/images/img-ph06.png" /></i>
 		 		</div>
 		 	</div>
 		 	<div class="m-bottomimg"><img src="../assets/images/bg-chartlist-bot.png" /></div>
@@ -37,9 +20,12 @@
 </template>
 
 <script>
+import imgdata from '../json/phb'
+
 export default {
 	    data() {
       return {
+		phbImg: imgdata,
         tcShow: false,
 		chartData:'',
       }
@@ -63,6 +49,14 @@ export default {
 		  for(var i=0;i<_this.chartData.length;i++){
 			  _this.chartData[i].str1 = _this.chartData[i].str1*1/100;
 		  }
+		  console.log(123)
+		  for (var a = 0; a < _this.phbImg.length; a++) {
+            for (var b = 0; b < _this.chartData.length; b++) {
+              if (b+1 == _this.phbImg[a].id) {
+                _this.chartData[b].img = _this.phbImg[a].img
+              }
+            }
+          }
         }, (error) => {
           console.log(error);
         });
@@ -107,18 +101,21 @@ export default {
 		vertical-align: top;
 	}
 	.center-chart .m-listbox{
-		width: 100%;display: inline-block;background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;    margin-top: -.6rem;position: relative;
+		width: 100%;display: inline-block;overflow: hidden; background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;    margin-top: -.6rem;position: relative;
 	}
-	.center-chart .m-listbox .m-list{
+
+	.center-chart .m-listbox .m-chartcontbox{
+		width: 100%;display: inline-block;vertical-align: top;
+	}
+	.center-chart .m-listbox .m-chartcontbox .m-li{
 		width: 9.35rem;
 		height: 2rem;
 		margin: 0 auto;
 		text-align: center;
 		background: url('../assets/images/img-chart-list.png');
 		background-size: 100%;
-
 	}
-	.center-chart .m-listbox .m-list:last-child{
+	.center-chart .m-listbox .m-chartcontbox .m-li:last-child{
 		width: 9.35rem;
 		height: 1.7rem;
 		margin: 0 auto;
@@ -126,37 +123,25 @@ export default {
 		background: url('../assets/images/img-chart-lastlist.png');
 		background-size: 100%;
 	}
-	.center-chart .m-listbox .m-list .ico-chart{
+	.center-chart .m-listbox .m-chartcontbox .m-li .ico-chart{
 		width: 1.1rem; height: 1.1rem;display: inline-block;float: left; margin: .3rem 0 0 .5rem;
 	}
-	.center-chart .m-listbox .m-list .ico-chart img{
+	.center-chart .m-listbox .m-chartcontbox .m-li .ico-chart img{
 		width: 100%;
 		height: 100%;
 		vertical-align: top;
 	}
-
-	.center-chart .m-listbox .m-chartcontbox{
-		width: auto;display: inline-block;left: 2rem; top:0;position: absolute;
-	}
-	.center-chart .m-listbox .m-chartcontbox .m-li{
-		width: auto;
-		height: 2rem;
-	}
-	.center-chart .m-listbox .m-chartcontbox .m-li:last-child{
-		width: auto;
-		height: 1.7rem;
-	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-name{
-		width: auto;max-width: 2rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .4rem;color: #472c0e;font-weight: bold;
+		width: 2rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .4rem;color: #472c0e;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-zb{
-		width: 2.8rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
+		width: 2.4rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-zb span{
 		color: #fff;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-lw{
-		width: 2.8rem;  display: inline-block;float: left;margin-top: .56rem;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
+		width: 2.4rem;  display: inline-block;float: left;margin-top: .56rem;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-lw span{
 		color: #fff;

@@ -70,6 +70,8 @@
         signData: '',
         role: '',
         fjs: "0",
+        balancesList:[],
+        role: false,
       }
     },
     methods: {
@@ -123,7 +125,16 @@
         });
       },
       open() {
-        this.tcShow = !this.tcShow
+        let _this = this;
+        if( _this.role== true){
+          _this.signData = '充值后才可创建角色,请前往钱包进行重置！';
+          _this.sign = true;
+          setTimeout( function(){
+              _this.sign = false;
+            },2000);
+        }else{
+          _this.tcShow = !_this.tcShow
+        }
       },
       signClick() {
         let self = this;
@@ -223,7 +234,11 @@
       //角色
       this.roleInit();
       this.verCheck();
-
+      this.balancesList = sessionStorage.getItem("balances") || [{balance:0,currency:"ENS"}]
+      if(this.balancesList[0].balance == '0'){
+        this.role = true;
+      }
+      console.log(this.balancesList)
     }
 
   }

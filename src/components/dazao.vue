@@ -1,6 +1,7 @@
 <template>
     <div class="m-dazao">
-      <div class="m-clickbtn" @click="cardList=true"></div>
+      <div v-if="!role" class="m-clickbtn" @click="cardList=true"></div>
+      <div v-if="role" class="m-clickbtn"></div>
     	<div v-show="tcShow" class="m-tcbg"></div>
 	    <div v-show="tcShow" class="m-dzcontbox">
         <div class="m-txt">打造将消耗</div>
@@ -42,6 +43,7 @@
         bag: [],
         dzfjs:'',
         dzens:'',
+        role: false,
       }
     },
     methods: {
@@ -72,6 +74,27 @@
                 _this.bag[b].img = _this.carddata[a].img
               }
             }
+          }
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      roleInit() {
+        var _this = this;
+        var params = {
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/role',
+          params: params
+        }).then((res) => {
+          if(res.data.data == null){
+            _this.role = true;
+            _this.signData = '请先创建角色';
+            _this.sign = true;
+          }else{
+            _this.roleInfo = res.data.data;
           }
         }, (error) => {
           console.log(error);
@@ -126,6 +149,7 @@
       },
     },
     mounted() {
+      this.roleInit();
       this.bagInit();
     }
 

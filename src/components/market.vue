@@ -294,8 +294,8 @@
 
   .market .search {
     width: 95%;
-    height: 2.3rem;
-    background: url("../assets/images/market_search.png") no-repeat;
+    /* height: 2.3rem; */
+    /* background: url("../assets/images/market_search.png") no-repeat; */
     background-size: 100%;
     margin: 15px 0 5px 2.5%;
   }

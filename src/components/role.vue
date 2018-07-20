@@ -1,7 +1,8 @@
 <template>
   <div class="role">
     <div class="m-jsbox" @click="audio">
-      <img src="" alt="" class="m-jsboximg">
+      <img src="../../static/images/img-js1.gif" alt="" class="m-jsboximg">
+      <!-- <img src="" alt="" class="m-jsboximg"> -->
     </div>
     <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow &&btnshow">
     <transition name="component-fade" mode="out-in">
@@ -327,16 +328,16 @@
         }
       },
       //角色帧动画
-      jskt() {
-        let self = this;
-        setInterval(function () {
-          self.jsImg++;
-          $('.m-jsboximg').attr('src', '../../static/images/img-js' + self.jsImg + '.png')
-          if (self.jsImg == 24) {
-            self.jsImg = 0;
-          }
-        }, 200)
-      },
+      // jskt() {
+      //   let self = this;
+      //   setInterval(function () {
+      //     self.jsImg++;
+      //     $('.m-jsboximg').attr('src', '../../static/images/img-js' + self.jsImg + '.png')
+      //     if (self.jsImg == 24) {
+      //       self.jsImg = 0;
+      //     }
+      //   }, 200)
+      // },
       roleInit() {
         var _this = this;
         var params = {
@@ -351,9 +352,6 @@
             _this.btnshow = false;
             _this.signData = '请先创建角色';
             _this.sign = true;
-            setTimeout( function(){
-              _this.sign = false;
-            },2000);
           }else{
             _this.roleInfo = res.data.data;
           }
@@ -745,7 +743,7 @@
       //我的上架
       this.myGroundingInit();
       //角色动画
-      this.jskt()
+      //this.jskt()
     }
   }
 </script>

@@ -5,7 +5,10 @@
       <!-- <img src="../assets/images/img-zhanbutime.png" /> -->
       <div id="countdown"></div>
     </div>
-    <a href="javascript:;" class="m-zbcardbtn" @click="tcShow=true">
+    <a v-if="!role" href="javascript:;" class="m-zbcardbtn" @click="tcShow=true">
+      <img src="../assets/images/img-zhanbucard.png" />
+    </a>
+    <a v-if="role" href="javascript:;" class="m-zbcardbtn">
       <img src="../assets/images/img-zhanbucard.png" />
     </a>
 
@@ -40,6 +43,8 @@
         fjs: '',
         rolejs: '',
         nextTime: '',
+        roleInfo: '',
+        role:false,
       }
     },
     methods: {
@@ -111,6 +116,27 @@
           console.log(error);
         });
       },
+      roleInit() {
+        var _this = this;
+        var params = {
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/role',
+          params: params
+        }).then((res) => {
+          if(res.data.data == null){
+            _this.role = true;
+            _this.signData = '请先创建角色';
+            _this.sign = true;
+          }else{
+            _this.roleInfo = res.data.data;
+          }
+        }, (error) => {
+          console.log(error);
+        });
+      },
       init() {
         this.roleInit();
         setTimeout(() => {
@@ -153,7 +179,8 @@
       }
     },
     mounted() {
-      this.init()
+      this.roleInit();
+      this.init();
     }
   }
 </script>

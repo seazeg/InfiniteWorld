@@ -10,9 +10,10 @@
     <div v-if="tcShow" class="m-tc">
 		<div class="m-xqcard"><img :src="'../../static/images/'+ showImg + '.png'" alt=""></div>
 		<div v-if="!cardxq" class="m-cardxqbtn" @click="openCard()"><img src="../assets/images/ico-xqbtn.png" /></div>
+		<div v-if="!cardxq" class="m-cardxqbtn" @click="tcShow=false"><img src="../assets/images/ico-gbbtn.png" /></div>
 		<div v-if="cardxq" class="m-xqtxtbox" @click="openCard()">
 			<div class="m-txt01">当前产出：<span>{{procount}}</span></div>
-			<div class="m-txt02">领悟需求：<span>26843</span></div>
+			<div class="m-txt02">领悟需求：<span>{{needyl}}</span></div>
 			<div class="m-txt03">上次产出时间：<span>{{lastprotime}}</span></div>
 		</div>
 	</div>
@@ -32,6 +33,7 @@ export default {
 		showImg:'',
 		lastprotime:'',
 		procount:'',
+		needyl:'',
       }
     },
     methods: {
@@ -44,7 +46,8 @@ export default {
 		}else{
 			self.lastprotime = ele.lastprotime
 		}
-		self.procount = ele.procount
+		self.procount = ele.procount;
+		self.needyl = ele.needyl;
         self.tcShow = !self.tcShow
       },
 	  openCard() {

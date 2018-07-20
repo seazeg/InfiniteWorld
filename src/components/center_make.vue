@@ -2,95 +2,17 @@
  <div class="center-make">
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
  	<div class="m-listbox">
- 		<div class="m-list">
+ 		<div v-if="noData" class="m-list" v-for="item in makeData">
  			<div class="m-titlebox">
  				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
  				<div class="m-txt">打造封约之镯</div>
  				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
  			</div>
  			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
+ 			<div class="m-date">时间：{{item.boxtime}}</div>
  		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造天使之杖</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造封约之镯</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造天使之杖</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造封约之镯</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造天使之杖</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造封约之镯</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造天使之杖</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造封约之镯</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
- 		</div>
- 		<div class="m-list">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造天使之杖</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">成功，品级由平淡无奇升级至星罗棋布。</div>
- 			<div class="m-date">时间：5/16 10:32</div>
+		 <div v-if="!noData" class="m-list">
+ 			<div class="m-text">暂无数据</div>
  		</div>
  	</div>
  	<div class="m-bottomimg"><img src="../assets/images/bg-makelist-bot.png" /></div>
@@ -101,13 +23,46 @@
 export default {
 	    data() {
       return {
-        tcShow: false,
+		tcShow: false,
+		makeData:'',
+		noData:true,
       }
     },
     methods: {
       open() {
         this.tcShow = !this.tcShow
+	  },
+	  //获取占卜记录
+	  makeInit() {
+        var _this = this;
+        var params = {
+			address : sessionStorage.getItem("address"),
+			lid : "999999999"
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/powerloglist',
+          params: params
+        }).then((res) => {
+            console.log("占卜记录", res.data);
+			_this.makeData = res.data.data;
+			if(_this.makeData == ''){
+				_this.noData =false;
+			}else{
+				for( var a = 0; a<_this.makeData.length; a++){
+					_this.makeData[a].boxtime = _this.makeData[a].boxtime.slice(5,16)
+				}
+			}
+			
+        }, (error) => {
+          console.log(error);
+        });
       },
+	},
+	mounted() {
+	  //获取排行榜
+	  let self = this;
+	  self.makeInit();
     }
 
 }
