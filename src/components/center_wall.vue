@@ -180,7 +180,7 @@
          _this.issign = false
       },3000)
       
-      this.balancesList = sessionStorage.getItem("balances") || [{balance:0,currency:"ENS"}]
+      this.balancesList = JSON.parse(sessionStorage.getItem("balances")) || [{balance:0,currency:"ENS"}]
     }
 
   }

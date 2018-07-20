@@ -60,7 +60,7 @@
           }).then((res) => {
 
             if (res.data.success) {
-              sessionStorage.setItem("balances", res.data.account.balances)
+              sessionStorage.setItem("balances", JSON.st(res.data.account.balances))
               sessionStorage.setItem("secret", _this.password)
               sessionStorage.setItem("publicKey", _this.$AschJS
                 .crypto.getKeys(_this.password).publicKey)
