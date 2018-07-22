@@ -76,7 +76,7 @@
         input3: "全部",
         list1: [{
           name: "全部",
-          type: ''
+          type: '0'
         }, {
           name: "一阶",
           type: 1
@@ -110,7 +110,7 @@
         }],
         list2: [{
           name: "全部",
-          type: ''
+          type: '0'
         }, {
           name: "平淡无奇",
           type: 1
@@ -170,7 +170,7 @@
         let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.packid];
+        var args = [sessionStorage.getItem("address"), "1004\u0004" + obj.packid];
         var result = this.$utils.contract(type, args, url, function (data) {
           self.marketLayer = false;
           if (data.result == false) {

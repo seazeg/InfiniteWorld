@@ -17,8 +17,10 @@
     <div v-show="tcShow" class="m-tcbg"></div>
     <div v-show="tcShow" class="m-contbox">
       <div class="m-txtbox">
-        <div class="m-txt01">{{fjs}}</div>
-        <div class="m-txt02">{{rolejs}}</div>
+        <!-- <div class="m-txt01">{{fjs}}</div>
+        <div class="m-txt02">{{rolejs}}</div> -->
+        <div class="m-txt01">10</div>
+        <div class="m-txt02">5</div>
       </div>
       <div class="m-zbtcbtnbox">
         <a href="javascript:;" class="m-btn" @click="zhanbo()">
@@ -86,35 +88,6 @@
             console.log("返回结果", data);
           });
         }
-
-
-
-
-      },
-      roleInit() {
-        var _this = this;
-        var params = {
-          address: sessionStorage.getItem("address")
-        }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/role',
-          params: params
-        }).then((res) => {
-          _this.role = res.data.data;
-          if (_this.role.nickname != '') {
-            _this.proname = _this.role.nickname;
-            _this.fjs = _this.role.str5;
-            _this.rolejs = _this.role.rolejs;
-            _this.nextTime = _this.role.nexttime;
-            if (_this.fjs == '') {
-              _this.fjs = '0';
-            }
-            _this.part = true;
-          }
-        }, (error) => {
-          console.log(error);
-        });
       },
       roleInit() {
         var _this = this;
@@ -132,7 +105,18 @@
             _this.sign = true;
           }else{
             _this.roleInfo = res.data.data;
+            if (_this.roleInfo.nickname != '') {
+            _this.proname = _this.roleInfo.nickname;
+            _this.fjs = _this.roleInfo.str5;
+            _this.rolejs = _this.roleInfo.rolejs;
+            _this.nextTime = _this.roleInfo.nexttime;
+            if (_this.fjs == '') {
+              _this.fjs = '0';
+            }
+            _this.part = true;
           }
+          }
+          
         }, (error) => {
           console.log(error);
         });
