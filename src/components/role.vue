@@ -35,6 +35,7 @@
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
+                <div class="itemyl">{{item.itemyl}}</div>
                 <!-- <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
                 <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt=""> -->
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
@@ -355,6 +356,9 @@
             _this.sign = true;
           }else{
             _this.roleInfo = res.data.data;
+            _this.roleInfo.roleyl = _this.roleInfo.roleyl*1+_this.roleInfo.sumyl*1
+            _this.roleInfo.rolecdcrit = _this.roleInfo.rolecdcrit*1+_this.roleInfo.sumcdcrit*1
+            _this.roleInfo.roleylcrit = _this.roleInfo.roleylcrit*1+_this.roleInfo.sumylcrit*1
           }
         }, (error) => {
           console.log(error);
@@ -562,7 +566,8 @@
         });
       },
       iptchange() {
-        
+        let _this = this;
+        _this.roleENS = _this.roleENS.replace(/[^\d]/g,'')
       },
       //穿上装备
       equipOn(ele) {
@@ -878,9 +883,9 @@
   }
 
   .role .layer .right .roleinfo2 span {
-    width: 40%;
-    margin: 0 5% .2rem;
-    height: 130px;
+    width: 45%;
+    margin: 0 2% .2rem;
+    height: 4rem;
     background: #85735b;
     display: inline-block;
     position: relative;
@@ -890,8 +895,8 @@
     color: #fff;
     font-size: 0.16rem;
     position: absolute;
-    left: 1.3rem;
-    top: .36rem;
+    left: 1.5rem;
+    top: .4rem;
   }
 
   .role .layer .right .roleinfo2 span p {

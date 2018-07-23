@@ -185,12 +185,6 @@
       }else{
         this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       }
-      
-      
-<<<<<<< HEAD
-      this.balancesList = JSON.parse(sessionStorage.getItem("balances")) || [{balance:0,currency:"ENS"}]
-=======
->>>>>>> c52324f2e498641460d881f20fa0ce3ce56460d6
     }
 
   }

@@ -31,9 +31,10 @@
     <div class="list">
       <div class="box" v-for="item in marketData">
         <div class="info">
-          <span>{{item.itemname}}</span>
-          <span>炼力值:{{item.itemyl}}</span>
-          <span>{{item.price}}ENS</span>
+          <span class="name">{{item.itemname}}</span>
+          <span v-if="item.itemtype !== 4" class="jlz">炼力值:{{item.itemyl}}</span>
+          <span v-if="item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}%跃升:{{item.itemylcrit}}%</span>
+          <span class="ens">ENS:{{item.price}}</span>
         </div>
         <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
       </div>
@@ -420,14 +421,27 @@
   }
 
   .market .list .box .info {
-    line-height: 2.2rem;
     margin-left: .8rem;
+    margin-top: .8rem;
     display: inline-block;
   }
 
   .market .list .box .info span {
     font-size: 0.4rem;
     color: #472c0e;
+    display: inline-block;
+    float: left;
+  }
+  .market .list .box .info span.name{
+    line-height: 1rem;
+  }
+  .market .list .box .info span.jlz{
+    width: 6rem;
+    margin-left: .4rem;
+  }
+  .market .list .box .info span.ens{
+    width: 6rem;
+    margin-left: .4rem;
   }
 
   .market .list .box img {

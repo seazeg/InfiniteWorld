@@ -97,11 +97,13 @@
   .login {
     width: 96%;
     margin-left: 2%;
-    height: 380px;
+    height: 9.68rem;
     background: url("../assets/images/login_bg.png") no-repeat;
     background-size: 100%;
     position: absolute;
-    top: 20%;
+    top: 50%;
+    margin-top: -6rem;
+    z-index: 2000;
   }
 
   .login input[type=password] {
