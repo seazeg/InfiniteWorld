@@ -13,7 +13,7 @@
             <img src="../assets/images/role1_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(2)">
-            <img src="../assets/images/role2.jpg" alt="" v-if="!left.role2">
+            <img src="../assets/images/role2.jpg" alt="" v-if="!left.role2" @click="bagInit()">
             <img src="../assets/images/role2_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(3)">
@@ -35,8 +35,8 @@
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
-                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
-                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                <!-- <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt=""> -->
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <p>{{item.itemname}}</p>
@@ -47,14 +47,15 @@
 
             <div class="roleinfo2 fixed">
               <span v-for="(item, index) in bag" @click="showBtn(index)">
+                <div class="itemyl">{{item.itemyl}}</div>
                 <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
                 <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
                 <div class="role_zb" v-if="item.rolezb">
-                  <div v-if="!item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
-                  <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOff(item)">卸下</div>
-                  <div v-if="item.isband == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
+                  <div v-if="item.iszb== '1' && item.isband == '1'" @click="equipOff(item)">卸下</div>
+                  <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
                   <div v-if="item.isband == '0'" @click="openjf(item)">解封</div>
                   <div v-if="item.isband == '1'" @click="openfy(item)">封禁</div>
                   <div @click="deczb(item)">分解</div>
@@ -133,7 +134,7 @@
     </div>
     <!-- 上架 -->
     <div class="rolesj" v-show="rolesj">
-      <input type="number" value="" v-model="roleENS">
+      <input type="text" value="" maxlength="8" v-model="roleENS" :change="iptchange()">
       <div class="box">
         <img src="../assets/images/role_ok.png" alt="" class="ok" @click="equipSell()">
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolesj=false,roleENS=''">
@@ -560,6 +561,9 @@
           console.log("返回结果",data);
         });
       },
+      iptchange() {
+        
+      },
       //穿上装备
       equipOn(ele) {
         let self =this;
@@ -581,6 +585,7 @@
           }else if(data.result == true){
             ele.rolezb = false;
             self.signData = data.data;
+            ele.iszb = '1';
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
@@ -608,9 +613,10 @@
               self.sign = false;
             },2000)
           }else if(data.result == true){
-            ele.rolezb = false;
+            //ele.rolezb = false;
             self.signData = data.data;
             self.sign = true;
+            ele.iszb = '0';
             setTimeout( function(){
               self.sign = false;
             },2000)
@@ -621,7 +627,7 @@
       //打开卖装备弹层
       openSell(ele) {
         let self =this;
-        ele.rolezb = false;
+        //ele.rolezb = false;
         self.rolesj=true;
         self.sellPackid =ele.packid;
       },
@@ -634,6 +640,13 @@
           setTimeout( function(){
             self.sign = false;
           },2000)
+        }else if(self.roleENS*1 > '20000000'){
+          self.signData = '卖价不能超过2000万！';
+          self.sign = true;
+          setTimeout( function(){
+            self.sign = false;
+          },2000)
+          self.roleENS ='20000000';
         }else{
           var url = this.http184 + "/app/EnsContract";
           var type = 6666;
@@ -654,9 +667,11 @@
               self.rolesj=false;
               self.signData = data.data;
               self.sign = true;
+              self.roleENS = '';
               setTimeout( function(){
                 self.sign = false;
-              },2000)
+              },2000);
+              self.bagInit();
             }
             console.log("返回结果",data);
           });
@@ -696,7 +711,7 @@
       //设定分解装备的Packid
       deczb(ele){
         let self = this;
-        ele.rolezb = false;
+        //ele.rolezb = false;
         self.decPackid = ele.packid;
         self.rolefj = true;
       },
@@ -870,6 +885,14 @@
     display: inline-block;
     position: relative;
   }
+  .role .layer .right .roleinfo2 span .itemyl{
+    width: auto;
+    color: #fff;
+    font-size: 0.16rem;
+    position: absolute;
+    left: 1.3rem;
+    top: .36rem;
+  }
 
   .role .layer .right .roleinfo2 span p {
     width: 100%;
@@ -920,10 +943,10 @@
 
   .role .layer .right .roleinfo2 .role_zb {
     width: 70%;
-    height: 100px;
+    height: auto;
     display: inline-block;
     background: url("../assets/images/role_zb.jpg") no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     font-size: 0.38rem;
     position: absolute;
     right: 0;
@@ -1059,13 +1082,12 @@
 
   .rolesj input {
     width: 41%;
-    margin: 3.2rem 3.1rem 0 2.8rem;
-    padding: 5px;
+    margin: 3.3rem 3.1rem 0 3rem;
+    padding: 0 .10rem;
     position: relative;
     z-index: 1000;
     background: transparent;
-    padding: 10px;
-    font-size: 0.16rem;
+    font-size: 0.6rem;
     outline: 0;
     border: 0;
   }

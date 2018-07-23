@@ -242,8 +242,8 @@
       //角色
       this.roleInit();
       this.verCheck();
-      this.balancesList = sessionStorage.getItem("balances") || [{balance:0,currency:"ENS"}]
-      if(this.balancesList[0].balance == '0'){
+      this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+      if(this.balancesList == '' || this.balancesList[0].balance == '0'){
         this.role = true;
       }
       console.log(this.balancesList)

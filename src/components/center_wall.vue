@@ -14,7 +14,8 @@
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
-          <div class="m-text">{{item.currency}}</div>
+          <!-- <div class="m-text">{{item.currency}}</div> -->
+          <div class="m-text">ENS</div>
         </div>
       </div>
       <div class="m-bottomimg">
@@ -179,8 +180,17 @@
       setInterval(function(){
          _this.issign = false
       },3000)
+      if(JSON.parse(sessionStorage.getItem("balances")) == ''){
+        this.balancesList = [{balance:0,currency:"ENS"}]
+      }else{
+        this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+      }
       
+      
+<<<<<<< HEAD
       this.balancesList = JSON.parse(sessionStorage.getItem("balances")) || [{balance:0,currency:"ENS"}]
+=======
+>>>>>>> c52324f2e498641460d881f20fa0ce3ce56460d6
     }
 
   }

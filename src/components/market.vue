@@ -75,6 +75,9 @@
         input2: "全部",
         input3: "全部",
         list1: [{
+          name: "全部",
+          type: '0'
+        }, {
           name: "一阶",
           type: 1
         }, {
@@ -106,6 +109,9 @@
           type: 10
         }],
         list2: [{
+          name: "全部",
+          type: '0'
+        }, {
           name: "平淡无奇",
           type: 1
         }, {
@@ -137,6 +143,9 @@
           type: 10
         }],
         list3: [{
+          name: "全部",
+          type: ''
+        }, {
           name: "戒指",
           type: "1"
         }, {
@@ -153,7 +162,7 @@
         pid: 0,
         powerid: 0,
         itemtype: "",
-        key:""
+        key: ""
       }
     },
     methods: {
@@ -161,13 +170,13 @@
         let self = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 6666;
-        var args = [sessionStorage.getItem("address"), "1104\u0004" + obj.packid];
+        var args = [sessionStorage.getItem("address"), "1004\u0004" + obj.packid];
         var result = this.$utils.contract(type, args, url, function (data) {
           self.marketLayer = false;
           if (data.result == false) {
-            if(data.msg == '合约失败,Error: Invalid timestamp'){
+            if (data.msg == '合约失败,Error: Invalid timestamp') {
               self.signData = '请更新手机时间';
-            }else{
+            } else {
               self.signData = data.msg;
             }
             self.sign = true;
@@ -243,9 +252,9 @@
         var result = this.$utils.contract(type, args, url, function (data) {
           self.tcShow = false;
           if (data.result == false) {
-            if(data.msg == '合约失败,Error: Invalid timestamp'){
+            if (data.msg == '合约失败,Error: Invalid timestamp') {
               self.signData = '请更新手机时间';
-            }else{
+            } else {
               self.signData = data.msg;
             }
             self.sign = true;
@@ -268,7 +277,7 @@
       search() {
         var _this = this;
         //_this.key
-        
+
         // var params = {
         //   pid: _this.pid,
         //   powerid: _this.powerid,
@@ -345,9 +354,9 @@
   .market .search .select1 {
     position: absolute;
     width: 2rem;
-    height: 8.5rem;
+    height: 8.8rem;
     background: url("../assets/images/market_input_1.png") no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     z-index: 66;
     margin-left: 1.1rem;
   }
@@ -363,9 +372,9 @@
   .market .search .select2 {
     position: absolute;
     width: 2.7rem;
-    height: 8.5rem;
+    height: 8.8rem;
     background: url("../assets/images/market_input_2.png") no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     z-index: 66;
     margin-left: 0.4rem;
   }
@@ -383,7 +392,7 @@
     width: 1.6rem;
     height: 5.5rem;
     background: url("../assets/images/market_input_3.png") no-repeat;
-    background-size: 100%;
+    background-size: 100% 75%;
     z-index: 66;
     margin-left: 1.4rem;
   }
