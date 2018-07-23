@@ -49,16 +49,23 @@
             <div class="roleinfo2 fixed">
               <span v-for="(item, index) in bag" @click="showBtn(index)">
                 <div class="itemyl">{{item.itemyl}}</div>
-                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
-                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                <img v-if="item.isband == '0' &&(item.itemid !== '1038' || item.itemid !== '1039' || item.itemid !== '1040')" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                <img v-if="item.isband == '1' &&(item.itemid !== '1038' || item.itemid !== '1039' || item.itemid !== '1040')" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
-                <div class="role_zb" v-if="item.rolezb">
+                <div class="role_zb" v-if="item.rolezb &&(item.itemid !== '1038' || item.itemid !== '1039' || item.itemid !== '1040')">
                   <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
                   <div v-if="item.iszb== '1' && item.isband == '1'" @click="equipOff(item)">卸下</div>
-                  <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.issale == '0' && item.isband == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
                   <div v-if="item.isband == '0'" @click="openjf(item)">解封</div>
                   <div v-if="item.isband == '1'" @click="openfy(item)">封禁</div>
+                  <div @click="deczb(item)">分解</div>
+                </div>
+                <div class="role_zb" v-if="item.rolezb &&(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
+                  <div v-if="true" @click="use(item)">使用</div>
+                  <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
                   <div @click="deczb(item)">分解</div>
                 </div>
               </span>
@@ -708,6 +715,7 @@
                 self.sign = false;
               },2000);
               self.myGroundingInit();
+              self.bagInit();
             }
             console.log("返回结果",data);
           });
