@@ -606,6 +606,35 @@
           console.log("返回结果",data);
         });
       },
+      //使用经理药水
+      use(ele) {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1113\u0004"+ele.packid];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
+            self.sign = true;
+            ele.rolezb = false;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            ele.rolezb = false;
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }
+          console.log("返回结果",data);
+        });
+      },
       //卸下装备
       equipOff(ele) {
         let self =this;
