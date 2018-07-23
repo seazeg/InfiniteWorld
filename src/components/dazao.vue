@@ -18,13 +18,14 @@
 	    </div>
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
-	    		<div class="m-list" v-for="(item, index) in bag">
-          <div v-if="item.itemid !=='1038' || item.itemid !=='1039' ||item.itemid !=='1040'">
+	    		<div v-if="!(item.itemid =='1038' || item.itemid =='1039' ||item.itemid =='1040')" class="m-list" v-for="(item, index) in bag">
             <div class="m-imgbox" @click="getResource(item)">
+              <div v-if="item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
+              <div v-if="item.itemtype == '4'" class="itemys">{{item.itemylcrit}}%</div>
+              <div v-if="item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}%</div>
+              <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
               <img :src="'../../static/images/'+ item.img + '.png'"/>
             </div>
-          </div>
-					
 				</div>
 	    	</div>
 	    </div>
@@ -34,11 +35,13 @@
 
 <script>
   import data from '../json/carddata'
+  import leveldata from '../json/cardlevel'
 
   export default {
     data() {
       return {
         carddata: data,
+        cardlevel:leveldata,
       	tcShow: false,
         sign: false,
         signData:'',
@@ -69,19 +72,20 @@
           params: params
         }).then((res) => {
           _this.bag = res.data.data;
-          // for(var d=0; d<_this.bag.length;d++){
-          //   if(_this.bag[d].itemid == '1001' || _this.bag[d].itemid == '1039' || _this.bag[d].itemid == '1040'){
-          //     _this.bag = _this.bag.replace(d,'')
-          //   }
+          // for (var c = 0; c < _this.bag.length; c++) {
+          //  _this.$set(_this.bag[c],'rolezb',false);
           // }
-          for (var c = 0; c < _this.bag.length; c++) {
-           _this.$set(_this.bag[c],'rolezb',false);
-           _this.$set(_this.bag[c],'zbno',false);
-          }
           for (var a = 0; a < _this.carddata.length; a++) {
             for (var b = 0; b < _this.bag.length; b++) {
               if (_this.bag[b].itemid == _this.carddata[a].id) {
                 _this.bag[b].img = _this.carddata[a].img
+              }
+            }
+          }
+          for (var v = 0; v < _this.cardlevel.length; v++) {
+            for (var z = 0; z < _this.bag.length; z++) {
+              if (_this.bag[z].powerid == _this.cardlevel[v].id) {
+                _this.bag[z].levelimg = _this.cardlevel[v].img
               }
             }
           }
@@ -293,5 +297,38 @@
     	height: 100%;
     	vertical-align: top;
 	}
+	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .levelimg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 100;
+    vertical-align: top;
+  }
+	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemyl{
+    width: auto;
+    color: #fff;
+    font-size: 0.12rem;
+    position: absolute;
+    left: 1.5rem;
+    top: .4rem;
+  }
+	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemys{
+    width: 1rem;
+    color: #fff;
+    font-size: 0.12rem;
+    position: absolute;
+    left: 1rem;
+    top: .4rem;
+  }
+	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemcd{
+    width: 1rem;
+    color: #fff;
+    font-size: 0.16rem;
+    position: absolute;
+    left: 2.2rem;
+    top: .4rem;
+  }
 
 </style>

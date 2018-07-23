@@ -479,8 +479,8 @@
     height: 350px;
     background: url("../assets/images/market_layer.png") no-repeat;
     background-size: 100%;
-    position: absolute;
-    top: 20%;
+    position: fixed;
+    top: 30%;
   }
 
   .marketLayer .card {
