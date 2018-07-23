@@ -3,7 +3,7 @@
     <div class="login" v-show="!isShow">
       <input type="password" value="" v-model="password">
       <p>
-        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="" v-model="isCk"/>
         <span>记住秘钥</span>
         <a @click="createSignature">创建秘钥</a>
       </p>
@@ -28,9 +28,10 @@
   export default {
     data() {
       return {
-        password: "",
+        password:$.cookie("secret")||"",
         secret: "",
-        isShow: false
+        isShow: false,
+        isCk:!!$.cookie("secret")||false
       }
     },
     methods: {
@@ -42,6 +43,7 @@
         }).then((res) => {
           _this.secret = res.data.secret;
           _this.isShow = true;
+          
         }, (error) => {
           console.log(error);
         });
@@ -52,6 +54,10 @@
           alert("密码不符合规范")
         } else {
           var _this = this;
+          if(_this.isCk){
+            $.cookie("secret",_this.secret);
+          }
+
           _this.$axios({
             method: 'get',
             url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + _this.$AschJS.crypto.getAddress(
