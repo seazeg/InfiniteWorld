@@ -192,6 +192,7 @@
             }, 2000)
             self.proname = self.name;
             self.part = true;
+            self.init();
           }
           console.log("返回结果", data);
         });

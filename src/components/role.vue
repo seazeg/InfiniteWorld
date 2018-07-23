@@ -865,13 +865,13 @@
   }
 
   .role .layer .right .roleInfo .field {
-    width: 32%;
+    width: 40%;
     display: inline-block;
     background: url("../assets/images/role_icon.png") no-repeat;
     background-size: 100%;
     font-size: 0.38rem;
-    padding: 0 10px;
-    line-height: 30px;
+    padding: 0 .1rem;
+    line-height: .8rem;
     color: #eda41a;
     text-shadow: 0 1px #3f291b, 1px 0 #3f291b, -1px 0 #3f291b, 0 -1px #3f291b;
   }

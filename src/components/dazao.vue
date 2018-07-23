@@ -19,9 +19,12 @@
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
 	    		<div class="m-list" v-for="(item, index) in bag">
-					<div class="m-imgbox" @click="getResource(item)">
-						<img :src="'../../static/images/'+ item.img + '.png'"/>
-					</div>
+          <div v-if="item.itemid !=='1038' || item.itemid !=='1039' ||item.itemid !=='1040'">
+            <div class="m-imgbox" @click="getResource(item)">
+              <img :src="'../../static/images/'+ item.img + '.png'"/>
+            </div>
+          </div>
+					
 				</div>
 	    	</div>
 	    </div>
@@ -66,6 +69,11 @@
           params: params
         }).then((res) => {
           _this.bag = res.data.data;
+          // for(var d=0; d<_this.bag.length;d++){
+          //   if(_this.bag[d].itemid == '1001' || _this.bag[d].itemid == '1039' || _this.bag[d].itemid == '1040'){
+          //     _this.bag = _this.bag.replace(d,'')
+          //   }
+          // }
           for (var c = 0; c < _this.bag.length; c++) {
            _this.$set(_this.bag[c],'rolezb',false);
            _this.$set(_this.bag[c],'zbno',false);
