@@ -205,12 +205,13 @@
         _this.issign = false
       }, 3000)
       if (JSON.parse(sessionStorage.getItem("balances")) == '') {
-        this.balancesList = [{
+        console.log(123)
+        _this.balancesList = [{
           balance: 0,
-          currency: "ENS"
+          currency: "ENDLESS.ENS"
         }]
       } else {
-        this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+        _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       }
 
 

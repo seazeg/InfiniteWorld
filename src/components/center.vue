@@ -133,7 +133,7 @@
       open() {
         let _this = this;
         if( _this.role== true){
-          _this.signData = '充值后才可创建角色,请前往钱包进行重置！';
+          _this.signData = '充值后才可创建角色,请前往钱包进行充值！';
           _this.sign = true;
           setTimeout( function(){
               _this.sign = false;

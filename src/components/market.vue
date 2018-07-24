@@ -524,7 +524,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1.8rem;
-    top: .4rem;
+    top: .55rem;
   }
   .marketLayer .card .itemys{
     width: 1rem;
@@ -532,7 +532,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1rem;
-    top: .4rem;
+    top: .55rem;
   }
   .marketLayer .card .itemcd{
     width: 1rem;
@@ -540,7 +540,7 @@
     font-size: 0.16rem;
     position: absolute;
     left: 2.2rem;
-    top: .4rem;
+    top: .55rem;
   }
   .marketLayer .card .levelimg {
     width: 100%;

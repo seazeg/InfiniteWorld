@@ -314,7 +314,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1.5rem;
-    top: .4rem;
+    top: .55rem;
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemys{
     width: 1rem;
@@ -322,7 +322,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1rem;
-    top: .4rem;
+    top: .55rem;
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemcd{
     width: 1rem;
@@ -330,7 +330,7 @@
     font-size: 0.16rem;
     position: absolute;
     left: 2.2rem;
-    top: .4rem;
+    top: .55rem;
   }
 
 </style>
