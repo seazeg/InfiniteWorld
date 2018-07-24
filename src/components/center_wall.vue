@@ -10,7 +10,7 @@
       <div class="m-listbox">
         <div class="m-list" v-for="item in balancesList">
           <div class="m-titlebox">
-            <div class="m-txt">余额：{{item.balance}}</div>
+            <div class="m-txt">余额：{{item.balance/1e8}}</div>
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
@@ -25,7 +25,7 @@
     <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
       <div class="m-txt">将游戏内资产充入钱包，将消耗0.1ENS。</div>
-      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSInNum"/>
+      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSInNum" />
       <div class="m-wallinbtnbox">
         <a href="javascript:;" class="m-btn" @click="ENSIn()">
           <img src="../assets/images/img-txbtn01.png" />
@@ -59,13 +59,35 @@
         tcinShow: false,
         tcoutShow: false,
         ENSOutNum: "",
-        ENSInNum:"",
+        ENSInNum: "",
         msg: "",
         issign: false,
-        balancesList:[]
+        balancesList: []
       }
     },
     methods: {
+      init() {
+        var _this = this;
+        _this.$axios({
+          method: 'get',
+          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' +  sessionStorage.getItem("address")
+        }).then((res) => {
+          if (res.data.success) {
+            sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances));
+            if (JSON.parse(sessionStorage.getItem("balances")) == '') {
+              _this.balancesList = [{
+                balance: 0,
+                currency: "ENS"
+              }]
+            } else {
+              _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+            }
+
+          }
+        }, (error) => {
+          console.log(error);
+        });
+      },
       openIn() {
         this.tcinShow = !this.tcinShow
       },
@@ -78,6 +100,7 @@
         var type = 6;
         var args = ["XAS", this.ENSInNum, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
+          _this.init();
           if (data.error.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
             _this.issign = true
@@ -118,7 +141,7 @@
             _this.issign = true
             return;
           }
-          if(!!data.transactionId){
+          if (!!data.transactionId) {
             _this.msg = '充值成功!'
             _this.issign = true
             return;
@@ -131,6 +154,7 @@
         var type = 2;
         var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
+          _this.init();
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
             _this.issign = true
@@ -177,14 +201,19 @@
     mounted() {
       let _this = this;
       //self.ENSOut();
-      setInterval(function(){
-         _this.issign = false
-      },3000)
-      if(JSON.parse(sessionStorage.getItem("balances")) == ''){
-        this.balancesList = [{balance:0,currency:"ENS"}]
-      }else{
+      setInterval(function () {
+        _this.issign = false
+      }, 3000)
+      if (JSON.parse(sessionStorage.getItem("balances")) == '') {
+        this.balancesList = [{
+          balance: 0,
+          currency: "ENS"
+        }]
+      } else {
         this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       }
+
+
     }
 
   }
