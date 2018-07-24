@@ -167,7 +167,7 @@
           type: "3"
         }, {
           name: "药剂",
-          type: "4"
+          type: "100"
         }],
         buyData: '',
         pid: 0,
