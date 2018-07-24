@@ -524,6 +524,8 @@
             self.rolefy = false;
             if(data.msg == '合约失败,Error: Invalid timestamp'){
               self.signData = '请更新手机时间';
+            }else if(data.msg == 'Error: Apply transaction error: Error: L10022' || data.msg == 'Error: Apply transaction error: Error: L10009'){
+              self.signData = '余额不足';
             }else{
               self.signData = data.msg;
             }

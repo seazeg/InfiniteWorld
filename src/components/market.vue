@@ -34,6 +34,7 @@
           <span class="name">{{item.itemname}}</span>
           <span v-if="item.itemtype !== 4" class="jlz">炼力值:{{item.itemyl}}</span>
           <span v-if="item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}%跃升:{{item.itemylcrit}}%</span>
+          <span class="name">{{item.powername}}</span>
           <span class="ens">ENS:{{item.price}}</span>
         </div>
         <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
@@ -45,6 +46,10 @@
     <!-- 弹层 -->
     <div class="marketLayer" v-show="marketLayer">
       <div class="card">
+        <div v-if="!(buyData.itemid == '1038' || buyData.itemid == '1039' || buyData.itemid == '1040') && buyData.itemtype != '4'" class="itemyl">{{buyData.itemyl}}</div>
+        <div v-if="!(buyData.itemid == '1038' || buyData.itemid == '1039' || buyData.itemid == '1040') && buyData.itemtype == '4'" class="itemys">{{buyData.itemylcrit}}%</div>
+        <div v-if="!(buyData.itemid == '1038' || buyData.itemid == '1039' || buyData.itemid == '1040') && buyData.itemtype == '4'" class="itemcd">{{buyData.itemcdcrit}}%</div>
+        <img class="levelimg" :src="'../../static/images/'+ buyData.levelimg + '.png'" alt="">
         <img :src="'../../static/images/'+ buyData.img + '.png'" alt="">
       </div>
       <p>{{buyData.price}}ENS</p>
@@ -59,11 +64,13 @@
 
 <script>
   import data from '../json/carddata'
+  import leveldata from '../json/cardlevel'
 
   export default {
     data() {
       return {
         carddata: data,
+        cardlevel:leveldata,
         signData: '',
         marketData: '',
         noticeShow: false,
@@ -177,6 +184,8 @@
           if (data.result == false) {
             if (data.msg == '合约失败,Error: Invalid timestamp') {
               self.signData = '请更新手机时间';
+            }else if(data.msg == 'Error: Apply transaction error: Error: L10022' || data.msg == 'Error: Apply transaction error: Error: L10009'){
+              self.signData = '余额不足';
             } else {
               self.signData = data.msg;
             }
@@ -243,6 +252,11 @@
             self.buyData.img = self.carddata[a].img
           }
         }
+        for (var v = 0; v < _this.cardlevel.length; v++) {
+          if (self.buyData.powerid == _this.cardlevel[v].id) {
+            self.buyData.levelimg = _this.cardlevel[v].img
+          }
+          }
         self.packid = self.buyData.packid
       },
       //购买装备
@@ -360,6 +374,7 @@
     background: url("../assets/images/market_input_1.png") no-repeat;
     background-size: 100% 100%;
     z-index: 66;
+    top: 1.1rem;
     margin-left: 1.1rem;
   }
 
@@ -378,6 +393,7 @@
     background: url("../assets/images/market_input_2.png") no-repeat;
     background-size: 100% 100%;
     z-index: 66;
+    top: 1.1rem;
     margin-left: 0.4rem;
   }
 
@@ -396,6 +412,7 @@
     background: url("../assets/images/market_input_3.png") no-repeat;
     background-size: 100% 75%;
     z-index: 66;
+    top: 1.1rem;
     margin-left: 1.4rem;
   }
 
@@ -434,15 +451,13 @@
     float: left;
   }
   .market .list .box .info span.name{
-    line-height: 1rem;
+    width: 2rem;
   }
   .market .list .box .info span.jlz{
     width: 6rem;
-    margin-left: .4rem;
   }
   .market .list .box .info span.ens{
     width: 6rem;
-    margin-left: .4rem;
   }
 
   .market .list .box img {
@@ -484,11 +499,12 @@
   }
 
   .marketLayer .card {
-    width: 80%;
+    width: 3.15rem;
     height: 4.2rem;
     text-align: center;
     margin: 0 auto;
     margin-top: 1.2rem;
+    position: relative;
   }
 
   .marketLayer .card img {
@@ -496,6 +512,31 @@
     margin: 0 auto;
     height: 100%;
     display: inline-block;
+  }
+
+  .marketLayer .card .itemyl{
+    width: auto;
+    color: #fff;
+    font-size: 0.12rem;
+    position: absolute;
+    left: 1.8rem;
+    top: .4rem;
+  }
+  .marketLayer .card .itemys{
+    width: 1rem;
+    color: #fff;
+    font-size: 0.12rem;
+    position: absolute;
+    left: 1rem;
+    top: .4rem;
+  }
+  .marketLayer .card .itemcd{
+    width: 1rem;
+    color: #fff;
+    font-size: 0.16rem;
+    position: absolute;
+    left: 2.2rem;
+    top: .4rem;
   }
 
   .marketLayer p {
