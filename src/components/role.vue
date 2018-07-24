@@ -790,7 +790,8 @@
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
-            },2000)
+            },2000);
+            self.bagInit();
           }
           console.log("返回结果",data);
         });
