@@ -165,6 +165,9 @@
         }, {
           name: "手镯",
           type: "3"
+        }, {
+          name: "药剂",
+          type: "4"
         }],
         buyData: '',
         pid: 0,
@@ -252,9 +255,9 @@
             self.buyData.img = self.carddata[a].img
           }
         }
-        for (var v = 0; v < _this.cardlevel.length; v++) {
-          if (self.buyData.powerid == _this.cardlevel[v].id) {
-            self.buyData.levelimg = _this.cardlevel[v].img
+        for (var v = 0; v < self.cardlevel.length; v++) {
+          if (self.buyData.powerid == self.cardlevel[v].id) {
+            self.buyData.levelimg = self.cardlevel[v].img
           }
           }
         self.packid = self.buyData.packid
@@ -410,7 +413,7 @@
     width: 1.6rem;
     height: 5.5rem;
     background: url("../assets/images/market_input_3.png") no-repeat;
-    background-size: 100% 75%;
+    background-size: 100% 90%;
     z-index: 66;
     top: 1.1rem;
     margin-left: 1.4rem;
@@ -450,6 +453,7 @@
     display: inline-block;
     float: left;
   }
+  
   .market .list .box .info span.name{
     width: 2rem;
   }
@@ -537,6 +541,15 @@
     position: absolute;
     left: 2.2rem;
     top: .4rem;
+  }
+  .marketLayer .card .levelimg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 100;
+    vertical-align: top;
   }
 
   .marketLayer p {
