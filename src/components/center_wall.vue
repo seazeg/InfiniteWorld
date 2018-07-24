@@ -8,7 +8,7 @@
         <img src="../assets/images/bg-walllist-top.png" />
       </div>
       <div class="m-listbox">
-        <div class="m-list" v-for="item in balancesList">
+        <div class="m-list" v-for="item in balancesList" v-if="item.currency == 'ENDLESS.ENS'">
           <div class="m-titlebox">
             <div class="m-txt">余额：{{item.balance/1e8}}</div>
             <a class="m-link" @click="openIn()">充入钱包</a>
