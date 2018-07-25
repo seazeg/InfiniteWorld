@@ -18,7 +18,7 @@
 	    </div>
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
-	    		<div v-if="!(item.itemid =='1038' || item.itemid =='1039' ||item.itemid =='1040')" class="m-list" v-for="(item, index) in bag">
+	    		<div v-if="!(item.itemid =='1038' || item.itemid =='1039' ||item.itemid =='1040') || item.issale == '1'" class="m-list" v-for="(item, index) in bag">
             <div class="m-imgbox" @click="getResource(item)">
               <div v-if="item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
               <div v-if="item.itemtype == '4'" class="itemys">{{item.itemylcrit}}%</div>
