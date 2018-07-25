@@ -99,8 +99,7 @@
         var _this = this;
         var url = this.http189 + "/peer/transactions";
         var type = 6;
-        var inENS = (this.ENSInNum*1e8).toString();
-        var args = ["ENDLESS.ENS", inENS, sessionStorage.getItem("address")];
+        var args = ["ENDLESS.ENS", this.ENSInNum*1e8, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcinShow = !_this.tcinShow;
           _this.ENSInNum ='';
@@ -149,6 +148,11 @@
           }
           if (data.error.indexOf('Account is locked') > -1) {
             _this.msg = '锁仓账户无法使用'
+            _this.issign = true
+            return;
+          }
+          if(!data.success){
+            _this.msg = '操作失败'
             _this.issign = true
             return;
           }
@@ -214,6 +218,11 @@
           }
           if (data.msg.indexOf('Account is locked') > -1) {
             _this.msg = '锁仓账户无法使用'
+            _this.issign = true
+            return;
+          }
+          if(!data.success){
+            _this.msg = '操作失败'
             _this.issign = true
             return;
           }
