@@ -202,58 +202,14 @@
           // })
         }
       },
-      verCheck() {
-        var md = new MobileDetect(window.navigator.userAgent);
-        var os = md.os(); //获取系统  
-        var ver = "";
-        if (os == "iOS") { //ios系统的处理  
-          os = md.os();
-          ver = md.version("iPhone")
-        } else if (os == "AndroidOS") { //Android系统的处理  
-          os = "Android";
-          ver = md.version("Android")
-        }
-
-        var _this = this;
-        var params = {
-          uuid: "5df2cd47183b9876",
-          cordova: ver,
-          model: md.phone(),
-          platform: os,
-          version: ver,
-          manufacturer: md.mobile(),
-          isVirtual: false,
-          serial: "sys",
-          appversion: "1.0.0" || $.cookie("appversion"),
-          address: sessionStorage.getItem("address")
-        }
-        _this.$axios({
-          method: 'post',
-          url: _this.http184 + '/app/ver',
-          data: params
-        }).then((res) => {
-          var result = res.data.data;
-          if (!!result) {
-            if (result.isUpdate) {
-              $.cookie("appversion", result.verno)
-              alert(result.memo);
-              window.location.href = result.downurl;
-            }
-          }
-        }, (error) => {
-          console.log(error);
-        });
-      }
     },
     mounted() {
       //角色
       this.roleInit();
-      this.verCheck();
       this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       if(this.balancesList == '' || this.balancesList[0].balance == '0'){
         this.role = true;
       }
-      console.log(this.balancesList)
     }
 
   }

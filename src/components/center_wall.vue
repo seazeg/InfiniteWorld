@@ -98,8 +98,9 @@
         var _this = this;
         var url = this.http189 + "/peer/transactions";
         var type = 6;
-        var args = ["XAS", this.ENSInNum, sessionStorage.getItem("address")];
+        var args = ["ENDLESS.ENS", this.ENSInNum, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
+          _this.tcinShow = !_this.tcinShow
           _this.init();
           if (data.error.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
@@ -152,8 +153,9 @@
         var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
-        var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
+        var args = ["ENDLESS.ENS", this.ENSOutNum, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
+          _this.tcoutShow = !_this.tcoutShow
           _this.init();
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
@@ -204,15 +206,15 @@
       setInterval(function () {
         _this.issign = false
       }, 3000)
-      if (JSON.parse(sessionStorage.getItem("balances")) == '') {
-        console.log(123)
-        _this.balancesList = [{
-          balance: 0,
-          currency: "ENDLESS.ENS"
-        }]
-      } else {
-        _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
-      }
+      // if (JSON.parse(sessionStorage.getItem("balances")) == '') {
+      //   _this.balancesList = [{
+      //     balance: 0,
+      //     currency: "ENDLESS.ENS"
+      //   }]
+      // } else {
+      //   _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+      // }
+      _this.init();
 
 
     }

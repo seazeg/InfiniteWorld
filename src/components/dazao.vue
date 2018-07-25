@@ -311,7 +311,7 @@
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemyl{
     width: auto;
     color: #fff;
-    font-size: 0.12rem;
+    font-size: 0.1rem;
     position: absolute;
     left: 1.5rem;
     top: .55rem;
@@ -319,7 +319,7 @@
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemys{
     width: 1rem;
     color: #fff;
-    font-size: 0.12rem;
+    font-size: 0.1rem;
     position: absolute;
     left: 1rem;
     top: .55rem;
@@ -327,7 +327,7 @@
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemcd{
     width: 1rem;
     color: #fff;
-    font-size: 0.16rem;
+    font-size: 0.1rem;
     position: absolute;
     left: 2.2rem;
     top: .55rem;

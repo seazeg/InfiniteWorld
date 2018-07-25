@@ -20,6 +20,7 @@
         <img src="../assets/images/img-txbtn01.png" />
       </a>
     </div>
+    <div v-if="sign" class="m-typebox">{{signData}}</div>
   </div>
 </template>
 
@@ -31,7 +32,9 @@
         password:$.cookie("secret")||"",
         secret: "",
         isShow: false,
-        isCk:!!$.cookie("secret")||false
+        isCk:!!$.cookie("secret")||false,
+        sign: false,
+        signData: '',
       }
     },
     methods: {
@@ -48,8 +51,64 @@
           console.log(error);
         });
       },
-      submit() {
+      verCheck() {
+        var md = new MobileDetect(window.navigator.userAgent);
+        var os = md.os(); //获取系统  
+        var ver = "";
+        if (os == "iOS") { //ios系统的处理  
+          os = md.os();
+          ver = md.version("iPhone")
+        } else if (os == "AndroidOS") { //Android系统的处理  
+          os = "Android";
+          ver = md.version("Android")
+        }
 
+        var _this = this;
+        var params = {
+          uuid: "5df2cd47183b9876",
+          cordova: ver,
+          model: md.phone(),
+          platform: os,
+          version: ver,
+          manufacturer: md.mobile(),
+          isVirtual: false,
+          serial: "sys",
+          appversion: "1.0.0" || $.cookie("appversion"),
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'post',
+          url: _this.http184 + '/app/ver',
+          data: params
+        }).then((res) => {
+          var result = res.data.data;
+          if (!!result) {
+            if (result.isUpdate) {
+              $.cookie("appversion", result.verno)
+              _this.signData = result.memo;
+              _this.sign = true;
+              setTimeout(function () {
+                window.location.href = result.downurl;
+              }, 2000)
+            }else if(!result.isUpdate){
+              _this.signData = result.memo;
+              _this.sign = true;
+              setTimeout(function () {
+                _this.$router.push({
+                  path: "/center"
+                })
+              }, 2000)
+            }else{
+              _this.$router.push({
+                path: "/center"
+              })
+            }
+          }
+        }, (error) => {
+          console.log(error);
+        });
+      },
+      submit() {
         if (!Mnemonic.isValid(this.password)) {
           alert("密码不符合规范")
         } else {
@@ -64,7 +123,6 @@
               _this.$AschJS
               .crypto.getKeys(_this.password).publicKey)
           }).then((res) => {
-
             if (res.data.success) {
               sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances))
               sessionStorage.setItem("secret", _this.password)
@@ -75,9 +133,8 @@
               sessionStorage.setItem("address", _this.$AschJS.crypto.getAddress(
                 _this.$AschJS
                 .crypto.getKeys(_this.password).publicKey))
-              _this.$router.push({
-                path: "/center"
-              })
+                _this.verCheck();
+              
             }
           }, (error) => {
             console.log(error);
@@ -177,5 +234,21 @@
     width: 100%;
     height: 100%;
     vertical-align: top;
+  }
+  .m-typebox {
+    display: inline-block;
+    width: 80%;
+    padding: .4rem .4rem;
+    box-sizing: border-box;
+    line-height: .46rem;
+    font-size: .34rem;
+    position: fixed;
+    z-index: 4000;
+    background: rgba(0, 0, 0, .8);
+    left: 10%;
+    top: 50%;
+    margin-top: -.54rem;
+    color: #eebc7f;
+    border-radius: .2rem;
   }
 </style>

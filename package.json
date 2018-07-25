@@ -14,6 +14,7 @@
     "axios": "^0.18.0",
     "bitcore-mnemonic": "^1.5.0",
     "vue": "^2.5.2",
+    "vue-pull-to": "^0.1.6",
     "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
