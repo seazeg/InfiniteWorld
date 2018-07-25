@@ -19,7 +19,7 @@ const utils = {
     //内部转账合约
     if (type == '3' || type == '2') {
       _transaction = AschJS.dapp.createInnerTransaction({
-        fee: '10000000', //fee,
+        fee: '1000000000', //fee,
         type: type,
         args: JSON.stringify(args)
       }, secret);

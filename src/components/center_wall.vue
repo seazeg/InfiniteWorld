@@ -11,6 +11,7 @@
         <div class="m-list" v-for="item in balancesList" v-if="item.currency == 'ENDLESS.ENS'">
           <div class="m-titlebox">
             <div class="m-txt">余额：{{item.balance/1e8}}</div>
+            <!-- <div class="m-txt">余额：{{item.balance}}</div> -->
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
@@ -24,8 +25,8 @@
     </div>
     <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
-      <div class="m-txt">将游戏内资产充入钱包，将消耗0.1ENS。</div>
-      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSInNum" />
+      <div class="m-txt">将游戏内资产充入钱包，将消耗0.1XAS。</div>
+      <input type="text" class="m-invitcode" maxlength="10" v-model="ENSInNum" />
       <div class="m-wallinbtnbox">
         <a href="javascript:;" class="m-btn" @click="ENSIn()">
           <img src="../assets/images/img-txbtn01.png" />
@@ -36,8 +37,8 @@
       </div>
     </div>
     <div v-show="tcoutShow" class="m-walloutcontbox">
-      <div class="m-txt">将游戏内资产提到钱包，将消耗0.1ENS。</div>
-      <input type="text" class="m-invitcode" maxlength="4" v-model="ENSOutNum" />
+      <div class="m-txt">将游戏内资产提到钱包，将消耗10ENS。</div>
+      <input type="text" class="m-invitcode" maxlength="10" v-model="ENSOutNum" />
       <div class="m-wallinbtnbox">
         <a href="javascript:;" class="m-btn" @click="ENSOut()">
           <img src="../assets/images/img-txbtn01.png" />
@@ -77,7 +78,7 @@
             if (JSON.parse(sessionStorage.getItem("balances")) == '') {
               _this.balancesList = [{
                 balance: 0,
-                currency: "ENS"
+                currency: "ENDLESS.ENS"
               }]
             } else {
               _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
@@ -98,9 +99,10 @@
         var _this = this;
         var url = this.http189 + "/peer/transactions";
         var type = 6;
-        var args = ["ENDLESS.ENS", this.ENSInNum, sessionStorage.getItem("address")];
+        var args = ["ENDLESS.ENS", this.ENSInNum*1e8, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
-          _this.tcinShow = !_this.tcinShow
+          _this.tcinShow = !_this.tcinShow;
+          _this.ENSInNum ='';
           _this.init();
           if (data.error.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
@@ -153,9 +155,10 @@
         var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
-        var args = ["ENDLESS.ENS", this.ENSOutNum, sessionStorage.getItem("address")];
+        var args = ["ENDLESS.ENS", this.ENSOutNum*1e8, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
-          _this.tcoutShow = !_this.tcoutShow
+          _this.tcoutShow = !_this.tcoutShow;
+          _this.ENSOutNum = '';
           _this.init();
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
@@ -207,6 +210,7 @@
         _this.issign = false
       }, 3000)
       // if (JSON.parse(sessionStorage.getItem("balances")) == '') {
+      //   console.log(123)
       //   _this.balancesList = [{
       //     balance: 0,
       //     currency: "ENDLESS.ENS"
@@ -215,8 +219,6 @@
       //   _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       // }
       _this.init();
-
-
     }
 
   }
