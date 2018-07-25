@@ -314,11 +314,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1.5rem;
-<<<<<<< HEAD
-    top: .4rem;
-=======
     top: .55rem;
->>>>>>> afe03e967b58283076d91fff5a2362fa954bab38
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemys{
     width: 1rem;
@@ -326,11 +322,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1rem;
-<<<<<<< HEAD
-    top: .4rem;
-=======
     top: .55rem;
->>>>>>> afe03e967b58283076d91fff5a2362fa954bab38
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemcd{
     width: 1rem;
@@ -338,11 +330,7 @@
     font-size: 0.16rem;
     position: absolute;
     left: 2.2rem;
-<<<<<<< HEAD
-    top: .4rem;
-=======
     top: .55rem;
->>>>>>> afe03e967b58283076d91fff5a2362fa954bab38
   }
 
 </style>

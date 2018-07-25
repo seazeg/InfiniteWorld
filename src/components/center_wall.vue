@@ -152,7 +152,7 @@
         var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
-        var args = ["XAS", this.ENSOutNum, sessionStorage.getItem("address")];
+        var args = ["XAS", this.ENSOutNum*1e8, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.init();
           if (data.msg.indexOf('Insufficient balance') > -1) {
