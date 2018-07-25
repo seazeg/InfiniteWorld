@@ -524,6 +524,8 @@
             self.rolefy = false;
             if(data.msg == '合约失败,Error: Invalid timestamp'){
               self.signData = '请更新手机时间';
+            }else if(data.msg == 'Error: Apply transaction error: Error: L10022' || data.msg == 'Error: Apply transaction error: Error: L10009'){
+              self.signData = '余额不足';
             }else{
               self.signData = data.msg;
             }
@@ -788,7 +790,8 @@
             self.sign = true;
             setTimeout( function(){
               self.sign = false;
-            },2000)
+            },2000);
+            self.bagInit();
           }
           console.log("返回结果",data);
         });
@@ -940,7 +943,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1.5rem;
-    top: .4rem;
+    top: .55rem;
   }
   .role .layer .right .roleinfo2 span .itemys{
     width: 1rem;
@@ -948,7 +951,7 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1rem;
-    top: .4rem;
+    top: .55rem;
   }
   .role .layer .right .roleinfo2 span .itemcd{
     width: 1rem;
@@ -956,7 +959,7 @@
     font-size: 0.16rem;
     position: absolute;
     left: 2.2rem;
-    top: .4rem;
+    top: .55rem;
   }
 
   .role .layer .right .roleinfo2 span p {

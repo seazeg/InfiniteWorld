@@ -148,6 +148,8 @@
           if(data.result == false){
             if(data.msg == '合约失败,Error: Invalid timestamp'){
               self.signData = '请更新手机时间';
+            }else if(data.msg == 'Error: Apply transaction error: Error: L10022' || data.msg == 'Error: Apply transaction error: Error: L10009'){
+              self.signData = '余额不足';
             }else{
               self.signData = data.msg;
             }
@@ -312,7 +314,11 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1.5rem;
+<<<<<<< HEAD
     top: .4rem;
+=======
+    top: .55rem;
+>>>>>>> afe03e967b58283076d91fff5a2362fa954bab38
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemys{
     width: 1rem;
@@ -320,7 +326,11 @@
     font-size: 0.12rem;
     position: absolute;
     left: 1rem;
+<<<<<<< HEAD
     top: .4rem;
+=======
+    top: .55rem;
+>>>>>>> afe03e967b58283076d91fff5a2362fa954bab38
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemcd{
     width: 1rem;
@@ -328,7 +338,11 @@
     font-size: 0.16rem;
     position: absolute;
     left: 2.2rem;
+<<<<<<< HEAD
     top: .4rem;
+=======
+    top: .55rem;
+>>>>>>> afe03e967b58283076d91fff5a2362fa954bab38
   }
 
 </style>

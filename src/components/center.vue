@@ -85,6 +85,8 @@
           if (data.result == false) {
             if(data.msg == '合约失败,Error: Invalid timestamp'){
               self.signData = '请更新手机时间';
+            }else if(data.msg == 'Error: Apply transaction error: Error: L10022' || data.msg == 'Error: Apply transaction error: Error: L10009'){
+              self.signData = '余额不足';
             }else{
               self.signData = data.msg;
             }
@@ -131,7 +133,7 @@
       open() {
         let _this = this;
         if( _this.role== true){
-          _this.signData = '充值后才可创建角色,请前往钱包进行重置！';
+          _this.signData = '充值后才可创建角色,请前往钱包进行充值！';
           _this.sign = true;
           setTimeout( function(){
               _this.sign = false;
