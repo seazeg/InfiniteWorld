@@ -25,7 +25,7 @@
     </div>
     <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
-      <div class="m-txt">将游戏内资产充入钱包，将消耗0.1XAS。</div>
+      <div class="m-txt">将钱包内资产充入游戏，将消耗0.1XAS</div>
       <input type="text" class="m-invitcode" maxlength="10" v-model="ENSInNum" />
       <div class="m-wallinbtnbox">
         <a href="javascript:;" class="m-btn" @click="ENSIn()">
@@ -99,7 +99,7 @@
         var _this = this;
         var url = this.http189 + "/peer/transactions";
         var type = 6;
-        var inENS = this.ENSInNum*1e8;
+        var inENS = (this.ENSInNum*1e8).toString();
         var args = ["ENDLESS.ENS", inENS, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcinShow = !_this.tcinShow;
@@ -156,7 +156,7 @@
         var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
-        var outENS = this.ENSOutNum*1e8;
+        var outENS = (this.ENSOutNum*1e8).toString();
         var args = ["ENDLESS.ENS", outENS, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcoutShow = !_this.tcoutShow;
