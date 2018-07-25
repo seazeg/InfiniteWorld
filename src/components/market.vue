@@ -29,16 +29,18 @@
       </div>
     </div>
     <div class="list">
-      <div class="box" v-for="item in marketData">
-        <div class="info">
-          <span class="name">{{item.itemname}}</span>
-          <span v-if="item.itemtype !== 4" class="jlz">炼力值:{{item.itemyl}}</span>
-          <span v-if="item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}%跃升:{{item.itemylcrit}}%</span>
-          <span class="level">{{item.powername}}</span>
-          <span class="ens">ENS:{{item.price}}</span>
+      <scroller :on-infinite="infinite" ref="myscroller">
+        <div class="box" v-for="item in marketData">
+          <div class="info">
+            <span class="name">{{item.itemname}}</span>
+            <span v-if="item.itemtype !== 4" class="jlz">炼力值:{{item.itemyl}}</span>
+            <span v-if="item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}%跃升:{{item.itemylcrit}}%</span>
+            <span class="level">{{item.powername}}</span>
+            <span class="ens">ENS:{{item.price}}</span>
+          </div>
+          <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
         </div>
-        <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
-      </div>
+      </scroller>
     </div>
     <notice v-show="noticeShow">购买成功，区块确认中，请与10秒后在角色—交易记录中 进行查看。
     </notice>
@@ -65,6 +67,9 @@
 <script>
   import data from '../json/carddata'
   import leveldata from '../json/cardlevel'
+  import Vue from 'vue'
+  import VueScroller from 'vue-scroller'
+  Vue.use(VueScroller);
 
   export default {
     data() {
@@ -173,7 +178,10 @@
         pid: 0,
         powerid: 0,
         itemtype: "",
-        key: ""
+        key: "",
+
+        noData: '',
+        moveList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
       }
     },
     methods: {
@@ -293,6 +301,33 @@
         });
 
       },
+      infinite(done) {
+        console.log(this.noData)
+        console.log(123)
+        if(this.noData) {
+        setTimeout(()=>{
+            this.$refs.myscroller.finishInfinite(2);
+        })
+        return;
+        }
+        let self = this;
+        let start = this.moveList.length;
+
+        setTimeout(() => {
+            for(let i = start + 1; i < start + 10; i++) {
+                self.moveList.push(i)
+            }
+            if(start > 30) {
+                self.noData = "没有更多数据"
+            }
+            self.$refs.myscroller.resize();
+            done()
+        }, 1500)
+
+    },
+    refresh() {
+        console.log('refresh')
+    },
       search() {
         var _this = this;
         //_this.key
@@ -318,6 +353,9 @@
     },
     mounted() {
       this.init();
+
+      
+
     }
   }
 </script>
@@ -430,6 +468,9 @@
   .market .list {
     width: 95%;
     margin-left: 2.5%;
+    display: inline-block;
+    position: relative;
+    height: 17rem;
   }
 
   .market .list .box {
@@ -459,6 +500,7 @@
   }
   .market .list .box .info span.jlz{
     width: 6rem;
+    margin-right: 1rem;
   }
    .market .list .box .info span.level{
     width: 2rem;
