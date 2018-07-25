@@ -99,7 +99,8 @@
         var _this = this;
         var url = this.http189 + "/peer/transactions";
         var type = 6;
-        var args = ["ENDLESS.ENS", this.ENSInNum*1e8, sessionStorage.getItem("address")];
+        var inENS = this.ENSInNum*1e8;
+        var args = ["ENDLESS.ENS", inENS, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcinShow = !_this.tcinShow;
           _this.ENSInNum ='';
@@ -155,7 +156,8 @@
         var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
-        var args = ["ENDLESS.ENS", this.ENSOutNum*1e8, sessionStorage.getItem("address")];
+        var outENS = this.ENSOutNum*1e8;
+        var args = ["ENDLESS.ENS", outENS, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcoutShow = !_this.tcoutShow;
           _this.ENSOutNum = '';
