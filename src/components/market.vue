@@ -34,7 +34,7 @@
           <span class="name">{{item.itemname}}</span>
           <span v-if="item.itemtype !== 4" class="jlz">炼力值:{{item.itemyl}}</span>
           <span v-if="item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}%跃升:{{item.itemylcrit}}%</span>
-          <span class="name">{{item.powername}}</span>
+          <span class="level">{{item.powername}}</span>
           <span class="ens">ENS:{{item.price}}</span>
         </div>
         <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
@@ -460,8 +460,13 @@
   .market .list .box .info span.jlz{
     width: 6rem;
   }
+   .market .list .box .info span.level{
+    width: 2rem;
+    margin-top: .1rem;
+  }
   .market .list .box .info span.ens{
     width: 6rem;
+    margin-top: .1rem;
   }
 
   .market .list .box img {

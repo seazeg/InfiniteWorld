@@ -104,7 +104,14 @@
         this.$utils.contract(type, args, url, function (data) {
           _this.tcinShow = !_this.tcinShow;
           _this.ENSInNum ='';
-          _this.init();
+          _this.msg = "区块确认中，请与10秒后在个人中心—钱包中进行查看。";
+          _this.issign = true;
+          setTimeout(function () {
+            _this.issign = false;
+          }, 3000);
+          setTimeout(function () {
+            _this.init();
+          }, 1010);
           if (data.error.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
             _this.issign = true
@@ -161,7 +168,15 @@
         this.$utils.contract(type, args, url, function (data) {
           _this.tcoutShow = !_this.tcoutShow;
           _this.ENSOutNum = '';
-          _this.init();
+          _this.msg = "区块确认中，请与10秒后在个人中心—钱包中进行查看。";
+          _this.issign = true;
+          setTimeout(function () {
+            _this.issign = false;
+          }, 3000);
+          setTimeout(function () {
+            _this.init();
+          }, 1010);
+          
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
             _this.issign = true
