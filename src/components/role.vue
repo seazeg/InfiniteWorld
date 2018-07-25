@@ -21,7 +21,7 @@
             <img src="../assets/images/role3_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(4)">
-            <img src="../assets/images/role4.jpg" alt="" v-if="!left.role4">
+            <img src="../assets/images/role4.jpg" alt="" v-if="!left.role4" @click="saleListInit()">
             <img src="../assets/images/role4_hover.jpg" alt="" v-else>
           </p>
         </div>
@@ -35,6 +35,9 @@
             </div>
             <div class="roleinfo2">
               <span v-for="item in rolepack">
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}%</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}%</div>
                 <!-- <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
                 <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt=""> -->
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
@@ -47,18 +50,26 @@
 
             <div class="roleinfo2 fixed">
               <span v-for="(item, index) in bag" @click="showBtn(index)">
-                <div class="itemyl">{{item.itemyl}}</div>
-                <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
-                <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}%</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}%</div>
+                <img v-if="item.isband == '0' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                <img v-if="item.isband == '1' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
                 <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
-                <div class="role_zb" v-if="item.rolezb">
+                <div class="role_zb" v-if="item.rolezb &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
                   <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
                   <div v-if="item.iszb== '1' && item.isband == '1'" @click="equipOff(item)">卸下</div>
-                  <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.issale == '0' && item.isband == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
                   <div v-if="item.isband == '0'" @click="openjf(item)">解封</div>
                   <div v-if="item.isband == '1'" @click="openfy(item)">封禁</div>
                   <div @click="deczb(item)">分解</div>
+                </div>
+                <div class="role_zb" v-if="item.rolezb &&(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
+                  <div v-if="item.issale == '0'" @click="use(item)">使用</div>
+                  <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
+                  <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
                 </div>
               </span>
             </div>
@@ -70,7 +81,7 @@
                   <tr>
                     <th>价格</th>
                     <th>时间</th>
-                    <th>操作</th>
+                    <th style="width:1rem">操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,7 +107,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in saleList">
-                    <td>{{item.itemname}} {{item.price}}ENS</td>
+                    <td><em v-if="item.saleaddress == address">卖出</em><em v-if="item.buyaddress == address">买入</em>{{item.itemname}} {{item.saleprice}}ENS</td>
                     <td>{{item.saletime}}</td>
                   </tr>
                 </tbody>
@@ -255,6 +266,7 @@
         jsImg: '1',
         oldVideo: '',
         oldstr: '',
+        address: '',
         left: {
           role1: true,
           role2: false,
@@ -355,6 +367,10 @@
             _this.sign = true;
           }else{
             _this.roleInfo = res.data.data;
+            _this.roleInfo.roleyl = _this.roleInfo.roleyl*1+_this.roleInfo.sumyl*1
+            _this.roleInfo.rolecdcrit = _this.roleInfo.rolecdcrit*1+_this.roleInfo.sumcdcrit*1
+            _this.roleInfo.roleylcrit = _this.roleInfo.roleylcrit*1+_this.roleInfo.sumylcrit*1
+            _this.address = sessionStorage.getItem("address");
           }
         }, (error) => {
           console.log(error);
@@ -453,6 +469,7 @@
           params: params
         }).then((res) => {
           _this.saleList = res.data.data;
+          console.log(_this.saleList)
         }, (error) => {
           console.log(error);
         });
@@ -562,7 +579,8 @@
         });
       },
       iptchange() {
-        
+        let _this = this;
+        _this.roleENS = _this.roleENS.replace(/[^\d]/g,'')
       },
       //穿上装备
       equipOn(ele) {
@@ -590,6 +608,36 @@
             setTimeout( function(){
               self.sign = false;
             },2000)
+          }
+          console.log("返回结果",data);
+        });
+      },
+      //使用经理药水
+      use(ele) {
+        let self =this;
+        var url = this.http184 + "/app/EnsContract";
+        var type = 6666;
+        var args = [sessionStorage.getItem("address"),"1113\u0004"+ele.packid];
+        var result = this.$utils.contract(type, args, url,function(data){
+          if(data.result == false){
+            if(data.msg == '合约失败,Error: Invalid timestamp'){
+              self.signData = '请更新手机时间';
+            }else{
+              self.signData = data.msg;
+            }
+            self.sign = true;
+            ele.rolezb = false;
+            setTimeout( function(){
+              self.sign = false;
+            },2000)
+          }else if(data.result == true){
+            ele.rolezb = false;
+            self.signData = data.data;
+            self.sign = true;
+            setTimeout( function(){
+              self.sign = false;
+            },2000);
+            self.bagInit();
           }
           console.log("返回结果",data);
         });
@@ -703,6 +751,7 @@
                 self.sign = false;
               },2000);
               self.myGroundingInit();
+              self.bagInit();
             }
             console.log("返回结果",data);
           });
@@ -778,13 +827,13 @@
       //获取角色穿戴
       this.rolepackInit();
       //背包内容初始化
-      this.bagInit();
+      //this.bagInit();
       //交易列表初始化
-      this.buyListInit();
+      //this.buyListInit();
       //卖出记录
-      this.saleListInit();
+      //this.saleListInit();
       //我的上架
-      this.myGroundingInit();
+      //this.myGroundingInit();
       //角色动画
       //this.jskt()
     }
@@ -860,13 +909,13 @@
   }
 
   .role .layer .right .roleInfo .field {
-    width: 32%;
+    width: 42%;
     display: inline-block;
     background: url("../assets/images/role_icon.png") no-repeat;
     background-size: 100%;
-    font-size: 0.38rem;
-    padding: 0 10px;
-    line-height: 30px;
+    font-size: 0.3rem;
+    padding: 0 .1rem;
+    line-height: .8rem;
     color: #eda41a;
     text-shadow: 0 1px #3f291b, 1px 0 #3f291b, -1px 0 #3f291b, 0 -1px #3f291b;
   }
@@ -878,9 +927,9 @@
   }
 
   .role .layer .right .roleinfo2 span {
-    width: 40%;
-    margin: 0 5% .2rem;
-    height: 130px;
+    width: 45%;
+    margin: 0 2% .2rem;
+    height: 4rem;
     background: #85735b;
     display: inline-block;
     position: relative;
@@ -888,10 +937,26 @@
   .role .layer .right .roleinfo2 span .itemyl{
     width: auto;
     color: #fff;
+    font-size: 0.12rem;
+    position: absolute;
+    left: 1.5rem;
+    top: .4rem;
+  }
+  .role .layer .right .roleinfo2 span .itemys{
+    width: 1rem;
+    color: #fff;
+    font-size: 0.12rem;
+    position: absolute;
+    left: 1rem;
+    top: .4rem;
+  }
+  .role .layer .right .roleinfo2 span .itemcd{
+    width: 1rem;
+    color: #fff;
     font-size: 0.16rem;
     position: absolute;
-    left: 1.3rem;
-    top: .36rem;
+    left: 2.2rem;
+    top: .4rem;
   }
 
   .role .layer .right .roleinfo2 span p {

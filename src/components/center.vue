@@ -190,9 +190,14 @@
             path: "/divine"
           })
         } else if (type == "invit") {
-          this.$router.push({
-            path: "/invit"
-          })
+            self.signData = "敬请期待";
+            self.sign = true;
+            setTimeout(function () {
+              self.sign = false;
+            }, 2000)
+          // this.$router.push({
+          //   path: "/invit"
+          // })
         }
       },
       verCheck() {
