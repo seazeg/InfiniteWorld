@@ -32,11 +32,13 @@
       <scroller :on-infinite="infinite" ref="myscroller">
         <div class="box" v-for="item in marketData">
           <div class="info">
-            <span class="name">{{item.itemname}}</span>
-            <span v-if="item.itemtype !== 4" class="jlz">炼力值:{{item.itemyl}}</span>
-            <span v-if="item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}%跃升:{{item.itemylcrit}}%</span>
-            <span class="level">{{item.powername}}</span>
-            <span class="ens">ENS:{{item.price}}</span>
+            <span v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="name">{{item.itemname}}</span>
+            <span v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype !== 4" class="jlz">领悟:{{item.itemyl}}</span>
+            <span v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == 4" class="jlz">冷却:{{item.itemcdcrit}}跃升:{{item.itemylcrit}}</span>
+            <span v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="level">{{item.powername}}</span>
+            <span v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="ens">ENS:{{item.price}}</span>
+            <span v-if="item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040'" class="name02">{{item.itemname}}</span>
+            <span v-if="item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040'" class="ens02">ENS:{{item.price}}</span>
           </div>
           <img src="../assets/images/market_buy.png" alt="" @click="buy(item)">
         </div>
@@ -494,6 +496,9 @@
     position: relative;
 
   }
+  .market .list .box:first-child{
+    margin-top: 3rem;
+  }
 
   .market .list .box .info {
     margin-left: .8rem;
@@ -522,6 +527,14 @@
   .market .list .box .info span.ens{
     width: 6rem;
     margin-top: .1rem;
+  }
+  .market .list .box .info span.name02{
+    width: 3rem;
+    margin-top: .3rem;
+  }
+  .market .list .box .info span.ens02{
+    width: 6rem;
+    margin-top: .3rem;
   }
 
   .market .list .box img {
@@ -624,7 +637,6 @@
     text-align: center;
     margin-top: 0.5rem;
   }
-
 
   .marketLayer img.ok {
     width: 30%;

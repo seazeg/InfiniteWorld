@@ -36,8 +36,8 @@
             <div class="roleinfo2">
               <span v-for="item in rolepack">
                 <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}%</div>
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}%</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}</div>
                 <!-- <img v-if="item.isband == '1'" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
                 <img v-if="item.isband == '0'" class="fyimg" :src="'../../static/images/jf_card.png'" alt=""> -->
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
