@@ -2,21 +2,23 @@
  <div class="center-devine">
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
  	<div class="m-listbox">
- 		<div v-if="noData" class="m-list" v-for="item in divineData">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">方解石占卜</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-textbox01">
- 				<div class="m-left">ENS:{{item.coin}}</div>
- 				<div class="m-right">{{item.str5}}</div>
- 			</div>
- 			<div class="m-textbox02">
- 				<div class="m-left">装备：{{item.itemname}}</div>
- 				<div class="m-right">时间：{{item.boxtime}}</div>
- 			</div>
- 		</div>
+		 <scroller :on-infinite="infinite" ref="myscroller">
+			<div v-if="noData" class="m-list" v-for="item in divineData">
+				<div class="m-titlebox">
+					<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
+					<div class="m-txt">方解石占卜</div>
+					<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
+				</div>
+				<div class="m-textbox01">
+					<div class="m-left">ENS:{{item.coin}}</div>
+					<div class="m-right">{{item.str5}}</div>
+				</div>
+				<div class="m-textbox02">
+					<div class="m-left">装备：{{item.itemname}}</div>
+					<div class="m-right">时间：{{item.boxtime}}</div>
+				</div>
+			</div>
+		 </scroller>
 		 <div v-if="!noData" class="m-list">
  			<div class="m-titlebox">
  				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
@@ -34,8 +36,9 @@ export default {
 	    data() {
       return {
         tcShow: false,
-				divineData:'',
-				noData:true,
+		divineData:[],
+		noData:true,
+		lastBoxid:""
       }
     },
     methods: {
@@ -43,34 +46,56 @@ export default {
         this.tcShow = !this.tcShow
 	  },
 	  //获取占卜记录
-	  divineInit() {
-        var _this = this;
-        var params = {
-			address : sessionStorage.getItem("address"),
-			boxid : "999999999"
-        }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/boxlist',
-          params: params
-        }).then((res) => {
+	  divineInit(boxid) {
+		if(!!boxid){
+			var _this = this;
+			var params = {
+				address : sessionStorage.getItem("address"),
+				boxid : boxid||"999999999"
+			}
+			_this.$axios({
+			method: 'get',
+			url: _this.http184 + '/wb/boxlist',
+			params: params
+			}).then((res) => {
+				
+				if(!!boxid){
+					_this.divineData = _this.divineData.concat(res.data.data);
+				}else{
 					_this.divineData = res.data.data;
-					if(_this.divineData == ''){
-						_this.noData =false;
-					}else{
-							for( var a = 0; a<_this.divineData.length; a++){
-								_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
-							}
+				}
+				if(_this.divineData == ''){
+					_this.noData =false;
+				}else{
+					for( var a = 0; a<_this.divineData.length; a++){
+						_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
 					}
-        }, (error) => {
-          console.log(error);
-        });
-      },
+				}
+				if(res.data.data.length>0){
+					_this.lastBoxid = res.data.data[res.data.data.length-1].boxid;
+				}else{
+					_this.lastBoxid = ""
+				}
+			}, (error) => {
+			console.log(error);
+			});
+		}
+        
+	  },
+	  infinite(done) {
+      this.divineInit(this.lastBoxid);
+      setTimeout(() => {
+        done();
+      }, 2000);
+    },
+    refresh() {
+        console.log('refresh')
+    },
     },
     mounted() {
 	  //获取排行榜
 	  let self = this;
-	  self.divineInit();
+	  self.divineInit("999999999");
 	//   setInterval( function(){
 	// 	self.divineInit();
 	//   },5000)
@@ -96,8 +121,7 @@ export default {
 		vertical-align: top;
 	}
 	.center-devine .m-listbox{
-		width: 100%;display: inline-block;background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;    margin-top: -.6rem;
-	}
+		width: 100%;display: inline-block;background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;height: 14rem;margin-top: -.6rem;position: relative;overflow: hidden;}
 	.center-devine .m-listbox .m-list{
 		width: 9.4rem;
 		height: 3.03rem;

@@ -13,15 +13,15 @@
             <img src="../assets/images/role1_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(2)">
-            <img src="../assets/images/role2.jpg" alt="" v-if="!left.role2" @click="bagInit()">
+            <img src="../assets/images/role2.jpg" alt="" v-if="!left.role2" @click="bagInit('999999999')">
             <img src="../assets/images/role2_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(3)">
-            <img src="../assets/images/role3.jpg" alt="" v-if="!left.role3" @click="myGroundingInit()">
+            <img src="../assets/images/role3.jpg" alt="" v-if="!left.role3" @click="myGroundingInit('2040/12/12')">
             <img src="../assets/images/role3_hover.jpg" alt="" v-else>
           </p>
           <p @click="change(4)">
-            <img src="../assets/images/role4.jpg" alt="" v-if="!left.role4" @click="saleListInit()">
+            <img src="../assets/images/role4.jpg" alt="" v-if="!left.role4" @click="saleListInit('2040/12/12')">
             <img src="../assets/images/role4_hover.jpg" alt="" v-else>
           </p>
         </div>
@@ -47,31 +47,32 @@
             </div>
           </div>
           <div v-if="left.role2">
-
             <div class="roleinfo2 fixed">
-              <span v-for="(item, index) in bag" @click="showBtn(index)">
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}</div>
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}</div>
-                <img v-if="item.isband == '0' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
-                <img v-if="item.isband == '1' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
-                <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
-                <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
-                <div class="role_zb" v-if="item.rolezb &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
-                  <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
-                  <div v-if="item.iszb== '1' && item.isband == '1'" @click="equipOff(item)">卸下</div>
-                  <div v-if="item.issale == '0' && item.isband == '0'" @click="openSell(item)">上架</div>
-                  <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
-                  <div v-if="item.isband == '0'" @click="openjf(item)">解封</div>
-                  <div v-if="item.isband == '1'" @click="openfy(item)">封禁</div>
-                  <div @click="deczb(item)">分解</div>
-                </div>
-                <div class="role_zb" v-if="item.rolezb &&(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
-                  <div v-if="item.issale == '0'" @click="use(item)">使用</div>
-                  <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
-                  <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
-                </div>
-              </span>
+              <scroller :on-infinite="infinite" ref="myscroller">
+                <span v-for="(item, index) in bag" @click="showBtn(index)">
+                  <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
+                  <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}</div>
+                  <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}</div>
+                  <img v-if="item.isband == '0' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
+                  <img v-if="item.isband == '1' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
+                  <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
+                  <img class="img" :src="'../../static/images/'+ item.img + '.png'" alt="">
+                  <div class="role_zb" v-if="item.rolezb &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
+                    <div v-if="item.iszb== '0' && item.isband == '1'" @click="equipOn(item)">装备</div>
+                    <div v-if="item.iszb== '1' && item.isband == '1'" @click="equipOff(item)">卸下</div>
+                    <div v-if="item.issale == '0' && item.isband == '0'" @click="openSell(item)">上架</div>
+                    <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
+                    <div v-if="item.isband == '0'" @click="openjf(item)">解封</div>
+                    <div v-if="item.isband == '1'" @click="openfy(item)">封禁</div>
+                    <div @click="deczb(item)">分解</div>
+                  </div>
+                  <div class="role_zb" v-if="item.rolezb &&(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')">
+                    <div v-if="item.issale == '0'" @click="use(item)">使用</div>
+                    <div v-if="item.issale == '0'" @click="openSell(item)">上架</div>
+                    <div v-if="item.issale == '1'" @click="sellDown(item)">下架</div>
+                  </div>
+                </span>
+              </scroller>
             </div>
           </div>
           <div v-if="left.role3">
@@ -84,16 +85,18 @@
                     <th style="width:1rem">操作</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-for="item in myGrounding">
-                    <td>{{item.itemname}} {{item.price}}ENS</td>
-                    <td>{{item.saleuptime}}</td>
-                    <td>
-                      <a href="javascript:;"  @click="sellDown(item)">取消</a>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
+              <div class="m-sjdatabox">
+                <scroller :on-infinite="infinitesj" ref="myscroller01">
+                  <div class="m-line" v-for="item in myGrounding">
+                    <div class="m-name">{{item.itemname}} {{item.price}}ENS</div>
+                    <div class="m-time">{{item.saleuptime}}</div>
+                    <div class="m-edit">
+                      <a href="javascript:;"  @click="sellDown(item)">取消</a>
+                    </div>
+                  </div>
+                </scroller>
+              </div>
             </div>
           </div>
           <div v-if="left.role4">
@@ -105,13 +108,15 @@
                     <th>时间</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr v-for="item in saleList">
-                    <td><em v-if="item.saleaddress == address">卖出</em><em v-if="item.buyaddress == address">买入</em>{{item.itemname}} {{item.saleprice}}ENS</td>
-                    <td>{{item.saletime}}</td>
-                  </tr>
-                </tbody>
               </table>
+              <div class="m-jydatabox">
+                <scroller :on-infinite="infinitejy" ref="myscroller02">
+                  <div class="m-line" v-for="item in saleList">
+                    <div class="m-name"><em v-if="item.saleaddress == address">卖出</em><em v-if="item.buyaddress == address">买入</em>{{item.itemname}} {{item.saleprice}}ENS</div>
+                    <div class="m-time">{{item.saletime}}</div>
+                  </div>
+                </scroller>
+              </div>
             </div>
           </div>
         </div>
@@ -298,7 +303,10 @@
           rolecdcrit: "",
           roleylcrit: ""
         },
-        rolepack: []
+        rolepack: [],
+        lastPackid: "",
+        lastSaleuptime: "",
+        lastSaletime: "",
       }
     },
     methods: {
@@ -405,39 +413,51 @@
           console.log(error);
         });
       },
-      bagInit() {
-        var _this = this;
-        var params = {
-          itemtype: "",
-          address: sessionStorage.getItem("address"),
-          packid: 999999999
+      bagInit(packid) {
+        if(!!packid){
+          var _this = this;
+          var params = {
+            itemtype: "",
+            address: sessionStorage.getItem("address"),
+            packid: packid || '999999999'
+          }
+          _this.$axios({
+            method: 'get',
+            url: _this.http184 + '/wb/mypacklist',
+            params: params
+          }).then((res) => {
+            if(!!packid){
+              _this.bag = _this.bag.concat(res.data.data);
+            }else{
+              _this.bag = res.data.data;
+            }
+            for (var c = 0; c < _this.bag.length; c++) {
+            _this.$set(_this.bag[c],'rolezb',false);
+            }
+            for (var a = 0; a < _this.carddata.length; a++) {
+              for (var b = 0; b < _this.bag.length; b++) {
+                if (_this.bag[b].itemid == _this.carddata[a].id) {
+                  _this.bag[b].img = _this.carddata[a].img
+                }
+              }
+            }
+            for (var v = 0; v < _this.cardlevel.length; v++) {
+              for (var z = 0; z < _this.bag.length; z++) {
+                if (_this.bag[z].powerid == _this.cardlevel[v].id) {
+                  _this.bag[z].levelimg = _this.cardlevel[v].img
+                }
+              }
+            }
+            if(res.data.data.length>0){
+              _this.lastPackid = res.data.data[res.data.data.length-1].packid;
+            }else{
+              _this.lastPackid = ""
+            }
+          }, (error) => {
+            console.log(error);
+          });
         }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/mypacklist',
-          params: params
-        }).then((res) => {
-          _this.bag = res.data.data;
-          for (var c = 0; c < _this.bag.length; c++) {
-           _this.$set(_this.bag[c],'rolezb',false);
-          }
-          for (var a = 0; a < _this.carddata.length; a++) {
-            for (var b = 0; b < _this.bag.length; b++) {
-              if (_this.bag[b].itemid == _this.carddata[a].id) {
-                _this.bag[b].img = _this.carddata[a].img
-              }
-            }
-          }
-          for (var v = 0; v < _this.cardlevel.length; v++) {
-            for (var z = 0; z < _this.bag.length; z++) {
-              if (_this.bag[z].powerid == _this.cardlevel[v].id) {
-                _this.bag[z].levelimg = _this.cardlevel[v].img
-              }
-            }
-          }
-        }, (error) => {
-          console.log(error);
-        });
+
       },
       buyListInit() {
         var _this = this;
@@ -456,40 +476,63 @@
           console.log(error);
         });
       },
-      saleListInit() {
-        var _this = this;
-        var params = {
-          itemtype: "",
-          address: sessionStorage.getItem("address"),
-          saletime: "2040/12/12"
+      saleListInit(saletime) {
+        if(!!saletime){
+          var _this = this;
+          var params = {
+            itemtype: "",
+            address: sessionStorage.getItem("address"),
+            saletime: saletime || "2040/12/12"
+          }
+          _this.$axios({
+            method: 'get',
+            url: _this.http184 + '/wb/salelist',
+            params: params
+          }).then((res) => {
+            if(!!saletime){
+              _this.saleList = _this.saleList.concat(res.data.data);
+            }else{
+              _this.saleList = res.data.data;
+            }
+            if(res.data.data.length>0){
+              _this.lastSaletime = res.data.data[res.data.data.length-1].saletime;
+            }else{
+              _this.lastSaletime = ""
+            }
+          }, (error) => {
+            console.log(error);
+          });
         }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/salelist',
-          params: params
-        }).then((res) => {
-          _this.saleList = res.data.data;
-          console.log(_this.saleList)
-        }, (error) => {
-          console.log(error);
-        });
+
       },
-      myGroundingInit() {
-        var _this = this;
-        var params = {
-          itemtype: "",
-          address: sessionStorage.getItem("address"),
-          saleuptime: "2040/12/12"
+      myGroundingInit(saleuptime) {
+        if(!!saleuptime){
+          var _this = this;
+          var params = {
+            itemtype: "",
+            address: sessionStorage.getItem("address"),
+            saleuptime: saleuptime || "2040/12/12"
+          }
+          _this.$axios({
+            method: 'get',
+            url: _this.http184 + '/wb/mymarketlist',
+            params: params
+          }).then((res) => {
+            if(!!saleuptime){
+              _this.myGrounding = _this.myGrounding.concat(res.data.data);
+            }else{
+              _this.myGrounding = res.data.data;
+            }
+            if(res.data.data.length>0){
+              _this.lastSaleuptime = res.data.data[res.data.data.length-1].saleuptime;
+            }else{
+              _this.lastSaleuptime = ""
+            }
+          }, (error) => {
+            console.log(error);
+          });
         }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/mymarketlist',
-          params: params
-        }).then((res) => {
-          _this.myGrounding = res.data.data;
-        }, (error) => {
-          console.log(error);
-        });
+
       },
       //打开封禁弹窗
       openfy(ele) {
@@ -540,7 +583,7 @@
             setTimeout( function(){
               self.sign = false;
             },2000);
-            self.bagInit();
+            self.bagInit('999999999');
           }
           console.log("返回结果",data);
         });
@@ -575,7 +618,7 @@
             setTimeout( function(){
               self.sign = false;
             },2000);
-            self.bagInit();
+            self.bagInit('999999999');
           }
           console.log("返回结果",data);
         });
@@ -639,7 +682,7 @@
             setTimeout( function(){
               self.sign = false;
             },2000);
-            self.bagInit();
+            self.bagInit('999999999');
           }
           console.log("返回结果",data);
         });
@@ -721,7 +764,7 @@
               setTimeout( function(){
                 self.sign = false;
               },2000);
-              self.bagInit();
+              self.bagInit('999999999');
             }
             console.log("返回结果",data);
           });
@@ -752,8 +795,8 @@
               setTimeout( function(){
                 self.sign = false;
               },2000);
-              self.myGroundingInit();
-              self.bagInit();
+              self.myGroundingInit('2040/12/12');
+              self.bagInit('999999999');
             }
             console.log("返回结果",data);
           });
@@ -791,7 +834,7 @@
             setTimeout( function(){
               self.sign = false;
             },2000);
-            self.bagInit();
+            self.bagInit('999999999');
           }
           console.log("返回结果",data);
         });
@@ -822,7 +865,31 @@
           }
         }
         self.oldstr = str
-      }
+      },
+      //背包下拉加载
+      infinite(done) {
+        this.bagInit(this.lastPackid);
+        setTimeout(() => {
+          done();
+        }, 2000);
+      },
+      //我的上架下拉加载
+      infinitesj(done) {
+        this.myGroundingInit(this.lastSaleuptime);
+        setTimeout(() => {
+          done();
+        }, 2000);
+      },
+      //交易记录下拉加载
+      infinitejy(done) {
+        this.saleListInit(this.lastSaletime);
+        setTimeout(() => {
+          done();
+        }, 2000);
+      },
+      refresh() {
+          console.log('refresh')
+      },
     },
     mounted() {
       //角色
@@ -1008,6 +1075,7 @@
     margin-top: 20px;
     overflow-y: scroll;
     height: 324px;
+    position: relative;
   }
 
   .role .layer .right .roleinfo2.fixed>span {
@@ -1224,4 +1292,18 @@
       height: 365px;
     }
   }
+  .m-sjdatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
+  .m-sjdatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
+  .m-sjdatabox .m-line .m-name{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
+  .m-sjdatabox .m-line .m-time{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
+  .m-sjdatabox .m-line .m-edit{ width: 20%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
+  .m-sjdatabox .m-line .m-edit a {
+    color: #1b3fb9;
+    text-decoration: underline;
+  }
+  .m-jydatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
+  .m-jydatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
+  .m-jydatabox .m-line .m-name{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
+  .m-jydatabox .m-line .m-time{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
+
 </style>

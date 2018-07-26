@@ -2,15 +2,18 @@
  <div class="center-make">
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
  	<div class="m-listbox">
- 		<div v-if="noData" class="m-list" v-for="item in makeData">
- 			<div class="m-titlebox">
- 				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
- 				<div class="m-txt">打造{{item.itemname}}</div>
- 				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
- 			</div>
- 			<div class="m-text">{{item.memo}}</div>
- 			<div class="m-date">时间：{{item.crtime}}</div>
- 		</div>
+		 <scroller :on-infinite="infinite" ref="myscroller">
+			 <div v-if="noData" class="m-list" v-for="item in makeData">
+				<div class="m-titlebox">
+					<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
+					<div class="m-txt">打造{{item.itemname}}</div>
+					<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
+				</div>
+				<div class="m-text">{{item.memo}}</div>
+				<div class="m-date">时间：{{item.crtime}}</div>
+			</div>
+		 </scroller>
+ 		
 		 <div v-if="!noData" class="m-list">
  			<div class="m-text">暂无数据</div>
  		</div>
@@ -24,8 +27,9 @@ export default {
 	    data() {
       return {
 		tcShow: false,
-		makeData:'',
+		makeData:[],
 		noData:true,
+		lastLid:'',
       }
     },
     methods: {
@@ -33,36 +37,56 @@ export default {
         this.tcShow = !this.tcShow
 	  },
 	  //获取占卜记录
-	  makeInit() {
-        var _this = this;
-        var params = {
-			address : sessionStorage.getItem("address"),
-			lid : "999999999"
-        }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/powerloglist',
-          params: params
-        }).then((res) => {
-            console.log("占卜记录", res.data);
-			_this.makeData = res.data.data;
-			if(_this.makeData == ''){
-				_this.noData =false;
-			}else{
-				for( var a = 0; a<_this.makeData.length; a++){
-					_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
-				}
+	  makeInit(lid) {
+		if(!!lid){
+			var _this = this;
+			var params = {
+				address : sessionStorage.getItem("address"),
+				lid : lid||"999999999"
 			}
-			
-        }, (error) => {
-          console.log(error);
-        });
-      },
+			_this.$axios({
+			method: 'get',
+			url: _this.http184 + '/wb/powerloglist',
+			params: params
+			}).then((res) => {
+				if(!!lid){
+					_this.makeData = _this.makeData.concat(res.data.data);
+				}else{
+					_this.makeData = res.data.data;
+				}
+				if(_this.makeData == ''){
+					_this.noData =false;
+				}else{
+					for( var a = 0; a<_this.makeData.length; a++){
+						_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
+					}
+				}
+				if(res.data.data.length>0){
+					_this.lastLid = res.data.data[res.data.data.length-1].lid;
+				}else{
+					_this.lastLid = ""
+				}
+				
+			}, (error) => {
+			console.log(error);
+			});
+		}
+        
+	  },
+	infinite(done) {
+      this.makeInit(this.lastLid);
+      setTimeout(() => {
+        done();
+      }, 2000);
+    },
+    refresh() {
+        console.log('refresh')
+    },
 	},
 	mounted() {
 	  //获取排行榜
 	  let self = this;
-	  self.makeInit();
+	  self.makeInit("999999999");
     }
 
 }
@@ -86,7 +110,7 @@ export default {
 		vertical-align: top;
 	}
 	.center-make .m-listbox{
-		width: 100%;display: inline-block;background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;    margin-top: -.6rem;
+		width: 100%;display: inline-block;background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;height: 14rem;margin-top: -.6rem;position: relative;overflow: hidden;
 	}
 	.center-make .m-listbox .m-list{
 		width: 9.4rem;
