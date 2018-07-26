@@ -221,7 +221,7 @@
 
   .m-zhanbu .m-contbox .m-txtbox {
     width: 100%;
-    margin-top: 6.52rem;
+    margin-top: 6.6rem;
     display: inline-block;
   }
 

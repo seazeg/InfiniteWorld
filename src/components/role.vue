@@ -51,8 +51,8 @@
             <div class="roleinfo2 fixed">
               <span v-for="(item, index) in bag" @click="showBtn(index)">
                 <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}%</div>
-                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}%</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}</div>
+                <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}</div>
                 <img v-if="item.isband == '0' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/fy_card.png'" alt="">
                 <img v-if="item.isband == '1' &&!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040')" class="fyimg" :src="'../../static/images/jf_card.png'" alt="">
                 <img class="levelimg" :src="'../../static/images/'+ item.levelimg + '.png'" alt="">
@@ -943,7 +943,9 @@
     font-size: 0.1rem;
     position: absolute;
     left: 1.5rem;
-    top: .55rem;
+    top: .5rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
   .role .layer .right .roleinfo2 span .itemys{
     width: 1rem;
@@ -951,7 +953,9 @@
     font-size: 0.1rem;
     position: absolute;
     left: 1rem;
-    top: .55rem;
+    top: .5rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
   .role .layer .right .roleinfo2 span .itemcd{
     width: 1rem;
@@ -959,7 +963,9 @@
     font-size: 0.1rem;
     position: absolute;
     left: 2.2rem;
-    top: .55rem;
+    top: .5rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
 
   .role .layer .right .roleinfo2 span p {

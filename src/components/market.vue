@@ -302,8 +302,6 @@
 
       },
       infinite(done) {
-        console.log(this.noData)
-        console.log(123)
         if(this.noData) {
         setTimeout(()=>{
             this.$refs.myscroller.finishInfinite(2);
