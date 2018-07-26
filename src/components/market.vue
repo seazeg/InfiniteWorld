@@ -74,7 +74,7 @@
         carddata: data,
         cardlevel:leveldata,
         signData: '',
-        marketData: '',
+        marketData: [],
         noticeShow: false,
         marketLayer: false,
         selShow1: false,
@@ -234,28 +234,34 @@
         }
       },
       init(time) {
-        var _this = this;
-        var params = {
-          pid: _this.pid,
-          powerid: _this.powerid,
-          itemtype: _this.itemtype,
-          saleuptime: time||"2040/12/12"
-        }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/marketlist',
-          params: params
-        }).then((res) => {
-          if(!!time){
-            _this.marketData = _this.marketData.concat(res.data.data);
-          }else{
-            _this.marketData = res.data.data;
+        if(!!time){
+          var _this = this;
+          var params = {
+            pid: _this.pid,
+            powerid: _this.powerid,
+            itemtype: _this.itemtype,
+            saleuptime: time||"2040/12/12"
           }
-        
-          _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
-        }, (error) => {
-          console.log(error);
-        });
+          _this.$axios({
+            method: 'get',
+            url: _this.http184 + '/wb/marketlist',
+            params: params
+          }).then((res) => {
+            if(!!time){
+              _this.marketData = _this.marketData.concat(res.data.data);
+            }else{
+              _this.marketData = res.data.data;
+            }
+           if(res.data.data.length>0){
+            _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
+           }else{
+             _this.lastTime = ""
+           }
+
+          }, (error) => {
+            console.log(error);
+          });
+        }
       },
       buy(ele) {
         let self = this;
@@ -359,7 +365,7 @@
       }
     },
     mounted() {
-      this.init();
+      this.init("2040/12/12");
 
       
 
