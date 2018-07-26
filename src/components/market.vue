@@ -67,9 +67,6 @@
 <script>
   import data from '../json/carddata'
   import leveldata from '../json/cardlevel'
-  import Vue from 'vue'
-  import VueScroller from 'vue-scroller'
-  Vue.use(VueScroller);
 
   export default {
     data() {
@@ -181,7 +178,8 @@
         key: "",
 
         noData: '',
-        moveList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        moveList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        lastTime:""
       }
     },
     methods: {
@@ -235,21 +233,26 @@
           this.init()
         }
       },
-      init() {
+      init(time) {
         var _this = this;
         var params = {
           pid: _this.pid,
           powerid: _this.powerid,
           itemtype: _this.itemtype,
-          saleuptime: "2040/12/12"
+          saleuptime: time||"2040/12/12"
         }
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/marketlist',
           params: params
         }).then((res) => {
-          console.log("市场列表", res.data);
-          _this.marketData = res.data.data;
+          if(!!time){
+            _this.marketData = _this.marketData.concat(res.data.data);
+          }else{
+            _this.marketData = res.data.data;
+          }
+        
+          _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
         }, (error) => {
           console.log(error);
         });
@@ -302,25 +305,31 @@
 
       },
       infinite(done) {
-        if(this.noData) {
-        setTimeout(()=>{
-            this.$refs.myscroller.finishInfinite(2);
-        })
-        return;
-        }
-        let self = this;
-        let start = this.moveList.length;
+      
+      this.init(this.lastTime);
+          
+      setTimeout(() => {
+        done();
+      }, 2000);
+        // if(this.noData) {
+        // setTimeout(()=>{
+        //     this.$refs.myscroller.finishInfinite(2);
+        // })
+        // return;
+        // }
+        // let self = this;
+        // let start = this.moveList.length;
 
-        setTimeout(() => {
-            for(let i = start + 1; i < start + 10; i++) {
-                self.moveList.push(i)
-            }
-            if(start > 30) {
-                self.noData = "没有更多数据"
-            }
-            self.$refs.myscroller.resize();
-            done()
-        }, 1500)
+        // setTimeout(() => {
+        //     for(let i = start + 1; i < start + 10; i++) {
+        //         self.moveList.push(i)
+        //     }
+        //     if(start > 30) {
+        //         self.noData = "没有更多数据"
+        //     }
+        //     self.$refs.myscroller.resize();
+        //     done()
+        // }, 1500)
 
     },
     refresh() {

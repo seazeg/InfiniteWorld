@@ -9,7 +9,8 @@ import notice from './components/layout/notice.vue'
 import axios from 'axios'
 import AschJS from 'asch-js'
 import utils from './utils'
-
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller);
 
 Vue.prototype.$axios = axios
 Vue.prototype.$AschJS = AschJS
