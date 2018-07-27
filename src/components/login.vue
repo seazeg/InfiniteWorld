@@ -10,7 +10,7 @@
       <div class="box">
         <img src="../assets/images/login_button.png" alt="" class="submit" @click="submit()">
       </div>
-      <div style="text-align: center;position: fixed;bottom: 1rem;">
+      <div style="text-align: center;position: fixed;bottom: .4rem;">
         <img src="../assets/images/login_logo.png" alt="" style="width:70%">
       </div>
     </div>

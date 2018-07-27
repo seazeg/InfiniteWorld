@@ -178,9 +178,6 @@
         powerid: 0,
         itemtype: "",
         key: "",
-
-        noData: '',
-        moveList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         lastTime:""
       }
     },
@@ -306,33 +303,11 @@
         });
 
       },
-      infinite(done) {
-      
+    infinite(done) {
       this.init(this.lastTime);
-          
       setTimeout(() => {
         done();
       }, 2000);
-        // if(this.noData) {
-        // setTimeout(()=>{
-        //     this.$refs.myscroller.finishInfinite(2);
-        // })
-        // return;
-        // }
-        // let self = this;
-        // let start = this.moveList.length;
-
-        // setTimeout(() => {
-        //     for(let i = start + 1; i < start + 10; i++) {
-        //         self.moveList.push(i)
-        //     }
-        //     if(start > 30) {
-        //         self.noData = "没有更多数据"
-        //     }
-        //     self.$refs.myscroller.resize();
-        //     done()
-        // }, 1500)
-
     },
     refresh() {
         console.log('refresh')
@@ -361,10 +336,7 @@
       }
     },
     mounted() {
-      this.init();
-
-      
-
+      this.init("2040/12/12");
     }
   }
 </script>
@@ -490,9 +462,9 @@
     position: relative;
 
   }
-  .market .list .box:first-child{
+  /* .market .list .box:first-child{
     margin-top: 3rem;
-  }
+  } */
 
   .market .list .box .info {
     margin-left: .8rem;
