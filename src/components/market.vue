@@ -76,7 +76,7 @@
         carddata: data,
         cardlevel:leveldata,
         signData: '',
-        marketData: '',
+        marketData: [],
         noticeShow: false,
         marketLayer: false,
         selShow1: false,
@@ -462,9 +462,9 @@
     position: relative;
 
   }
-  /* .market .list .box:first-child{
+  .market .list .box:first-child{
     margin-top: 3rem;
-  } */
+  }
 
   .market .list .box .info {
     margin-left: .8rem;

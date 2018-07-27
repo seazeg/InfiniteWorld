@@ -19,7 +19,7 @@
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
           <scroller :on-infinite="infinite" ref="myscroller">
-            <div v-if="!(item.itemid =='1038' || item.itemid =='1039' ||item.itemid =='1040') && item.issale == '1'" class="m-list" v-for="(item, index) in bag">
+            <div v-if="!(item.itemid =='1038' || item.itemid =='1039' ||item.itemid =='1040') && item.issale == '0'" class="m-list" v-for="(item, index) in bag">
               <div class="m-imgbox" @click="getResource(item)">
                 <div v-if="item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
                 <div v-if="item.itemtype == '4'" class="itemys">{{item.itemylcrit}}</div>
@@ -302,7 +302,7 @@
   .m-dzcardtcbox .m-listbox{
   	width: 7.3rem;height: 9.6rem; display: inline-block;margin: .8rem auto 0;overflow-x: hidden;overflow-y: auto;position: relative;
   }
-  	.m-dzcardtcbox .m-listbox .m-list{
+  .m-dzcardtcbox .m-listbox .m-list{
 		width: 3.35rem;
 		height: 4.37rem;
 		float: left;
@@ -311,6 +311,9 @@
 		background: url('../assets/images/bg-dazaocardlist.png');
 		background-size: 100%;
 	}
+  .m-dzcardtcbox .m-listbox .m-list:first-child{
+    margin-top: 3rem;
+  }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox{
 		width: 2.8rem;height: 4.12rem;display: inline-block;margin:.2rem auto 0;	position: relative;
 	}
