@@ -63,46 +63,47 @@
       },
       
       bagInit(packid) {
-        var _this = this;
-        var params = {
-          itemtype: "",
-          address: sessionStorage.getItem("address"),
-          packid: packid||'999999999'
+        if(!!packid){
+          var _this = this;
+          var params = {
+            itemtype: "",
+            address: sessionStorage.getItem("address"),
+            packid: packid||'999999999'
+          }
+          _this.$axios({
+            method: 'get',
+            url: _this.http184 + '/wb/mypacklist',
+            params: params
+          }).then((res) => {
+            console.log(res.data.data)
+            if(!!packid){
+              _this.bag = _this.bag.concat(res.data.data);
+            }else{
+              _this.bag = res.data.data;
+            }
+            for (var a = 0; a < _this.carddata.length; a++) {
+              for (var b = 0; b < _this.bag.length; b++) {
+                if (_this.bag[b].itemid == _this.carddata[a].id) {
+                  _this.bag[b].img = _this.carddata[a].img
+                }
+              }
+            }
+            for (var v = 0; v < _this.cardlevel.length; v++) {
+              for (var z = 0; z < _this.bag.length; z++) {
+                if (_this.bag[z].powerid == _this.cardlevel[v].id) {
+                  _this.bag[z].levelimg = _this.cardlevel[v].img
+                }
+              }
+            }
+            if(res.data.data.length>0){
+              _this.lastPackid = res.data.data[res.data.data.length-1].packid;
+            }else{
+              _this.lastPackid = ""
+            }
+          }, (error) => {
+            console.log(error);
+          });
         }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/mypacklist',
-          params: params
-        }).then((res) => {
-          console.log(res.data.data)
-          if(packid !='999999999'){
-            console.log(345)
-            _this.bag = _this.bag.concat(res.data.data);
-          }else{
-            _this.bag = res.data.data;
-          }
-          for (var a = 0; a < _this.carddata.length; a++) {
-            for (var b = 0; b < _this.bag.length; b++) {
-              if (_this.bag[b].itemid == _this.carddata[a].id) {
-                _this.bag[b].img = _this.carddata[a].img
-              }
-            }
-          }
-          for (var v = 0; v < _this.cardlevel.length; v++) {
-            for (var z = 0; z < _this.bag.length; z++) {
-              if (_this.bag[z].powerid == _this.cardlevel[v].id) {
-                _this.bag[z].levelimg = _this.cardlevel[v].img
-              }
-            }
-          }
-          if(res.data.data.length>0){
-            _this.lastPackid = res.data.data[res.data.data.length-1].packid;
-          }else{
-            _this.lastPackid = ""
-          }
-        }, (error) => {
-          console.log(error);
-        });
       },
       roleInit() {
         var _this = this;
@@ -190,7 +191,7 @@
     },
     mounted() {
       this.roleInit();
-      this.bagInit();
+      this.bagInit('999999999');
     }
 
   }
@@ -300,7 +301,7 @@
     text-align: center;
   }
   .m-dzcardtcbox .m-listbox{
-  	width: 7.3rem;height: 9.6rem; display: inline-block;margin: .8rem auto 0;overflow-x: hidden;overflow-y: auto;position: relative;
+  	width: 7.3rem;height: 9.6rem; display: inline-block;margin: .8rem auto 0;position: relative;
   }
   .m-dzcardtcbox .m-listbox .m-list{
 		width: 3.35rem;

@@ -414,47 +414,50 @@
         });
       },
       bagInit(packid) {
-        var _this = this;
-        var params = {
-          itemtype: "",
-          address: sessionStorage.getItem("address"),
-          packid: packid || '999999999'
+        if(!!packid){
+          var _this = this;
+          var params = {
+            itemtype: "",
+            address: sessionStorage.getItem("address"),
+            packid: packid || '999999999'
+          }
+          _this.$axios({
+            method: 'get',
+            url: _this.http184 + '/wb/mypacklist',
+            params: params
+          }).then((res) => {
+            if(!!packid){
+              _this.bag = _this.bag.concat(res.data.data);
+            }else{
+              _this.bag = res.data.data;
+            }
+            for (var c = 0; c < _this.bag.length; c++) {
+            _this.$set(_this.bag[c],'rolezb',false);
+            }
+            for (var a = 0; a < _this.carddata.length; a++) {
+              for (var b = 0; b < _this.bag.length; b++) {
+                if (_this.bag[b].itemid == _this.carddata[a].id) {
+                  _this.bag[b].img = _this.carddata[a].img
+                }
+              }
+            }
+            for (var v = 0; v < _this.cardlevel.length; v++) {
+              for (var z = 0; z < _this.bag.length; z++) {
+                if (_this.bag[z].powerid == _this.cardlevel[v].id) {
+                  _this.bag[z].levelimg = _this.cardlevel[v].img
+                }
+              }
+            }
+            if(res.data.data.length>0){
+              _this.lastPackid = res.data.data[res.data.data.length-1].packid;
+            }else{
+              _this.lastPackid = ""
+            }
+          }, (error) => {
+            console.log(error);
+          });
         }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/mypacklist',
-          params: params
-        }).then((res) => {
-          if(!!packid){
-            _this.bag = _this.bag.concat(res.data.data);
-          }else{
-            _this.bag = res.data.data;
-          }
-          for (var c = 0; c < _this.bag.length; c++) {
-          _this.$set(_this.bag[c],'rolezb',false);
-          }
-          for (var a = 0; a < _this.carddata.length; a++) {
-            for (var b = 0; b < _this.bag.length; b++) {
-              if (_this.bag[b].itemid == _this.carddata[a].id) {
-                _this.bag[b].img = _this.carddata[a].img
-              }
-            }
-          }
-          for (var v = 0; v < _this.cardlevel.length; v++) {
-            for (var z = 0; z < _this.bag.length; z++) {
-              if (_this.bag[z].powerid == _this.cardlevel[v].id) {
-                _this.bag[z].levelimg = _this.cardlevel[v].img
-              }
-            }
-          }
-          if(res.data.data.length>0){
-            _this.lastPackid = res.data.data[res.data.data.length-1].packid;
-          }else{
-            _this.lastPackid = ""
-          }
-        }, (error) => {
-          console.log(error);
-        });
+
       },
       // buyListInit() {
       //   var _this = this;
@@ -474,6 +477,7 @@
       //   });
       // },
       saleListInit(saletime) {
+        if(!!saletime){
           var _this = this;
           var params = {
             itemtype: "",
@@ -498,6 +502,8 @@
           }, (error) => {
             console.log(error);
           });
+        }
+
       },
       myGroundingInit(saleuptime) {
         if(!!saleuptime){
@@ -1066,9 +1072,9 @@
   }
 
   .role .layer .right .roleinfo2.fixed {
-    margin-top: 20px;
+    margin-top: .3rem;
     overflow-y: scroll;
-    height: 324px;
+    height: 9.6rem;
     position: relative;
   }
 

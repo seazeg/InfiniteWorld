@@ -38,37 +38,40 @@ export default {
 	  },
 	  //获取占卜记录
 	  makeInit(lid) {
-		var _this = this;
-		var params = {
-			address : sessionStorage.getItem("address"),
-			lid : lid||"999999999"
-		}
-		_this.$axios({
-		method: 'get',
-		url: _this.http184 + '/wb/powerloglist',
-		params: params
-		}).then((res) => {
-			if(!!lid){
-				_this.makeData = _this.makeData.concat(res.data.data);
-			}else{
-				_this.makeData = res.data.data;
+		if(!!lid){
+			var _this = this;
+			var params = {
+				address : sessionStorage.getItem("address"),
+				lid : lid||"999999999"
 			}
-			if(_this.makeData == ''){
-				_this.noData =false;
-			}else{
-				for( var a = 0; a<_this.makeData.length; a++){
-					_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
+			_this.$axios({
+			method: 'get',
+			url: _this.http184 + '/wb/powerloglist',
+			params: params
+			}).then((res) => {
+				if(!!lid){
+					_this.makeData = _this.makeData.concat(res.data.data);
+				}else{
+					_this.makeData = res.data.data;
 				}
-			}
-			if(res.data.data.length>0){
-				_this.lastLid = res.data.data[res.data.data.length-1].lid;
-			}else{
-				_this.lastLid = ""
-			}
-			
-		}, (error) => {
-		console.log(error);
-		});
+				if(_this.makeData == ''){
+					_this.noData =false;
+				}else{
+					for( var a = 0; a<_this.makeData.length; a++){
+						_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
+					}
+				}
+				if(res.data.data.length>0){
+					_this.lastLid = res.data.data[res.data.data.length-1].lid;
+				}else{
+					_this.lastLid = ""
+				}
+				
+			}, (error) => {
+			console.log(error);
+			});
+		}
+        
 	  },
 	infinite(done) {
       this.makeInit(this.lastLid);
@@ -83,7 +86,7 @@ export default {
 	mounted() {
 	  //获取排行榜
 	  let self = this;
-	  self.makeInit("999999999");
+	  self.makeInit('999999999');
     }
 
 }
@@ -117,7 +120,7 @@ export default {
 		background: url('../assets/images/bg-make-list.jpg');
 		background-size: 100%;
 	}
-	.center-make .m-listbox .m-list:first-child{
+	.center-devine .m-listbox .m-list:first-child{
 		margin-top: 3rem;
 	}
 	.center-make .m-listbox .m-list:last-child{

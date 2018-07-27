@@ -47,37 +47,40 @@ export default {
 	  },
 	  //获取占卜记录
 	  divineInit(boxid) {
-		var _this = this;
-		var params = {
-			address : sessionStorage.getItem("address"),
-			boxid : boxid||"999999999"
-		}
-		_this.$axios({
-		method: 'get',
-		url: _this.http184 + '/wb/boxlist',
-		params: params
-		}).then((res) => {
-			
-			if(!!boxid){
-				_this.divineData = _this.divineData.concat(res.data.data);
-			}else{
-				_this.divineData = res.data.data;
+		if(!!boxid){
+			var _this = this;
+			var params = {
+				address : sessionStorage.getItem("address"),
+				boxid : boxid||"999999999"
 			}
-			if(_this.divineData == ''){
-				_this.noData =false;
-			}else{
-				for( var a = 0; a<_this.divineData.length; a++){
-					_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
+			_this.$axios({
+			method: 'get',
+			url: _this.http184 + '/wb/boxlist',
+			params: params
+			}).then((res) => {
+				
+				if(!!boxid){
+					_this.divineData = _this.divineData.concat(res.data.data);
+				}else{
+					_this.divineData = res.data.data;
 				}
-			}
-			if(res.data.data.length>0){
-				_this.lastBoxid = res.data.data[res.data.data.length-1].boxid;
-			}else{
-				_this.lastBoxid = ""
-			}
-		}, (error) => {
-		console.log(error);
-		});
+				if(_this.divineData == ''){
+					_this.noData =false;
+				}else{
+					for( var a = 0; a<_this.divineData.length; a++){
+						_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
+					}
+				}
+				if(res.data.data.length>0){
+					_this.lastBoxid = res.data.data[res.data.data.length-1].boxid;
+				}else{
+					_this.lastBoxid = ""
+				}
+			}, (error) => {
+			console.log(error);
+			});
+		}
+        
 	  },
 	  infinite(done) {
       this.divineInit(this.lastBoxid);
@@ -92,7 +95,7 @@ export default {
     mounted() {
 	  //获取排行榜
 	  let self = this;
-	  self.divineInit("999999999");
+	  self.divineInit();
 	//   setInterval( function(){
 	// 	self.divineInit();
 	//   },5000)
@@ -128,8 +131,8 @@ export default {
 		background-size: 100%;
 	}
 	.center-devine .m-listbox .m-list:first-child{
-		margin-top: 3rem;
-	}
+    margin-top: 3rem;
+  }
 	.center-devine .m-listbox .m-list:last-child{
 		width: 9.4rem;
 		height: 2.53rem;
