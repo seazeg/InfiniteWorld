@@ -47,40 +47,37 @@ export default {
 	  },
 	  //获取占卜记录
 	  divineInit(boxid) {
-		if(!!boxid){
-			var _this = this;
-			var params = {
-				address : sessionStorage.getItem("address"),
-				boxid : boxid||"999999999"
-			}
-			_this.$axios({
-			method: 'get',
-			url: _this.http184 + '/wb/boxlist',
-			params: params
-			}).then((res) => {
-				
-				if(!!boxid){
-					_this.divineData = _this.divineData.concat(res.data.data);
-				}else{
-					_this.divineData = res.data.data;
-				}
-				if(_this.divineData == ''){
-					_this.noData =false;
-				}else{
-					for( var a = 0; a<_this.divineData.length; a++){
-						_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
-					}
-				}
-				if(res.data.data.length>0){
-					_this.lastBoxid = res.data.data[res.data.data.length-1].boxid;
-				}else{
-					_this.lastBoxid = ""
-				}
-			}, (error) => {
-			console.log(error);
-			});
+		var _this = this;
+		var params = {
+			address : sessionStorage.getItem("address"),
+			boxid : boxid||"999999999"
 		}
-        
+		_this.$axios({
+		method: 'get',
+		url: _this.http184 + '/wb/boxlist',
+		params: params
+		}).then((res) => {
+			
+			if(!!boxid){
+				_this.divineData = _this.divineData.concat(res.data.data);
+			}else{
+				_this.divineData = res.data.data;
+			}
+			if(_this.divineData == ''){
+				_this.noData =false;
+			}else{
+				for( var a = 0; a<_this.divineData.length; a++){
+					_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
+				}
+			}
+			if(res.data.data.length>0){
+				_this.lastBoxid = res.data.data[res.data.data.length-1].boxid;
+			}else{
+				_this.lastBoxid = ""
+			}
+		}, (error) => {
+		console.log(error);
+		});
 	  },
 	  infinite(done) {
       this.divineInit(this.lastBoxid);
