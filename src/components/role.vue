@@ -47,9 +47,9 @@
             </div>
           </div>
           <div v-if="left.role2">
-            <div class="roleinfo2 fixed">
+            <div class="roleinfo2 fixed bagbox">
               <scroller :on-infinite="infinite" ref="myscroller">
-                <span v-for="(item, index) in bag" @click="showBtn(index)">
+                <span class="m-list" v-for="(item, index) in bag" @click="showBtn(index)">
                   <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
                   <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemys">{{item.itemylcrit}}</div>
                   <div v-if="!(item.itemid == '1038' || item.itemid == '1039' || item.itemid == '1040') && item.itemtype == '4'" class="itemcd">{{item.itemcdcrit}}</div>
@@ -459,23 +459,23 @@
         }
 
       },
-      buyListInit() {
-        var _this = this;
-        var params = {
-          itemtype: "",
-          address: sessionStorage.getItem("address"),
-          saletime: "2040/12/12"
-        }
-        _this.$axios({
-          method: 'get',
-          url: _this.http184 + '/wb/buylist',
-          params: params
-        }).then((res) => {
-          _this.buyList = res.data.data;
-        }, (error) => {
-          console.log(error);
-        });
-      },
+      // buyListInit() {
+      //   var _this = this;
+      //   var params = {
+      //     itemtype: "",
+      //     address: sessionStorage.getItem("address"),
+      //     saletime: "2040/12/12"
+      //   }
+      //   _this.$axios({
+      //     method: 'get',
+      //     url: _this.http184 + '/wb/buylist',
+      //     params: params
+      //   }).then((res) => {
+      //     _this.buyList = res.data.data;
+      //   }, (error) => {
+      //     console.log(error);
+      //   });
+      // },
       saleListInit(saletime) {
         if(!!saletime){
           var _this = this;
@@ -1072,9 +1072,9 @@
   }
 
   .role .layer .right .roleinfo2.fixed {
-    margin-top: 20px;
+    margin-top: .3rem;
     overflow-y: scroll;
-    height: 324px;
+    height: 9.6rem;
     position: relative;
   }
 
@@ -1294,6 +1294,9 @@
   }
   .m-sjdatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-sjdatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
+  .m-sjdatabox .m-line:first-child{
+		margin-top: 3rem;
+	}
   .m-sjdatabox .m-line .m-name{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-sjdatabox .m-line .m-time{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-sjdatabox .m-line .m-edit{ width: 20%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
@@ -1303,7 +1306,11 @@
   }
   .m-jydatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-jydatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
+  .m-jydatabox .m-line:first-child{
+		margin-top: 3rem;
+	}
   .m-jydatabox .m-line .m-name{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-jydatabox .m-line .m-time{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
 
+  .bagbox .m-list:first-child{margin-top: 3rem!important;}
 </style>

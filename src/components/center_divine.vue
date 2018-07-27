@@ -95,7 +95,7 @@ export default {
     mounted() {
 	  //获取排行榜
 	  let self = this;
-	  self.divineInit("999999999");
+	  self.divineInit();
 	//   setInterval( function(){
 	// 	self.divineInit();
 	//   },5000)
@@ -130,6 +130,9 @@ export default {
 		background: url('../assets/images/bg-divine-list.png');
 		background-size: 100%;
 	}
+	.center-devine .m-listbox .m-list:first-child{
+    margin-top: 3rem;
+  }
 	.center-devine .m-listbox .m-list:last-child{
 		width: 9.4rem;
 		height: 2.53rem;

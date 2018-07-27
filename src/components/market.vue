@@ -209,7 +209,7 @@
             }, 2000)
             self.proname = self.name;
             self.part = true;
-            self.init();
+            self.init('2040/12/12');
           }
           console.log("返回结果", data);
         });
@@ -219,17 +219,17 @@
           this.input1 = obj.name;
           this.pid = obj.type;
           this.selShow1 = false;
-          this.init()
+          this.init('2040/12/12')
         } else if (type == 2) {
           this.input2 = obj.name;
           this.powerid = obj.type;
           this.selShow2 = false;
-          this.init()
+          this.init('2040/12/12')
         } else if (type == 3) {
           this.input3 = obj.name;
           this.itemtype = obj.type;
           this.selShow3 = false;
-          this.init()
+          this.init('2040/12/12')
         }
       },
       init(time) {
@@ -251,16 +251,13 @@
             }else{
               _this.marketData = res.data.data;
             }
-           if(res.data.data.length>0){
+          
             _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
-           }else{
-             _this.lastTime = ""
-           }
-
           }, (error) => {
             console.log(error);
           });
         }
+
       },
       buy(ele) {
         let self = this;
@@ -342,7 +339,7 @@
       }
     },
     mounted() {
-      this.init("2040/12/12");
+      this.init('2040/12/12');
     }
   }
 </script>
@@ -468,9 +465,9 @@
     position: relative;
 
   }
-  /* .market .list .box:first-child{
+  .market .list .box:first-child{
     margin-top: 3rem;
-  } */
+  }
 
   .market .list .box .info {
     margin-left: .8rem;

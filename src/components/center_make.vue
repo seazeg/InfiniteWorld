@@ -86,7 +86,7 @@ export default {
 	mounted() {
 	  //获取排行榜
 	  let self = this;
-	  self.makeInit("999999999");
+	  self.makeInit('999999999');
     }
 
 }
@@ -119,6 +119,9 @@ export default {
 		text-align: center;
 		background: url('../assets/images/bg-make-list.jpg');
 		background-size: 100%;
+	}
+	.center-devine .m-listbox .m-list:first-child{
+		margin-top: 3rem;
 	}
 	.center-make .m-listbox .m-list:last-child{
 		width: 9.4rem;

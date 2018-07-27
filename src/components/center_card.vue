@@ -37,18 +37,17 @@ export default {
       }
     },
     methods: {
-      open(ele) {
-		console.log(ele);
-		let self = this;
-		self.showImg= ele.img;
-		if(ele.lastprotime == null){
-			self.lastprotime = '00-00-00 00:00:00'
-		}else{
-			self.lastprotime = ele.lastprotime
-		}
-		self.procount = ele.procount;
-		self.needyl = ele.needyl;
-        self.tcShow = !self.tcShow
+    open(ele) {
+			let self = this;
+			self.showImg= ele.img;
+			if(ele.lastprotime == null){
+				self.lastprotime = '00-00-00 00:00:00'
+			}else{
+				self.lastprotime = ele.lastprotime
+			}
+			self.procount = ele.procount;
+			self.needyl = ele.needyl;
+			self.tcShow = !self.tcShow
       },
 	  openCard() {
         this.cardxq = !this.cardxq
