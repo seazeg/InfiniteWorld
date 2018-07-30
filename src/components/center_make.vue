@@ -49,6 +49,7 @@ export default {
 			url: _this.http184 + '/wb/powerloglist',
 			params: params
 			}).then((res) => {
+				
 				if(!!lid){
 					_this.makeData = _this.makeData.concat(res.data.data);
 				}else{
@@ -56,11 +57,12 @@ export default {
 				}
 				if(_this.makeData == ''){
 					_this.noData =false;
-				}else{
-					for( var a = 0; a<_this.makeData.length; a++){
-						_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
-					}
 				}
+				// else{
+				// 	for( var a = 0; a<_this.makeData.length; a++){
+				// 		_this.makeData[a].crtime = _this.makeData[a].crtime.slice(5,16)
+				// 	}
+				// }
 				if(res.data.data.length>0){
 					_this.lastLid = res.data.data[res.data.data.length-1].lid;
 				}else{

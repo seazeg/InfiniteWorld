@@ -66,11 +66,12 @@ export default {
 				}
 				if(_this.divineData == ''){
 					_this.noData =false;
-				}else{
-					for( var a = 0; a<_this.divineData.length; a++){
-						_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
-					}
 				}
+				// else{
+				// 	for( var a = 0; a<_this.divineData.length; a++){
+				// 		_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
+				// 	}
+				// }
 				if(res.data.data.length>0){
 					_this.lastBoxid = res.data.data[res.data.data.length-1].boxid;
 				}else{
@@ -162,19 +163,19 @@ export default {
 		width: 100%;display: inline-block;margin-top: .1rem;padding: 0 .4rem; color: #472c0e;vertical-align: top;box-sizing: border-box;font-size: .38rem;
 	}
 	.center-devine .m-listbox .m-list .m-textbox01 .m-left{
-		width: 45%; margin-left:5%;display: inline-block;float: left;text-align: left;height: .4rem; 
+		width: 2.8rem; margin-left:5%;display: inline-block;float: left;text-align: left;height: .4rem; 
 	}
 	.center-devine .m-listbox .m-list .m-textbox01 .m-right{
-		width: 50%;display: inline-block;float: right;text-align: left;height: .4rem;
+		width: 5rem;display: inline-block;float: right;text-align: left;height: .4rem;
 	}
 	.center-devine .m-listbox .m-list .m-textbox02{
 		width: 100%; display: inline-block;margin-top: -.6rem;padding: 0 .4rem;font-size: .38rem; color: #472c0e;vertical-align: top;box-sizing: border-box;
 	}
 	.center-devine .m-listbox .m-list .m-textbox02 .m-left{
-		width: 45%; margin-left:5%;display: inline-block;float: left;text-align: left;height: .4rem; 
+		width: 2.8rem; margin-left:5%;display: inline-block;float: left;text-align: left;height: .4rem; 
 	}
 	.center-devine .m-listbox .m-list .m-textbox02 .m-right{
-		width: 50%;display: inline-block;float: right;text-align: left;height: .4rem;
+		width: 5rem;display: inline-block;float: right;text-align: left;height: .4rem;
 	}
 
 </style>
