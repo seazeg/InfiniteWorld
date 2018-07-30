@@ -342,16 +342,18 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1.5rem;
-    top: .55rem;
+    left: 1.3rem;
+    top: .53rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemys{
     width: 1rem;
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: .7rem;
-    top: .5rem;
+    left: .8rem;
+    top: .53rem;
     -webkit-transform: scale(0.8); 
     transform: scale(0.8); 
   }
@@ -360,8 +362,8 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1.8rem;
-    top: .5rem;
+    left: 2rem;
+    top: .53rem;
     -webkit-transform: scale(0.8); 
     transform: scale(0.8); 
   }

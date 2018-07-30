@@ -426,7 +426,7 @@
             url: _this.http184 + '/wb/mypacklist',
             params: params
           }).then((res) => {
-            if(!!packid){
+            if(packid != '999999999'){
               _this.bag = _this.bag.concat(res.data.data);
             }else{
               _this.bag = res.data.data;
@@ -489,7 +489,7 @@
             url: _this.http184 + '/wb/salelist',
             params: params
           }).then((res) => {
-            if(!!saletime){
+            if(saletime != "2040/12/12"){
               _this.saleList = _this.saleList.concat(res.data.data);
             }else{
               _this.saleList = res.data.data;
@@ -518,7 +518,7 @@
             url: _this.http184 + '/wb/mymarketlist',
             params: params
           }).then((res) => {
-            if(!!saleuptime){
+            if(saleuptime != "2040/12/12"){
               _this.myGrounding = _this.myGrounding.concat(res.data.data);
             }else{
               _this.myGrounding = res.data.data;
@@ -1009,8 +1009,8 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1.5rem;
-    top: .5rem;
+    left: 1.3rem;
+    top: .53rem;
     -webkit-transform: scale(0.8); 
     transform: scale(0.8); 
   }
@@ -1019,8 +1019,8 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: .7rem;
-    top: .5rem;
+    left: .8rem;
+    top: .53rem;
     -webkit-transform: scale(0.8); 
     transform: scale(0.8); 
   }
@@ -1029,8 +1029,8 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1.8rem;
-    top: .5rem;
+    left: 2rem;
+    top: .53rem;
     -webkit-transform: scale(0.8); 
     transform: scale(0.8); 
   }
@@ -1294,9 +1294,9 @@
   }
   .m-sjdatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-sjdatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
-  /* .m-sjdatabox .m-line:first-child{
+  .m-sjdatabox .m-line:first-child{
 		margin-top: 3rem;
-	} */
+	}
   .m-sjdatabox .m-line .m-name{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-sjdatabox .m-line .m-time{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-sjdatabox .m-line .m-edit{ width: 20%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
@@ -1306,11 +1306,11 @@
   }
   .m-jydatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-jydatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
-  /* .m-jydatabox .m-line:first-child{
+  .m-jydatabox .m-line:first-child{
 		margin-top: 3rem;
-	} */
+	}
   .m-jydatabox .m-line .m-name{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-jydatabox .m-line .m-time{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
 
-  /* .bagbox .m-list:first-child{margin-top: 3rem!important;} */
+  .bagbox .m-list:first-child{margin-top: 3rem!important;}
 </style>

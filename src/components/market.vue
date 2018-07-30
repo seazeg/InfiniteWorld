@@ -246,13 +246,17 @@
             url: _this.http184 + '/wb/marketlist',
             params: params
           }).then((res) => {
-            if(!!time){
+            if(time !='2040/12/12'){
               _this.marketData = _this.marketData.concat(res.data.data);
             }else{
               _this.marketData = res.data.data;
             }
-          
-            _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
+            if(res.data.data.length>0){
+              _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
+            }else{
+              _this.lastTime = ""
+            }
+           // _this.lastTime = res.data.data[res.data.data.length-1].saleuptime;
           }, (error) => {
             console.log(error);
           });
@@ -465,9 +469,9 @@
     position: relative;
 
   }
-  /* .market .list .box:first-child{
+  .market .list .box:first-child{
     margin-top: 3rem;
-  } */
+  }
 
   .market .list .box .info {
     margin-left: .8rem;
@@ -565,24 +569,30 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1.8rem;
-    top: .55rem;
+    left: 1.3rem;
+    top: .53rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
   .marketLayer .card .itemys{
     width: 1rem;
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1rem;
-    top: .55rem;
+    left: .8rem;
+    top: .53rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
   .marketLayer .card .itemcd{
     width: 1rem;
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 2.2rem;
-    top: .55rem;
+    left: 2rem;
+    top: .53rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
   .marketLayer .card .levelimg {
     width: 100%;
