@@ -18,7 +18,7 @@
 	    </div>
 	    <div class="m-dzcardtcbox" v-show="cardList">
 	    	<div class="m-listbox">
-          <scroller :on-infinite="infinite" ref="myscroller06">
+          <div>
             <div v-if="!(item.itemid =='1038' || item.itemid =='1039' ||item.itemid =='1040') && item.issale == '0'" class="m-list" v-for="(item, index) in bag">
               <div class="m-imgbox" @click="getResource(item)">
                 <div v-if="item.itemtype != '4'" class="itemyl">{{item.itemyl}}</div>
@@ -28,7 +28,8 @@
                 <img :src="'../../static/images/'+ item.img + '.png'"/>
               </div>
             </div>
-          </scroller>
+          </div>
+          <a v-if="moreShow" href="javascript:;" class="field" @click="more()">加载更多</a>
 	    	</div>
 	    </div>
        <notice v-show="sign">{{signData}}</notice>
@@ -54,6 +55,7 @@
         role: false,
         dzPackid:'',
         lastPackid:'',
+        moreShow:true,
         
       }
     },
@@ -98,7 +100,8 @@
             if(res.data.data.length>0){
               _this.lastPackid = res.data.data[res.data.data.length-1].packid;
             }else{
-              _this.lastPackid = ""
+              _this.lastPackid = "";
+              _this.moreShow = false;
             }
           }, (error) => {
             console.log(error);
@@ -178,6 +181,10 @@
           }
           console.log("返回结果",data);
         });
+      },
+      //点击加载更多
+      more() {
+        this.bagInit(this.lastPackid);
       },
       infinite(done) {
         this.bagInit(this.lastPackid);
@@ -301,7 +308,7 @@
     text-align: center;
   }
   .m-dzcardtcbox .m-listbox{
-  	width: 7.3rem;height: 9.6rem; display: inline-block;margin: .8rem auto 0;position: relative;
+  	width: 7.3rem;height: 9.6rem; display: inline-block;margin: .8rem auto 0;position: relative;overflow-x: hidden;overflow-y: auto;
   }
   .m-dzcardtcbox .m-listbox .m-list{
 		width: 3.35rem;
@@ -312,9 +319,7 @@
 		background: url('../assets/images/bg-dazaocardlist.png');
 		background-size: 100%;
 	}
-  .m-dzcardtcbox .m-listbox .m-list:first-child, .m-dzcardtcbox .m-listbox .m-list:nth-child(2){
-    margin-top: 3rem;
-  }
+
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox{
 		width: 2.8rem;height: 4.12rem;display: inline-block;margin:.2rem auto 0;	position: relative;
 	}
@@ -345,16 +350,29 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1rem;
-    top: .55rem;
+    left: .7rem;
+    top: .5rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
   }
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox .itemcd{
     width: 1rem;
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 2.2rem;
-    top: .55rem;
+    left: 1.8rem;
+    top: .5rem;
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
+  }
+	.m-dzcardtcbox .m-listbox .field {
+    width: 100%;
+    display: inline-block;
+    font-size: 0.3rem;
+    padding: 0 .1rem;
+    line-height: .8rem;
+    color: #eda41a;
+    text-shadow: 0 1px #3f291b, 1px 0 #3f291b, -1px 0 #3f291b, 0 -1px #3f291b;
   }
 
 </style>

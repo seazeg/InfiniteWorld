@@ -465,9 +465,9 @@
     position: relative;
 
   }
-  .market .list .box:first-child{
+  /* .market .list .box:first-child{
     margin-top: 3rem;
-  }
+  } */
 
   .market .list .box .info {
     margin-left: .8rem;
