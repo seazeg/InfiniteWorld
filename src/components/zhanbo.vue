@@ -166,7 +166,7 @@
           };
           // $("#countdown").jCountdown("destroy");
           $("#countdown").jCountdown(config);
-        }, 100);
+        }, 500);
       }
     },
     mounted() {
