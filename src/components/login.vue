@@ -115,6 +115,8 @@
           var _this = this;
           if(_this.isCk){
             $.cookie("secret",_this.password);
+          }else{
+            $.cookie("secret","");
           }
 
           _this.$axios({
