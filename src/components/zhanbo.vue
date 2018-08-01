@@ -143,6 +143,7 @@
           var b = new Date;
           var b = -b.getTimezoneOffset() / 60;
           // var i = '2018/7/10 10:00:00';
+          console.log(this.nextTime)
           var i = this.nextTime;
           var config = {
             timeText: i, //倒计时时间
