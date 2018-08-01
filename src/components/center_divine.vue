@@ -1,9 +1,9 @@
 <template>
  <div class="center-devine">
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
- 	<div class="m-listbox">
+ 	<div v-if="noData" class="m-listbox">
 		 <scroller :on-infinite="infinite" ref="myscroller">
-			<div v-if="noData" class="m-list" v-for="item in divineData">
+			<div class="m-list" v-for="item in divineData">
 				<div class="m-titlebox">
 					<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
 					<div class="m-txt">方解石占卜</div>
@@ -19,14 +19,17 @@
 				</div>
 			</div>
 		 </scroller>
-		 <div v-if="!noData" class="m-list">
+		
+ 	</div>
+	 <div v-if="!noData" class="m-listbox nodata">
+		  <div class="m-list ">
  			<div class="m-titlebox">
  				<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
  				<div class="m-txt">暂无数据</div>
  				<div class="m-right"><img src="../assets/images/bg-make-tit03.png" /></div>
  			</div>
  		</div>
- 	</div>
+	 </div>
  	<div class="m-bottomimg"><img src="../assets/images/bg-makelist-bot.png" /></div>
  </div>
 </template>
@@ -58,7 +61,6 @@ export default {
 			url: _this.http184 + '/wb/boxlist',
 			params: params
 			}).then((res) => {
-				
 				if(!!boxid){
 					_this.divineData = _this.divineData.concat(res.data.data);
 				}else{
@@ -67,6 +69,7 @@ export default {
 				if(_this.divineData == ''){
 					_this.noData =false;
 				}
+				
 				// else{
 				// 	for( var a = 0; a<_this.divineData.length; a++){
 				// 		_this.divineData[a].boxtime = _this.divineData[a].boxtime.slice(5,16)
@@ -123,6 +126,7 @@ export default {
 	}
 	.center-devine .m-listbox{
 		width: 100%;display: inline-block;background: url('../assets/images/bg-makelist.png') repeat-y;background-size: 100%;vertical-align: top;height: 14rem;margin-top: -.6rem;position: relative;overflow: hidden;}
+	.center-devine .m-listbox.nodata{height: 2.53rem;}
 	.center-devine .m-listbox .m-list{
 		width: 9.4rem;
 		height: 3.03rem;
@@ -132,8 +136,8 @@ export default {
 		background-size: 100%;
 	}
 	.center-devine .m-listbox .m-list:first-child{
-    margin-top: 3rem;
-  }
+		margin-top: 3rem;
+	}
 	.center-devine .m-listbox .m-list:last-child{
 		width: 9.4rem;
 		height: 2.53rem;

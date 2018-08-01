@@ -105,15 +105,17 @@ export default {
 	}
 
 	.center-chart .m-listbox .m-chartcontbox{
-		width: 100%;display: inline-block;vertical-align: top;
+		width: 100%;display: inline-block;vertical-align: top;text-align: center;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li{
 		width: 9.35rem;
 		height: 2rem;
+		display: inline-block;
 		margin: 0 auto;
 		text-align: center;
 		background: url('../assets/images/img-chart-list.png');
 		background-size: 100%;
+		vertical-align: top;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li:last-child{
 		width: 9.35rem;
@@ -132,16 +134,16 @@ export default {
 		vertical-align: top;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-name{
-		width: 2rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .4rem;color: #472c0e;font-weight: bold;
+		width: 2.8rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .4rem;color: #472c0e;font-weight: bold;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-zb{
-		width: 2.4rem; display: inline-block;float: left;margin: .56rem .2rem 0 0;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
+		width: 4.4rem; display: inline-block;float: left;margin: .25rem .2rem 0 0;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;text-align: left;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-zb span{
 		color: #fff;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-lw{
-		width: 2.4rem;  display: inline-block;float: left;margin-top: .56rem;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;
+		width: 4.4rem;  display: inline-block;float: left;margin-top: .05rem;font-size: .32rem;color: #eda41a; text-shadow: 1px 1px .15rem #3f291b;font-weight: bold;text-align: left;
 	}
 	.center-chart .m-listbox .m-chartcontbox .m-li .m-lw span{
 		color: #fff;
