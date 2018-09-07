@@ -1,11 +1,14 @@
 <template>
   <div>
     <div class="login" v-show="!isShow">
+      <input type="idkey" value="" v-model="idkey">
       <input type="password" value="" v-model="password">
+      <input type="code" value="" v-model="code">
+      <a href="javascript:;" class="m-codebtn">发送</a>
       <p>
         <input type="checkbox" name="" id="" v-model="isCk"/>
-        <span>记住秘钥</span>
-        <a @click="createSignature">创建秘钥</a>
+        <span>记住账户</span>
+        <a @click="createSignature">注册</a>
       </p>
       <div class="box">
         <img src="../assets/images/login_button.png" alt="" class="submit" @click="submit()">
@@ -15,7 +18,12 @@
       </div>
     </div>
     <div class="login_2" v-show="isShow">
-      <textarea value="" v-model="secret"></textarea>
+      <!-- <textarea value="" v-model="secret"></textarea> -->
+      <input type="zckey" value="" v-model="zckey">
+      <input type="zccode" value="" v-model="zccode">
+      <a href="javascript:;" class="m-codebtn">发送</a>
+      <input type="zcpassword" value="" v-model="zcpassword">
+      <input type="zcpasswordagain" value="" v-model="zcpasswordagain">
       <a href="javascript:;" class="m-btn" @click="closezc()">
         <img src="../assets/images/img-txbtn01.png" />
       </a>
@@ -29,8 +37,14 @@
   export default {
     data() {
       return {
-        password:$.cookie("secret")||"",
+        password:"",
+        idkey:$.cookie("secret")||"",
+        code:"",
         secret: "",
+        zckey:"",
+        zccode:"",
+        zcpassword:"",
+        zcpasswordagain:"",
         isShow: false,
         isCk:!!$.cookie("secret")||false,
         sign: false,
@@ -40,16 +54,17 @@
     methods: {
       createSignature() {
         var _this = this;
-        _this.$axios({
-          method: 'get',
-          url: "http://mainnet.asch.io/api/accounts/new"
-        }).then((res) => {
-          _this.secret = res.data.secret;
-          _this.isShow = true;
+        _this.isShow = true;
+        // _this.$axios({
+        //   method: 'get',
+        //   url: "http://mainnet.asch.io/api/accounts/new"
+        // }).then((res) => {
+        //   _this.secret = res.data.secret;
+        //   
           
-        }, (error) => {
-          console.log(error);
-        });
+        // }, (error) => {
+        //   console.log(error);
+        // });
       },
       verCheck() {
         var md = new MobileDetect(window.navigator.userAgent);
@@ -109,12 +124,12 @@
         });
       },
       submit() {
-        if (!Mnemonic.isValid(this.password)) {
+        if (!Mnemonic.isValid(this.idkey)) {
           alert("密码不符合规范")
         } else {
           var _this = this;
           if(_this.isCk){
-            $.cookie("secret",_this.password);
+            $.cookie("secret",_this.idkey);
           }else{
             $.cookie("secret","");
           }
@@ -123,18 +138,18 @@
             method: 'get',
             url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + _this.$AschJS.crypto.getAddress(
               _this.$AschJS
-              .crypto.getKeys(_this.password).publicKey)
+              .crypto.getKeys(_this.idkey).publicKey)
           }).then((res) => {
             if (res.data.success) {
               sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances))
-              sessionStorage.setItem("secret", _this.password)
+              sessionStorage.setItem("secret", _this.idkey)
               sessionStorage.setItem("publicKey", _this.$AschJS
-                .crypto.getKeys(_this.password).publicKey)
+                .crypto.getKeys(_this.idkey).publicKey)
               sessionStorage.setItem("privateKey", _this.$AschJS
-                .crypto.getKeys(_this.password).privateKey)
+                .crypto.getKeys(_this.idkey).privateKey)
               sessionStorage.setItem("address", _this.$AschJS.crypto.getAddress(
                 _this.$AschJS
-                .crypto.getKeys(_this.password).publicKey))
+                .crypto.getKeys(_this.idkey).publicKey))
                 _this.verCheck();
               
             }
@@ -162,7 +177,7 @@
   .login {
     width: 96%;
     margin-left: 2%;
-    height: 9.68rem;
+    height: 10.5rem;
     background: url("../assets/images/login_bg.png") no-repeat;
     background-size: 100%;
     position: absolute;
@@ -170,23 +185,57 @@
     margin-top: -6rem;
     z-index: 2000;
   }
-
-  .login input[type=password] {
-    width: 56%;
-    margin: 2.5rem 3.1rem 0 2.8rem;
+  .login input[type=idkey] {
+    width: 44%;
+    margin: 2.4rem 3.1rem 0 2.9rem;
     position: relative;
     z-index: 10;
     background: transparent;
-    padding: 10px;
+    padding: 7px;
     font-size: 0.4rem;
     outline: 0;
     border: 0;
     color: #eebc7f;
   }
+  .login input[type=password] {
+    width: 44%;
+    margin: .6rem 3.1rem 0 2.9rem;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    padding: 7px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #eebc7f;
+  }
+  .login input[type=code] {
+    width: 20%;
+    margin: .6rem 0 0 2.9rem;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    padding: 7px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #eebc7f;
+  }
+  .login .m-codebtn{
+    width: 20%;
+    height: .8rem;
+    line-height: .8rem;
+    float: right;
+    margin: .6rem 2.2rem 0 0;
+    font-size: 0.4rem;
+    text-align: center;
+    border: 2px solid #81511c;
+    color: #fff;
+  }
 
   .login .box {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: .4rem;
   }
 
   .login>p {
@@ -204,11 +253,74 @@
   .login_2 {
     width: 96%;
     margin-left: 2%;
-    height: 380px;
+    height: 10.72rem;
     background: url("../assets/images/login_sc.png") no-repeat;
     background-size: 100%;
     position: absolute;
     top: 20%;
+  }
+
+  .login_2 input[type=zckey] {
+    width: 44%;
+    margin: 2.3rem 0 0 3.9rem;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    padding: 7px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #eebc7f;
+  }
+  .login_2 input[type=zccode] {
+    width: 20%;
+    vertical-align: top;
+    margin: .3rem 0 0 3.9rem;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    padding: 7px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #eebc7f;
+  }
+  .login_2 .m-codebtn{
+    width: 20%;
+    height: .8rem;
+    line-height: .8rem;
+    float: right;
+    margin: .3rem 1.6rem 0 0;
+    font-size: 0.4rem;
+    text-align: center;
+    border: 2px solid #81511c;
+    color: #fff;
+  }
+  .login_2 input[type=zcpassword] {
+    width: 44%;
+    margin: .3rem 0 0 3.9rem;
+    position: relative;
+    vertical-align: top;
+    z-index: 10;
+    background: transparent;
+    padding: 7px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #eebc7f;
+  }
+  .login_2 input[type=zcpasswordagain] {
+    width: 44%;
+    margin: .3rem 0 0 3.9rem;
+    vertical-align: top;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    padding: 7px;
+    font-size: 0.4rem;
+    outline: 0;
+    border: 0;
+    color: #eebc7f;
   }
 
   .login_2 textarea {
@@ -229,7 +341,7 @@
     width: 2.95rem;
     height: 1.2rem;
     display: block;
-    margin: 2.8rem auto 0;
+    margin: .8rem auto 0;
   }
 
   .m-btn img {

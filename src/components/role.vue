@@ -1,7 +1,8 @@
 <template>
   <div class="role">
-    <div class="m-jsbox" @click="audio">
-      <img src="../../static/images/img-js1.gif" alt="" class="m-jsboximg">
+    <!-- <div class="m-jsbox" @click="audio"> -->
+    <div class="m-jsbox">
+      <img src="../../static/images/img-js1.png" alt="" class="m-jsboximg">
       <!-- <img src="" alt="" class="m-jsboximg"> -->
     </div>
     <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow &&btnshow">
@@ -156,102 +157,102 @@
         <img src="../assets/images/role_no.png" alt="" class="no" @click="rolesj=false,roleENS=''">
       </div>
     </div>
-    <audio id="aud1">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+    <!-- <audio id="aud1">
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/01.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud2">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/02.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud3">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/03.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud4">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/04.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud5">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/05.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud6">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/06.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud7">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/07.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud8">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/08.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud9">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/09.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud10">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/10.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud11">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/11.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud12">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/12.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud13">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/13.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud14">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/14.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud15">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/15.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud16">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/16.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud17">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/17.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud18">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/18.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud19">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/19.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud20">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/20.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud21">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/21.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud22">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/22.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud23">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/23.mp3" type="audio/mpeg">
     </audio>
     <audio id="aud24">
-      <!-- <source src="/i/song.ogg" type="audio/ogg"> -->
+      <source src="/i/song.ogg" type="audio/ogg">
       <source src="../assets/audio/24.mp3" type="audio/mpeg">
-    </audio>
+    </audio> -->
     <notice v-show="sign">{{signData}}</notice>
   </div>
 </template>
@@ -841,31 +842,31 @@
         
       },
 
-      audio() {
-        let self = this;
-        var num = Math.random(); //Math.random()：得到一个0到1之间的随机数
-        num = Math.ceil(num * 24); //num*24的取值范围在0~80之间,使用向上取整就可以得到一个1~24的随机数
-        //num就是你要的随机数,如果你希望个位数前加0,那么这样:
-        var str;
-        if (num < 10) {
-          str = "0" + num
-        } else {
-          str = num.toString();
-        }
-        var myVideo = document.getElementById("aud" + str);
-        if (self.oldVideo == '') {
-          myVideo.play();
-          self.oldVideo = document.getElementById("aud" + str);
-        } else {
-          if (self.oldstr != str) {
-            self.oldVideo.pause();
-            self.oldVideo.currentTime = 0;
-            myVideo.play();
-            self.oldVideo = document.getElementById("aud" + str);
-          }
-        }
-        self.oldstr = str
-      },
+      // audio() {
+      //   let self = this;
+      //   var num = Math.random(); //Math.random()：得到一个0到1之间的随机数
+      //   num = Math.ceil(num * 24); //num*24的取值范围在0~80之间,使用向上取整就可以得到一个1~24的随机数
+      //   //num就是你要的随机数,如果你希望个位数前加0,那么这样:
+      //   var str;
+      //   if (num < 10) {
+      //     str = "0" + num
+      //   } else {
+      //     str = num.toString();
+      //   }
+      //   var myVideo = document.getElementById("aud" + str);
+      //   if (self.oldVideo == '') {
+      //     myVideo.play();
+      //     self.oldVideo = document.getElementById("aud" + str);
+      //   } else {
+      //     if (self.oldstr != str) {
+      //       self.oldVideo.pause();
+      //       self.oldVideo.currentTime = 0;
+      //       myVideo.play();
+      //       self.oldVideo = document.getElementById("aud" + str);
+      //     }
+      //   }
+      //   self.oldstr = str
+      // },
       //背包下拉加载
       infinite(done) {
         this.bagInit(this.lastPackid);
@@ -1007,7 +1008,7 @@
   .role .layer .right .roleinfo2 span .itemyl{
     width: auto;
     color: #fff;
-    font-size: 0.1rem;
+    font-size: .1rem;
     position: absolute;
     left: 1.3rem;
     top: .53rem;

@@ -8,22 +8,40 @@
         <img src="../assets/images/bg-walllist-top.png" />
       </div>
       <div class="m-listbox">
-        <div class="m-list" v-for="item in balancesList" v-if="item.currency == 'ENDLESS.ENS'">
+        <div class="m-wallbox">
+          <div class="m-idkeybox">
+            <div class="m-leftbox">
+              <div class="m-text">私钥</div>
+              <a href="javascript:;" v-if="!idkeyShow" class="m-btn" @click="showIdkey()">查看</a>
+              <a href="javascript:;" v-if="idkeyShow" class="m-btn" @click="hiddenIdkey()">隐藏</a>
+              <a href="javascript:;" class="m-btn btn"  data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">复制</a>
+            </div>
+            <div v-if="idkeyShow" class="m-textarea">cat student basket garbage chest riot sight clip oven climb brain able</div>
+            <div v-if="!idkeyShow" class="m-textarea"><p class="m-hidden">******</p></div>
+          </div>
+          <div class="m-htmlbox">
+            <div class="m-leftbox">
+              <div class="m-text">地址</div>
+              <a href="javascript:;" class="m-btn">复制</a>
+            </div>
+            <div class="m-textarea02">https://www.baidu.com</div>
+            <div class="m-tip">请保存好您的私钥，切勿泄露给他人！</div>
+          </div>
+        </div>
+        <!-- <div class="m-list" v-for="item in balancesList" v-if="item.currency == 'ENDLESS.ENS'">
           <div class="m-titlebox">
             <div class="m-txt">余额：{{item.balance/1e8}}</div>
-            <!-- <div class="m-txt">余额：{{item.balance}}</div> -->
             <a class="m-link" @click="openIn()">充入钱包</a>
             <a class="m-link" @click="openOut()">提到钱包</a>
           </div>
-          <!-- <div class="m-text">{{item.currency}}</div> -->
           <div class="m-text">ENS</div>
-        </div>
+        </div> -->
       </div>
       <div class="m-bottomimg">
         <img src="../assets/images/bg-chartlist-bot.png" />
       </div>
     </div>
-    <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
+    <!-- <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
       <div class="m-txt">将钱包内资产充入游戏，将消耗0.1XAS</div>
       <input type="text" class="m-invitcode" maxlength="10" v-model="ENSInNum" />
@@ -47,13 +65,14 @@
           <img src="../assets/images/img-txbtn02.png" />
         </a>
       </div>
-    </div>
+    </div> -->
     <notice v-show="issign">{{msg}}</notice>
   </div>
 
 </template>
 
 <script>
+
   export default {
     data() {
       return {
@@ -63,7 +82,8 @@
         ENSInNum: "",
         msg: "",
         issign: false,
-        balancesList: []
+        balancesList: [],
+        idkeyShow:false,
       }
     },
     methods: {
@@ -88,6 +108,14 @@
         }, (error) => {
           console.log(error);
         });
+      },
+      showIdkey(){
+        let self = this;
+        self.idkeyShow = true;
+      },
+      hiddenIdkey(){
+        let self = this;
+        self.idkeyShow = false;
       },
       openIn() {
         this.tcinShow = !this.tcinShow
@@ -294,6 +322,107 @@
     background: url('../assets/images/bg-walllist.png') repeat-y;
     background-size: 100%;
     float: left;
+  }
+  .center-wall .m-listbox .m-wallbox{
+    width: 9.1rem;
+    background: #94815f;
+    display: inline-block;
+    margin-left: .5rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-idkeybox{
+    width: 100%;
+    display: inline-block;
+    margin: .8rem 0;
+    border-bottom: 2px solid #655d4d;
+    padding-bottom: .8rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-htmlbox{
+    width: 100%;
+    display: inline-block;
+    margin-bottom: .8rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-leftbox{
+    width: 2rem;
+    display: inline-block;
+    float: left;
+    margin: 0 .5rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-leftbox .m-text{
+    width: 100%;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    height: .4rem;
+    line-height: .4rem;
+    font-size: .3rem;
+    color: #fff;
+  }
+  .center-wall .m-listbox .m-wallbox .m-leftbox .m-btn{
+    width: 100%;
+    display: inline-block;
+    border: 2px solid #81511c;
+    text-align: center;
+    height: .8rem;
+    line-height: .8rem;
+    font-size: .3rem;
+    color: #fff;
+    vertical-align: top;
+    margin-top: .4rem;
+    float: left;
+  }
+  .center-wall .m-listbox .m-wallbox .m-textarea{
+    width: 5.6rem;
+    display: inline-block;
+    float: right;
+    margin-right: .5rem;
+    border: 2px solid #81511c;
+    border-radius: .1rem;
+    padding: .5rem;
+    box-sizing: border-box;
+    font-size: .3rem;
+    text-align: center;
+    min-height: 3rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-textarea{
+    width: 5.6rem;
+    display: inline-block;
+    float: right;
+    margin-right: .5rem;
+    border: 2px solid #81511c;
+    border-radius: .1rem;
+    padding: .5rem;
+    box-sizing: border-box;
+    font-size: .3rem;
+    text-align: center;
+    min-height: 3rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-textarea02{
+    width: 5.6rem;
+    display: inline-block;
+    float: right;
+    margin-right: .5rem;
+    border: 2px solid #81511c;
+    border-radius: .1rem;
+    padding: .5rem;
+    box-sizing: border-box;
+    font-size: .3rem;
+    text-align: center;
+    word-break:break-all;
+    min-height: 1.75rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-textarea .m-hidden{
+    width: 100%;
+    display: inline-block;
+    height: 1.8rem;
+    line-height: 1.8rem;
+  }
+  .center-wall .m-listbox .m-wallbox .m-tip{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: .3rem;
+    color: #4e3838;
+    margin: .5rem 0;
   }
 
   .center-wall .m-listbox .m-list {

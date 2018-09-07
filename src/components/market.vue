@@ -569,7 +569,7 @@
     color: #fff;
     font-size: 0.1rem;
     position: absolute;
-    left: 1.3rem;
+    left: 2rem;
     top: .53rem;
     -webkit-transform: scale(0.8); 
     transform: scale(0.8); 
