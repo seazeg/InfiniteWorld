@@ -2,7 +2,7 @@
   <div class="role">
     <!-- <div class="m-jsbox" @click="audio"> -->
     <div class="m-jsbox">
-      <img src="../../static/images/img-js1.png" alt="" class="m-jsboximg">
+      <img src="../assets/images/img-js1.png" alt="" class="m-jsboximg">
       <!-- <img src="" alt="" class="m-jsboximg"> -->
     </div>
     <img src="../assets/images/role_button.png" alt="" @click="open" v-show="!this.layerShow &&btnshow">
@@ -1295,9 +1295,9 @@
   }
   .m-sjdatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-sjdatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
-  .m-sjdatabox .m-line:first-child{
+  /* .m-sjdatabox .m-line:first-child{
 		margin-top: 3rem;
-	}
+	} */
   .m-sjdatabox .m-line .m-name{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-sjdatabox .m-line .m-time{ width: 40%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-sjdatabox .m-line .m-edit{ width: 20%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
@@ -1307,11 +1307,11 @@
   }
   .m-jydatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-jydatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
-  .m-jydatabox .m-line:first-child{
+  /* .m-jydatabox .m-line:first-child{
 		margin-top: 3rem;
-	}
+	} */
   .m-jydatabox .m-line .m-name{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-jydatabox .m-line .m-time{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
 
-  .bagbox .m-list:first-child{margin-top: 3rem!important;}
+  /* .bagbox .m-list:first-child{margin-top: 3rem!important;} */
 </style>

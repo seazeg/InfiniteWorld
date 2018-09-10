@@ -4,9 +4,9 @@
       <input type="idkey" value="" v-model="idkey">
       <input type="password" value="" v-model="password">
       <input type="code" value="" v-model="code">
-      <a href="javascript:;" class="m-codebtn">发送</a>
+      <img id="verifyCodeId" :src="src" class="m-codebtn" @click="recode()" />
       <p>
-        <input type="checkbox" name="" id="" v-model="isCk"/>
+        <input type="checkbox" name="" id="" v-model="isCk" />
         <span>记住账户</span>
         <a @click="createSignature">注册</a>
       </p>
@@ -21,12 +21,17 @@
       <!-- <textarea value="" v-model="secret"></textarea> -->
       <input type="zckey" value="" v-model="zckey">
       <input type="zccode" value="" v-model="zccode">
-      <a href="javascript:;" class="m-codebtn">发送</a>
+      <img id="verifyCodeId2" :src="src2" class="m-codebtn" @click="recode2()" />
       <input type="zcpassword" value="" v-model="zcpassword">
       <input type="zcpasswordagain" value="" v-model="zcpasswordagain">
-      <a href="javascript:;" class="m-btn" @click="closezc()">
-        <img src="../assets/images/img-txbtn01.png" />
-      </a>
+      <div class="m-btnbox">
+        <a href="javascript:;" class="m-btn" @click="reg()">
+          <img src="../assets/images/img-txbtn01.png" />
+        </a>
+        <a href="javascript:;" class="m-btn" @click="closezc()">
+          <img src="../assets/images/img-txbtn02.png" />
+        </a>
+      </div>
     </div>
     <div v-if="sign" class="m-typebox">{{signData}}</div>
   </div>
@@ -37,21 +42,56 @@
   export default {
     data() {
       return {
-        password:"",
-        idkey:$.cookie("secret")||"",
-        code:"",
+        password: "",
+        idkey: "",
+        code: "",
         secret: "",
-        zckey:"",
-        zccode:"",
-        zcpassword:"",
-        zcpasswordagain:"",
+        zckey: "",
+        zccode: "",
+        zcpassword: "",
+        zcpasswordagain: "",
         isShow: false,
-        isCk:!!$.cookie("secret")||false,
+        isCk: !!$.cookie("secret") || false,
         sign: false,
         signData: '',
       }
     },
+    computed: {
+      src: function () {
+        return this.http184 + "/user/GetImg?" + Math.random()
+      },
+      src2: function () {
+        return this.http184 + "/user/GetImg?" + Math.random()
+      }
+    },
     methods: {
+      reg() {
+        var _this = this;
+        _this.$axios({
+          method: 'post',
+          url: _this.http184 + "/user/UserReg",
+          data: {
+            "username": _this.zckey,
+            "pwd": _this.zcpassword,
+            "pwdagain": _this.zcpasswordagain,
+            "code": _this.zccode
+          }
+        }).then((res) => {
+          if (!res.data.result) {
+            _this.signData = res.data.msg;
+            _this.sign = true;
+            setTimeout(() => {
+              _this.sign = false;
+            }, 1000);
+          } else {
+            _this.createSignature();
+          }
+        }, (error) => {
+          console.log(error);
+        });
+
+
+      },
       createSignature() {
         var _this = this;
         _this.isShow = true;
@@ -61,7 +101,7 @@
         // }).then((res) => {
         //   _this.secret = res.data.secret;
         //   
-          
+
         // }, (error) => {
         //   console.log(error);
         // });
@@ -105,7 +145,7 @@
               setTimeout(function () {
                 window.location.href = result.downurl;
               }, 2000)
-            }else if(!result.isUpdate){
+            } else if (!result.isUpdate) {
               _this.signData = result.memo;
               _this.sign = true;
               setTimeout(function () {
@@ -113,7 +153,7 @@
                   path: "/center"
                 })
               }, 2000)
-            }else{
+            } else {
               _this.$router.push({
                 path: "/center"
               })
@@ -124,44 +164,59 @@
         });
       },
       submit() {
-        if (!Mnemonic.isValid(this.idkey)) {
-          alert("密码不符合规范")
+        var _this = this;
+        if (_this.isCk) {
+          $.cookie("secret", _this.idkey);
         } else {
-          var _this = this;
-          if(_this.isCk){
-            $.cookie("secret",_this.idkey);
-          }else{
-            $.cookie("secret","");
-          }
-
-          _this.$axios({
-            method: 'get',
-            url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + _this.$AschJS.crypto.getAddress(
-              _this.$AschJS
-              .crypto.getKeys(_this.idkey).publicKey)
-          }).then((res) => {
-            if (res.data.success) {
-              sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances))
-              sessionStorage.setItem("secret", _this.idkey)
-              sessionStorage.setItem("publicKey", _this.$AschJS
-                .crypto.getKeys(_this.idkey).publicKey)
-              sessionStorage.setItem("privateKey", _this.$AschJS
-                .crypto.getKeys(_this.idkey).privateKey)
-              sessionStorage.setItem("address", _this.$AschJS.crypto.getAddress(
-                _this.$AschJS
-                .crypto.getKeys(_this.idkey).publicKey))
-                _this.verCheck();
-              
-            }
-          }, (error) => {
-            console.log(error);
-          });
+          $.cookie("secret", "");
         }
+
+        
+        _this.$axios({
+          method: 'post',
+          url: _this.http184 + "/user/UserLogin",
+          data: {
+            "username": _this.idkey,
+            "pwd": _this.password,
+            "code": _this.code
+          }
+        }).then((res) => {
+          if (!res.data.result) {
+            _this.signData = res.data.msg;
+            _this.sign = true;
+            setTimeout(() => {
+              _this.sign = false;
+            }, 1000);
+          } else {
+            _this.verCheck();
+            _this.$router.push({
+              path: "/center"
+            })
+          }
+        }, (error) => {
+          console.log(error);
+        });
+
+
+
+
       },
       closezc() {
         this.isShow = false;
+      },
+      recode() {
+        this.yanzhengma();
+      },
+      recode2() {
+        this.yanzhengma2();
+      },
+      yanzhengma() {
+        $("#verifyCodeId").attr("src", this.http184 + "/user/GetImg?" + Math.random());
+      },
+      yanzhengma2() {
+        $("#verifyCodeId2").attr("src", this.http184 + "/user/GetImg?" + Math.random());
       }
-      
+
     },
     mounted() {
       if (sessionStorage.getItem("address")) {
@@ -185,6 +240,7 @@
     margin-top: -6rem;
     z-index: 2000;
   }
+
   .login input[type=idkey] {
     width: 44%;
     margin: 2.4rem 3.1rem 0 2.9rem;
@@ -197,6 +253,7 @@
     border: 0;
     color: #eebc7f;
   }
+
   .login input[type=password] {
     width: 44%;
     margin: .6rem 3.1rem 0 2.9rem;
@@ -209,6 +266,7 @@
     border: 0;
     color: #eebc7f;
   }
+
   .login input[type=code] {
     width: 20%;
     margin: .6rem 0 0 2.9rem;
@@ -221,7 +279,8 @@
     border: 0;
     color: #eebc7f;
   }
-  .login .m-codebtn{
+
+  .login .m-codebtn {
     width: 20%;
     height: .8rem;
     line-height: .8rem;
@@ -258,11 +317,12 @@
     background-size: 100%;
     position: absolute;
     top: 20%;
+    text-align: center;
   }
 
   .login_2 input[type=zckey] {
     width: 44%;
-    margin: 2.3rem 0 0 3.9rem;
+    margin: 2.3rem 0 0 2.6rem;
     position: relative;
     z-index: 10;
     background: transparent;
@@ -272,10 +332,11 @@
     border: 0;
     color: #eebc7f;
   }
+
   .login_2 input[type=zccode] {
     width: 20%;
     vertical-align: top;
-    margin: .3rem 0 0 3.9rem;
+    margin: .3rem 0 0 3.4rem;
     position: relative;
     z-index: 10;
     background: transparent;
@@ -285,7 +346,8 @@
     border: 0;
     color: #eebc7f;
   }
-  .login_2 .m-codebtn{
+
+  .login_2 .m-codebtn {
     width: 20%;
     height: .8rem;
     line-height: .8rem;
@@ -296,9 +358,10 @@
     border: 2px solid #81511c;
     color: #fff;
   }
+
   .login_2 input[type=zcpassword] {
     width: 44%;
-    margin: .3rem 0 0 3.9rem;
+    margin: .3rem 0 0 2.6rem;
     position: relative;
     vertical-align: top;
     z-index: 10;
@@ -309,9 +372,10 @@
     border: 0;
     color: #eebc7f;
   }
+
   .login_2 input[type=zcpasswordagain] {
     width: 44%;
-    margin: .3rem 0 0 3.9rem;
+    margin: .3rem 0 0 2.6rem;
     vertical-align: top;
     position: relative;
     z-index: 10;
@@ -337,11 +401,17 @@
     color: #111;
   }
 
+  .m-btnbox {
+    display: inline-block;
+    margin: .8rem auto 0;
+    width: auto;
+  }
   .m-btn {
     width: 2.95rem;
     height: 1.2rem;
     display: block;
-    margin: .8rem auto 0;
+    float: left;
+    margin: 0 .2rem;
   }
 
   .m-btn img {
@@ -349,6 +419,7 @@
     height: 100%;
     vertical-align: top;
   }
+
   .m-typebox {
     display: inline-block;
     width: 80%;

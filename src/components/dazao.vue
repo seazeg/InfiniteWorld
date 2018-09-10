@@ -319,7 +319,6 @@
 		background: url('../assets/images/bg-dazaocardlist.png');
 		background-size: 100%;
 	}
-
 	.m-dzcardtcbox .m-listbox .m-list .m-imgbox{
 		width: 2.8rem;height: 4.12rem;display: inline-block;margin:.2rem auto 0;	position: relative;
 	}

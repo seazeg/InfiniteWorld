@@ -14,17 +14,20 @@
               <div class="m-text">私钥</div>
               <a href="javascript:;" v-if="!idkeyShow" class="m-btn" @click="showIdkey()">查看</a>
               <a href="javascript:;" v-if="idkeyShow" class="m-btn" @click="hiddenIdkey()">隐藏</a>
-              <a href="javascript:;" class="m-btn btn"  data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">复制</a>
+              <a href="javascript:;" class="m-btn btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">复制</a>
             </div>
-            <div v-if="idkeyShow" class="m-textarea">cat student basket garbage chest riot sight clip oven climb brain able</div>
-            <div v-if="!idkeyShow" class="m-textarea"><p class="m-hidden">******</p></div>
+            <div v-if="idkeyShow" class="m-textarea">cat student basket garbage chest riot sight clip oven climb brain
+              able</div>
+            <div v-if="!idkeyShow" class="m-textarea">
+              <p class="m-hidden">******</p>
+            </div>
           </div>
           <div class="m-htmlbox">
             <div class="m-leftbox">
               <div class="m-text">地址</div>
-              <a href="javascript:;" class="m-btn">复制</a>
+              <a href="javascript:;" data-clipboard-target="#demoInput" class="m-btn">复制</a>
             </div>
-            <div class="m-textarea02">https://www.baidu.com</div>
+            <textarea class="m-textarea02" id="demoInput">https://www.baidu.com</textarea>
             <div class="m-tip">请保存好您的私钥，切勿泄露给他人！</div>
           </div>
         </div>
@@ -72,7 +75,6 @@
 </template>
 
 <script>
-
   export default {
     data() {
       return {
@@ -83,15 +85,18 @@
         msg: "",
         issign: false,
         balancesList: [],
-        idkeyShow:false,
+        idkeyShow: false,
       }
     },
     methods: {
+      copy() {
+
+      },
       init() {
         var _this = this;
         _this.$axios({
           method: 'get',
-          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' +  sessionStorage.getItem("address")
+          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + sessionStorage.getItem("address")
         }).then((res) => {
           if (res.data.success) {
             sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances));
@@ -109,11 +114,11 @@
           console.log(error);
         });
       },
-      showIdkey(){
+      showIdkey() {
         let self = this;
         self.idkeyShow = true;
       },
-      hiddenIdkey(){
+      hiddenIdkey() {
         let self = this;
         self.idkeyShow = false;
       },
@@ -127,10 +132,10 @@
         var _this = this;
         var url = this.http189 + "/peer/transactions";
         var type = 6;
-        var args = ["ENDLESS.ENS", this.ENSInNum*1e8, sessionStorage.getItem("address")];
+        var args = ["ENDLESS.ENS", this.ENSInNum * 1e8, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcinShow = !_this.tcinShow;
-          _this.ENSInNum ='';
+          _this.ENSInNum = '';
           _this.msg = "区块确认中，请与10秒后在个人中心—钱包中进行查看。";
           _this.issign = true;
           setTimeout(function () {
@@ -179,7 +184,7 @@
             _this.issign = true
             return;
           }
-          if(!data.success){
+          if (!data.success) {
             _this.msg = '操作失败'
             _this.issign = true
             return;
@@ -195,7 +200,7 @@
         var _this = this;
         var url = this.http184 + "/app/EnsContract";
         var type = 2;
-        var outENS = (this.ENSOutNum*1e8).toString();
+        var outENS = (this.ENSOutNum * 1e8).toString();
         var args = ["ENDLESS.ENS", outENS, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcoutShow = !_this.tcoutShow;
@@ -208,7 +213,7 @@
           setTimeout(function () {
             _this.init();
           }, 1010);
-          
+
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
             _this.issign = true
@@ -249,7 +254,7 @@
             _this.issign = true
             return;
           }
-          if(!data.success){
+          if (!data.success) {
             _this.msg = '操作失败'
             _this.issign = true
             return;
@@ -273,6 +278,8 @@
       //   _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       // }
       _this.init();
+      new ClipboardJS('.m-btn');
+
     }
 
   }
@@ -323,31 +330,36 @@
     background-size: 100%;
     float: left;
   }
-  .center-wall .m-listbox .m-wallbox{
+
+  .center-wall .m-listbox .m-wallbox {
     width: 9.1rem;
     background: #94815f;
     display: inline-block;
     margin-left: .5rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-idkeybox{
+
+  .center-wall .m-listbox .m-wallbox .m-idkeybox {
     width: 100%;
     display: inline-block;
     margin: .8rem 0;
     border-bottom: 2px solid #655d4d;
     padding-bottom: .8rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-htmlbox{
+
+  .center-wall .m-listbox .m-wallbox .m-htmlbox {
     width: 100%;
     display: inline-block;
     margin-bottom: .8rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-leftbox{
+
+  .center-wall .m-listbox .m-wallbox .m-leftbox {
     width: 2rem;
     display: inline-block;
     float: left;
     margin: 0 .5rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-leftbox .m-text{
+
+  .center-wall .m-listbox .m-wallbox .m-leftbox .m-text {
     width: 100%;
     display: inline-block;
     float: left;
@@ -357,7 +369,8 @@
     font-size: .3rem;
     color: #fff;
   }
-  .center-wall .m-listbox .m-wallbox .m-leftbox .m-btn{
+
+  .center-wall .m-listbox .m-wallbox .m-leftbox .m-btn {
     width: 100%;
     display: inline-block;
     border: 2px solid #81511c;
@@ -370,7 +383,8 @@
     margin-top: .4rem;
     float: left;
   }
-  .center-wall .m-listbox .m-wallbox .m-textarea{
+
+  .center-wall .m-listbox .m-wallbox .m-textarea {
     width: 5.6rem;
     display: inline-block;
     float: right;
@@ -383,7 +397,8 @@
     text-align: center;
     min-height: 3rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-textarea{
+
+  .center-wall .m-listbox .m-wallbox .m-textarea {
     width: 5.6rem;
     display: inline-block;
     float: right;
@@ -396,7 +411,8 @@
     text-align: center;
     min-height: 3rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-textarea02{
+
+  .center-wall .m-listbox .m-wallbox .m-textarea02 {
     width: 5.6rem;
     display: inline-block;
     float: right;
@@ -407,16 +423,19 @@
     box-sizing: border-box;
     font-size: .3rem;
     text-align: center;
-    word-break:break-all;
+    word-break: break-all;
     min-height: 1.75rem;
+    background: transparent;
   }
-  .center-wall .m-listbox .m-wallbox .m-textarea .m-hidden{
+
+  .center-wall .m-listbox .m-wallbox .m-textarea .m-hidden {
     width: 100%;
     display: inline-block;
     height: 1.8rem;
     line-height: 1.8rem;
   }
-  .center-wall .m-listbox .m-wallbox .m-tip{
+
+  .center-wall .m-listbox .m-wallbox .m-tip {
     width: 100%;
     display: inline-block;
     text-align: center;
