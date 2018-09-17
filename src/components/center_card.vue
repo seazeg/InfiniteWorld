@@ -61,7 +61,10 @@ export default {
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/itemlist',
-          params: params
+					params: params,
+					headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           console.log("卡牌图鉴", res.data);
 			_this.cardData = res.data.data;

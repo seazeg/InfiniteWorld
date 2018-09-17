@@ -75,7 +75,10 @@
           _this.$axios({
             method: 'get',
             url: _this.http184 + '/wb/mypacklist',
-            params: params
+            params: params,
+            	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
           }).then((res) => {
             console.log(res.data.data)
             if(!!packid){
@@ -116,7 +119,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/role',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           if(res.data.data == null){
             _this.role = true;
@@ -141,7 +147,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/itempowercost',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
          _this.dzens = res.data.data[0].costens;
          _this.dzfjs = res.data.data[0].costitem;

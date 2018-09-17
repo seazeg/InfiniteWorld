@@ -42,7 +42,10 @@ export default {
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/ylrandlist',
-          params: params
+					params: params,
+						headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           console.log("排行榜", res.data);
 		  _this.chartData = res.data.data;

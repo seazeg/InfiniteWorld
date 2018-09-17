@@ -3,7 +3,7 @@
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
  	<div v-if="noData" class="m-listbox">
 		 <scroller :on-infinite="infinite" ref="myscroller">
-			 <div class="m-list" v-for="item in makeData">
+			 <div class="m-list" v-for="(item,index) in makeData" :class="{'first':index==0}">
 				<div class="m-titlebox">
 					<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
 					<div class="m-txt">打造{{item.itemname}}</div>
@@ -48,7 +48,10 @@ export default {
 			_this.$axios({
 			method: 'get',
 			url: _this.http184 + '/wb/powerloglist',
-			params: params
+			params: params,
+				headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
 			}).then((res) => {
 				
 				if(!!lid){
@@ -124,8 +127,8 @@ export default {
 		background: url('../assets/images/bg-make-list.jpg');
 		background-size: 100%;
 	}
-	.center-devine .m-listbox .m-list:first-child{
-		margin-top: 3rem;
+	.first{
+		margin: 2.86rem auto 0!important;
 	}
 	.center-make .m-listbox .m-list:last-child{
 		width: 9.4rem;
@@ -158,5 +161,5 @@ export default {
 	.center-make .m-listbox .m-list .m-date{
 		width: auto; display: inline-block;float: right;margin: -.61rem .7rem 0 0; font-size: .38rem; color: #472c0e;vertical-align: top;
 	}
-
+.loading-layer{display: none!important;}
 </style>

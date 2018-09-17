@@ -43,7 +43,7 @@
     data() {
       return {
         password: "",
-        idkey: "",
+        idkey: $.cookie('idkey')||"",
         code: "",
         secret: "",
         zckey: "",
@@ -83,8 +83,12 @@
             setTimeout(() => {
               _this.sign = false;
             }, 1000);
+            _this.recode2();
           } else {
-            _this.createSignature();
+            _this.idkey = _this.zckey;
+            _this.password = _this.zcpassword;
+            _this.code = _this.zccode;
+            _this.submit();
           }
         }, (error) => {
           console.log(error);
@@ -171,7 +175,6 @@
           $.cookie("secret", "");
         }
 
-        
         _this.$axios({
           method: 'post',
           url: _this.http184 + "/user/UserLogin",
@@ -187,8 +190,23 @@
             setTimeout(() => {
               _this.sign = false;
             }, 1000);
+            _this.recode();
           } else {
             _this.verCheck();
+            var address = JSON.parse(res.data.data).address;
+            var logintoken = JSON.parse(res.data.data).logintoken;
+            var secret = JSON.parse(res.data.data).secret;
+            var enscoin = JSON.parse(res.data.data).enscoin;
+            var nickname = JSON.parse(res.data.data).nickname;
+            console.log(enscoin)
+            sessionStorage.setItem('address',address);
+            sessionStorage.setItem('logintoken',logintoken);
+            sessionStorage.setItem('secret',secret);
+            //$.cookie('secret',secret)
+            $.cookie('idkey',_this.idkey)
+            $.cookie('enscoin',enscoin)
+            $.cookie('nickname',nickname)
+    
             _this.$router.push({
               path: "/center"
             })
@@ -196,7 +214,6 @@
         }, (error) => {
           console.log(error);
         });
-
 
 
 

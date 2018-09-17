@@ -103,7 +103,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/role',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           if(res.data.data == null){
             _this.role = true;

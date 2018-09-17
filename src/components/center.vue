@@ -71,7 +71,7 @@
         role: '',
         fjs: "0",
         balancesList:[],
-        role: false,
+        newrole: false,
       }
     },
     methods: {
@@ -102,6 +102,7 @@
             }, 2000)
             self.proname = self.name;
             self.part = true;
+            self.roleInit();
           }
           console.log("返回结果", data);
         });
@@ -115,7 +116,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/role',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           if (res.data.data != null) {
             _this.role = res.data.data;
@@ -132,7 +136,7 @@
       },
       open() {
         let _this = this;
-        if( _this.role== true){
+        if( _this.newrole== true){
           _this.signData = '创建角色需要消耗200ENS，请先在钱包进行充值！';
           _this.sign = true;
           setTimeout( function(){
@@ -171,6 +175,7 @@
         });
       },
       go(type) {
+        let self = this;
         if (type == "make") {
           this.$router.push({
             path: "/make"
@@ -206,9 +211,12 @@
     mounted() {
       //角色
       this.roleInit();
-      this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
-      if(this.balancesList == '' || this.balancesList[0].balance == '0'){
-        this.role = true;
+      // this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+      // if(this.balancesList == '' || this.balancesList[0].balance == '0'){
+      //   this.role = true;
+      // }
+      if($.cookie("enscoin") <= 200*1e8){
+        this.newrole = true;
       }
     }
 
@@ -220,6 +228,7 @@
     width: 100%;
     height: 24.56rem;
     margin-bottom: 2.4rem;
+    text-align:center;
     display: inline-block;
     background: url("../assets/images/img-vipbg01.png") no-repeat;
     background-size: 100% 100%;

@@ -244,7 +244,10 @@
           _this.$axios({
             method: 'get',
             url: _this.http184 + '/wb/marketlist',
-            params: params
+            params: params,
+            	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
           }).then((res) => {
             if(time !='2040/12/12'){
               _this.marketData = _this.marketData.concat(res.data.data);
@@ -470,7 +473,7 @@
 
   }
   .market .list .box:first-child{
-    /* margin-top: 3rem; */
+    margin-top: 3rem;
   }
 
   .market .list .box .info {
@@ -624,4 +627,5 @@
   .marketLayer img.no {
     width: 30%;
   }
+    .loading-layer{display: none!important;}
 </style>

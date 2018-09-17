@@ -8,6 +8,7 @@ const utils = {
     let headers = {
       "Accept": "application/json",
       "Content-Type": "application/json",
+      "Authorization": "basic " + sessionStorage.getItem('logintoken')
     }
     // let opt = JSON.parse(sessionStorage.getItem("options"))
     //普通合约调用
@@ -17,28 +18,28 @@ const utils = {
       args: JSON.stringify(args)
     }, secret);
     //内部转账合约
-    if (type == '3' || type == '2') {
+    if (type == '3' || type == '2' || type == '6') {
       _transaction = AschJS.dapp.createInnerTransaction({
         fee: '1000000000', //fee,
         type: type,
         args: JSON.stringify(args)
       }, secret);
     }
-    if (type == '6') {
-      var dappid = Vue.prototype.dappId;
-      _transaction = {
-        "transaction":AschJS.transfer.createInTransfer(dappid, args[0], args[1], secret, "")
-      };
-      headers.magic = "594fe0f3",
-      // headers.magic = "5f5b3cf5"  //生产
-      headers.version = "";
-    }
+    // if (type == '6') {
+    //   var dappid = Vue.prototype.dappId;
+    //   _transaction = {
+    //     "transaction": AschJS.transfer.createInTransfer(dappid, args[0], args[1], secret, "")
+    //   };
+    //   headers.magic = "594fe0f3",
+    //     // headers.magic = "5f5b3cf5"  //生产
+    //     headers.version = "";
+    // }
 
 
     axios({
       method: 'POST',
       url: url,
-      data:JSON.stringify(_transaction),
+      data: JSON.stringify(_transaction),
       headers: headers
     }).then((res) => {
       var data = res.data;

@@ -3,7 +3,7 @@
  	<div class="m-topimg"><img src="../assets/images/bg-makelist-top.png" /></div>
  	<div v-if="noData" class="m-listbox">
 		 <scroller :on-infinite="infinite" ref="myscroller">
-			<div class="m-list" v-for="item in divineData">
+			<div class="m-list" v-for="(item,index) in divineData"  :class="{'first':index==0}">
 				<div class="m-titlebox">
 					<div class="m-left"><img src="../assets/images/bg-make-tit01.png" /></div>
 					<div class="m-txt">方解石占卜</div>
@@ -59,7 +59,10 @@ export default {
 			_this.$axios({
 			method: 'get',
 			url: _this.http184 + '/wb/boxlist',
-			params: params
+			params: params,
+				headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
 			}).then((res) => {
 				if(!!boxid){
 					_this.divineData = _this.divineData.concat(res.data.data);
@@ -135,8 +138,8 @@ export default {
 		background: url('../assets/images/bg-divine-list.png');
 		background-size: 100%;
 	}
-	.center-devine .m-listbox .m-list:first-child{
-		margin-top: 3rem;
+	.first{
+		margin: 2.86rem auto 0!important;
 	}
 	.center-devine .m-listbox .m-list:last-child{
 		width: 9.4rem;
@@ -181,5 +184,5 @@ export default {
 	.center-devine .m-listbox .m-list .m-textbox02 .m-right{
 		width: 5rem;display: inline-block;float: right;text-align: left;height: .4rem;
 	}
-
+.loading-layer{display: none!important;}
 </style>

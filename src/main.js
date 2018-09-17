@@ -25,19 +25,19 @@ Vue.component(notice.name, notice)
 
 
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-//     if (!!sessionStorage.getItem("address")) { 
-//       next();
-//     } else {
-//       next({
-//         path: '/login'
-//       })
-//     }
-//   } else {
-//     next();
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
+    if (!!sessionStorage.getItem("address")) { 
+      next();
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next();
+  }
+})
 
 
 

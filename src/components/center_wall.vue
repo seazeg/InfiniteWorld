@@ -8,16 +8,24 @@
         <img src="../assets/images/bg-walllist-top.png" />
       </div>
       <div class="m-listbox">
+        <div class="m-list" v-for="item in balancesList">
+          <div class="m-titlebox">
+            <div class="m-txt">余额：{{item.balance/1e8}}</div>
+            <a class="m-link" @click="openIn()">充入钱包</a>
+            <a class="m-link" @click="openOut()">提到钱包</a>
+          </div>
+          <div class="m-text">ENS</div>
+        </div>
         <div class="m-wallbox">
+
           <div class="m-idkeybox">
             <div class="m-leftbox">
               <div class="m-text">私钥</div>
               <a href="javascript:;" v-if="!idkeyShow" class="m-btn" @click="showIdkey()">查看</a>
               <a href="javascript:;" v-if="idkeyShow" class="m-btn" @click="hiddenIdkey()">隐藏</a>
-              <a href="javascript:;" class="m-btn btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">复制</a>
+              <a href="javascript:;" class="m-btn btn" :data-clipboard-text="secret">复制</a>
             </div>
-            <div v-if="idkeyShow" class="m-textarea">cat student basket garbage chest riot sight clip oven climb brain
-              able</div>
+            <div v-if="idkeyShow" class="m-textarea">{{secret}}</div>
             <div v-if="!idkeyShow" class="m-textarea">
               <p class="m-hidden">******</p>
             </div>
@@ -27,7 +35,7 @@
               <div class="m-text">地址</div>
               <a href="javascript:;" data-clipboard-target="#demoInput" class="m-btn">复制</a>
             </div>
-            <textarea class="m-textarea02" id="demoInput">https://www.baidu.com</textarea>
+            <div class="m-textarea02" id="demoInput">{{address}}</div>
             <div class="m-tip">请保存好您的私钥，切勿泄露给他人！</div>
           </div>
         </div>
@@ -44,7 +52,7 @@
         <img src="../assets/images/bg-chartlist-bot.png" />
       </div>
     </div>
-    <!-- <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
+    <div v-show="tcinShow || tcoutShow" class="m-tcbg"></div>
     <div v-show="tcinShow" class="m-wallincontbox">
       <div class="m-txt">将钱包内资产充入游戏，将消耗0.1XAS</div>
       <input type="text" class="m-invitcode" maxlength="10" v-model="ENSInNum" />
@@ -68,7 +76,7 @@
           <img src="../assets/images/img-txbtn02.png" />
         </a>
       </div>
-    </div> -->
+    </div>
     <notice v-show="issign">{{msg}}</notice>
   </div>
 
@@ -86,6 +94,8 @@
         issign: false,
         balancesList: [],
         idkeyShow: false,
+        secret:'',
+        address:'',
       }
     },
     methods: {
@@ -94,25 +104,35 @@
       },
       init() {
         var _this = this;
-        _this.$axios({
-          method: 'get',
-          url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + sessionStorage.getItem("address")
-        }).then((res) => {
-          if (res.data.success) {
-            sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances));
-            if (JSON.parse(sessionStorage.getItem("balances")) == '') {
-              _this.balancesList = [{
-                balance: 0,
+        _this.secret = sessionStorage.getItem("secret");
+        _this.address = sessionStorage.getItem("address");
+         _this.balancesList = [{
+                balance: $.cookie("enscoin"),
                 currency: "ENDLESS.ENS"
               }]
-            } else {
-              _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
-            }
+        // _this.$axios({
+        //   method: 'get',
+        //   url: _this.http189 + '/api/dapps/' + _this.dappId + '/accounts/' + sessionStorage.getItem("address"),
+        //   	headers:{
+				// 		"Authorization": "basic " + sessionStorage.getItem('logintoken')
+				// 	}
+        // }).then((res) => {
+        //   if (res.data.success) {
+        //     sessionStorage.setItem("balances", JSON.stringify(res.data.account.balances));
+        //     if (JSON.parse(sessionStorage.getItem("balances")) == '') {
+        //       console.log(123)
+        //       _this.balancesList = [{
+        //         balance: 0,
+        //         currency: "ENDLESS.ENS"
+        //       }]
+        //     } else {
+        //       _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
+        //     }
 
-          }
-        }, (error) => {
-          console.log(error);
-        });
+        //   }
+        // }, (error) => {
+        //   console.log(error);
+        // });
       },
       showIdkey() {
         let self = this;
@@ -130,71 +150,106 @@
       },
       ENSIn() {
         var _this = this;
-        var url = this.http189 + "/peer/transactions";
+        // var url = this.http189 + "/peer/transactions";
+        // var type = 6;
+        // var args = ["ENDLESS.ENS", this.ENSInNum * 1e8, sessionStorage.getItem("address")];
+        var url = this.http184 + "/app/EnsContract";
         var type = 6;
-        var args = ["ENDLESS.ENS", this.ENSInNum * 1e8, sessionStorage.getItem("address")];
+        var outENS = (this.ENSInNum * 1e8).toString();
+        var args = ["ENDLESS.ENS", outENS, sessionStorage.getItem("address")];
         this.$utils.contract(type, args, url, function (data) {
           _this.tcinShow = !_this.tcinShow;
           _this.ENSInNum = '';
+          setTimeout(function () {
+            _this.roleInit();
+          }, 1010);
+          if (data.result == false) {
+            _this.msg = "余额不足,请充值";
+            _this.issign = true
+            return;
+          }
+          // if (data.error.indexOf('Key is locked') > -1) {
+          //   _this.msg = '你的操作正在进行网络确认，请稍后';
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.error.indexOf('amount range') > -1) {
+          //   _this.msg = '数额要大于0';
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.error.indexOf('String is too long') > -1) {
+          //   _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.error.indexOf('should be integer') > -1) {
+          //   _this.msg = '您输入的数额过长或不为整数，请再次确认';
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.error.indexOf('Invalid timestamp') > -1) {
+          //   _this.msg = '本地时间不精准，请先校准本地时间';
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.error.indexOf('second') > -1) {
+          //   _this.msg = '设置了二级密码账号无法使用';
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.error.indexOf('Account is locked') > -1) {
+          //   _this.msg = '锁仓账户无法使用'
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (!data.result) {
+          //   _this.msg = data.msg
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (data.success) {
+          //   _this.msg = '操作失败'
+          //   _this.issign = true
+          //   return;
+          // }
+          // if (!!data.transactionId) {
+          //   _this.msg = '充值成功!'
+          //   _this.issign = true
+          //   return;
+          // }
           _this.msg = "区块确认中，请与10秒后在个人中心—钱包中进行查看。";
           _this.issign = true;
           setTimeout(function () {
             _this.issign = false;
           }, 3000);
           setTimeout(function () {
-            _this.init();
+            _this.roleInit();
           }, 1010);
-          if (data.error.indexOf('Insufficient balance') > -1) {
-            _this.msg = "余额不足,请充值";
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('Key is locked') > -1) {
-            _this.msg = '你的操作正在进行网络确认，请稍后';
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('amount range') > -1) {
-            _this.msg = '数额要大于0';
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('String is too long') > -1) {
-            _this.msg = '您在登录时的秘钥过长或者输入的数值过大';
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('should be integer') > -1) {
-            _this.msg = '您输入的数额过长或不为整数，请再次确认';
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('Invalid timestamp') > -1) {
-            _this.msg = '本地时间不精准，请先校准本地时间';
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('second') > -1) {
-            _this.msg = '设置了二级密码账号无法使用';
-            _this.issign = true
-            return;
-          }
-          if (data.error.indexOf('Account is locked') > -1) {
-            _this.msg = '锁仓账户无法使用'
-            _this.issign = true
-            return;
-          }
-          if (!data.success) {
-            _this.msg = '操作失败'
-            _this.issign = true
-            return;
-          }
-          if (!!data.transactionId) {
-            _this.msg = '充值成功!'
-            _this.issign = true
-            return;
-          }
         })
+      },
+      roleInit() {
+        var _this = this;
+        _this.secret = sessionStorage.getItem("secret");
+        _this.address = sessionStorage.getItem("address");
+        var params = {
+          address: sessionStorage.getItem("address")
+        }
+        _this.$axios({
+          method: 'get',
+          url: _this.http184 + '/wb/baserole',
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
+        }).then((res) => {
+          _this.balancesList = [{
+                balance: res.data.data.enscoin,
+                currency: "ENDLESS.ENS"
+              }]
+        }, (error) => {
+          console.log(error);
+        });
       },
       ENSOut() {
         var _this = this;
@@ -205,14 +260,20 @@
         this.$utils.contract(type, args, url, function (data) {
           _this.tcoutShow = !_this.tcoutShow;
           _this.ENSOutNum = '';
-          _this.msg = "区块确认中，请与10秒后在个人中心—钱包中进行查看。";
+          setTimeout(function () {
+            _this.roleInit();
+          }, 1010);
+          if (!data.result) {
+            _this.msg = data.msg
+            _this.issign = true
+            return;
+          }
+          _this.msg = "提现成功，所提ENS将于24小时内到账。";
           _this.issign = true;
           setTimeout(function () {
             _this.issign = false;
           }, 3000);
-          setTimeout(function () {
-            _this.init();
-          }, 1010);
+
 
           if (data.msg.indexOf('Insufficient balance') > -1) {
             _this.msg = "余额不足,请充值";
@@ -254,11 +315,11 @@
             _this.issign = true
             return;
           }
-          if (!data.success) {
-            _this.msg = '操作失败'
-            _this.issign = true
-            return;
-          }
+          // if (!data.success) {
+          //   _this.msg = '操作失败'
+          //   _this.issign = true
+          //   return;
+          // }
         })
       },
     },
@@ -277,7 +338,7 @@
       // } else {
       //   _this.balancesList = JSON.parse(sessionStorage.getItem("balances"))
       // }
-      _this.init();
+      _this.roleInit();
       new ClipboardJS('.m-btn');
 
     }

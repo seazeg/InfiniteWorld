@@ -89,7 +89,7 @@
               </table>
               <div class="m-sjdatabox">
                 <scroller :on-infinite="infinitesj" ref="myscroller01">
-                  <div class="m-line" v-for="item in myGrounding">
+                  <div class="m-line" v-for="(item, index) in myGrounding" :class="{'first':index==0}">
                     <div class="m-name">{{item.itemname}} {{item.price}}ENS</div>
                     <div class="m-time">{{item.saleuptime}}</div>
                     <div class="m-edit">
@@ -112,7 +112,7 @@
               </table>
               <div class="m-jydatabox">
                 <scroller :on-infinite="infinitejy" ref="myscroller02">
-                  <div class="m-line" v-for="item in saleList">
+                  <div class="m-line" v-for="(item,index) in saleList" :class="{'first':index==0}">
                     <div class="m-name"><em v-if="item.saleaddress == address">卖出</em><em v-if="item.buyaddress == address">买入</em>{{item.itemname}} {{item.saleprice}}ENS</div>
                     <div class="m-time">{{item.saletime}}</div>
                   </div>
@@ -368,7 +368,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/role',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           if(res.data.data == null){
             _this.btnshow = false;
@@ -393,7 +396,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/rolepack',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
           _this.rolepack = res.data.data;
           for (var a = 0; a < _this.carddata.length; a++) {
@@ -425,7 +431,10 @@
           _this.$axios({
             method: 'get',
             url: _this.http184 + '/wb/mypacklist',
-            params: params
+            params: params,
+            	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
           }).then((res) => {
             if(packid != '999999999'){
               _this.bag = _this.bag.concat(res.data.data);
@@ -488,7 +497,10 @@
           _this.$axios({
             method: 'get',
             url: _this.http184 + '/wb/salelist',
-            params: params
+            params: params,
+            	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
           }).then((res) => {
             if(saletime != "2040/12/12"){
               _this.saleList = _this.saleList.concat(res.data.data);
@@ -517,7 +529,10 @@
           _this.$axios({
             method: 'get',
             url: _this.http184 + '/wb/mymarketlist',
-            params: params
+            params: params,
+            	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
           }).then((res) => {
             if(saleuptime != "2040/12/12"){
               _this.myGrounding = _this.myGrounding.concat(res.data.data);
@@ -547,7 +562,10 @@
         _this.$axios({
           method: 'get',
           url: _this.http184 + '/wb/getbindcount',
-          params: params
+          params: params,
+          	headers:{
+						"Authorization": "basic " + sessionStorage.getItem('logintoken')
+					}
         }).then((res) => {
          console.log(res.data.data);
          _this.fyens = res.data.data.bindens;
@@ -1307,11 +1325,12 @@
   }
   .m-jydatabox{ width: 86%; margin-left: 8%; display: inline-block;position: relative;height: 100%;}
   .m-jydatabox .m-line{ width: 100%;display: inline-block;border-bottom: 1px solid #452b2a;}
-  /* .m-jydatabox .m-line:first-child{
+  .first{
 		margin-top: 3rem;
-	} */
+	}
   .m-jydatabox .m-line .m-name{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
   .m-jydatabox .m-line .m-time{ width: 50%;display: inline-block;float: left;text-align: center;padding: 10px 0;font-size: 0.3rem;color: #452b2a;}
 
-  /* .bagbox .m-list:first-child{margin-top: 3rem!important;} */
+  .bagbox .m-list:first-child{margin-top: 3rem!important;}
+  .loading-layer{display: none!important;}
 </style>
