@@ -466,14 +466,17 @@
 
   .market .list .box {
     width: 100%;
-    height: 2.6rem;
-    background: url("../assets/images/market_bg.png") repeat-y;
+    height: auto;
+    background: url("../assets/images/market_bg.png") no-repeat;
     background-size: 100%;
     position: relative;
 
   }
   .market .list .box:first-child{
     margin-top: 3rem;
+  }
+  .market .list .box:last-child .info{
+    margin-bottom: 3rem;
   }
 
   .market .list .box .info {

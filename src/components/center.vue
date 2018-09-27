@@ -110,6 +110,9 @@
       },
       roleInit() {
         var _this = this;
+        if($.cookie("enscoin") < 200*1e8){
+          this.newrole = true;
+        }
         var params = {
           address: sessionStorage.getItem("address")
         }
@@ -197,14 +200,19 @@
             path: "/divine"
           })
         } else if (type == "invit") {
-            self.signData = "敬请期待";
+
+            if(self.part == true){
+              this.$router.push({
+                path: "/invit"
+              })
+            }else{
+            self.signData = "请先创建角色";
             self.sign = true;
             setTimeout(function () {
               self.sign = false;
             }, 2000)
-          // this.$router.push({
-          //   path: "/invit"
-          // })
+            }
+          
         }
       },
     },
@@ -215,9 +223,7 @@
       // if(this.balancesList == '' || this.balancesList[0].balance == '0'){
       //   this.role = true;
       // }
-      if($.cookie("enscoin") <= 200*1e8){
-        this.newrole = true;
-      }
+      
     }
 
   }

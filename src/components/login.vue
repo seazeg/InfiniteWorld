@@ -7,7 +7,7 @@
       <img id="verifyCodeId" :src="src" class="m-codebtn" @click="recode()" />
       <p>
         <input type="checkbox" name="" id="" v-model="isCk" />
-        <span>记住账户</span>
+        <span>记住密码</span>
         <a @click="createSignature">注册</a>
       </p>
       <div class="box">
@@ -42,7 +42,7 @@
   export default {
     data() {
       return {
-        password: "",
+        password: $.cookie('password')||"",
         idkey: $.cookie('idkey')||"",
         code: "",
         secret: "",
@@ -171,8 +171,10 @@
         var _this = this;
         if (_this.isCk) {
           $.cookie("secret", _this.idkey);
+          $.cookie("password", _this.password);
         } else {
           $.cookie("secret", "");
+          $.cookie("password", "");
         }
 
         _this.$axios({

@@ -247,6 +247,7 @@
                 balance: res.data.data.enscoin,
                 currency: "ENDLESS.ENS"
               }]
+              $.cookie('enscoin',res.data.data.enscoin)
         }, (error) => {
           console.log(error);
         });
